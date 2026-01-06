@@ -38,7 +38,7 @@ const items = [
   },
   {
     title: "Training Categories",
-    url: "#",
+    url: "/training-categories",
     icon: Search,
   },
   {
