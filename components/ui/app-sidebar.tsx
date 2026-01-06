@@ -18,7 +18,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import LogoCard from "../userInfo";
+import LogoCard from "../logoCard";
 import UserInfo from "../userInfo";
 
 // Menu items.
@@ -72,7 +72,8 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
-            <div className="m-4">
+            <div className="m-4 space-y-4">
+              <LogoCard />
               <UserInfo />
             </div>
             <SidebarMenu>
