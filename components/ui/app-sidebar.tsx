@@ -18,6 +18,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import LogoCard from "../userInfo";
+import UserInfo from "../userInfo";
 
 // Menu items.
 const items = [
@@ -70,6 +72,9 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
+            <div className="m-4">
+              <UserInfo />
+            </div>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
