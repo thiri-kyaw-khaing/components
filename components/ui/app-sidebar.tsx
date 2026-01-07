@@ -2,12 +2,18 @@
 
 import {
   ArchiveIcon,
+  BookOpen,
   Calendar,
+  DownloadIcon,
   GoalIcon,
   Home,
   Inbox,
+  Notebook,
+  PersonStandingIcon,
+  SaveIcon,
   Search,
   Settings,
+  User,
 } from "lucide-react";
 
 import {
@@ -40,7 +46,7 @@ const items = [
   {
     title: "User Management",
     url: "/user-management",
-    icon: Calendar,
+    icon: User,
   },
   {
     title: "Training Categories",
@@ -55,17 +61,17 @@ const items = [
   {
     title: "Training Plans",
     url: "/training-plans",
-    icon: Settings,
+    icon: BookOpen,
   },
   {
     title: "Training Records",
     url: "/training-records",
-    icon: Settings,
+    icon: Notebook,
   },
   {
     title: "Uploaded Certificates",
     url: "/uploaded-certificates",
-    icon: GoalIcon,
+    icon: DownloadIcon,
   },
 ];
 
