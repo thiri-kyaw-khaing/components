@@ -2,7 +2,7 @@ export default function DashboardPage() {
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Welcome to your dashboard!</p>
+      <p>Welcome to your dashboard! thiri edited</p>
     </div>
   );
 }
