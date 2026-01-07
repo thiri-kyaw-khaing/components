@@ -94,11 +94,12 @@ export function AppSidebar() {
                       className="
                         data-[active=true]:bg-[#006022]
                         data-[active=true]:text-white
+                        text-md px-3 py-4 rounded-md 
                       "
                     >
                       <Link href={item.url} className="flex items-center gap-2">
                         <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
+                        <span className="">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
