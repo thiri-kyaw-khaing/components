@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { UserIcon, UsersIcon } from "lucide-react";
 
 type DashboardCardProps = {
   icon?: React.ReactNode;
