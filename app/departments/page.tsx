@@ -1,21 +1,21 @@
 import ButtonDialog from "@/components/dashboard/buttonDialog";
 import SubTitle from "@/components/subTitle";
 import Title from "@/components/title";
-import React from "react";
 
 function DepartmentPage() {
   return (
-    <>
-      <div className="flex items-center m-6 w-full">
-        <div className="space-y-4">
+    <div className="p-6 max-w-7xl mx-auto">
+      <div className="flex items-start justify-between gap-4">
+        <div className="space-y-2">
           <Title text="Department Management" />
           <SubTitle text="Manage departments, assign managers, and view staff" />
         </div>
-        <div className="ml-auto">
+
+        <div className="mt-6">
           <ButtonDialog name="Add Department" />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
