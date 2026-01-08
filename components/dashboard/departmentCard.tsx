@@ -18,6 +18,14 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 type DashboardCardProps = {
   title: string;
@@ -31,7 +39,7 @@ function DepartmentCard({
   staffCount,
 }: DashboardCardProps) {
   return (
-    <Card className=" min-w-[360px]">
+    <Card className="w-full sm:max-w-[360px]">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="bg-[#E8F7EC] w-16 h-16 flex items-center justify-center text-white rounded-md">
           <UsersIcon className="w-6 h-6 text-[#006022]" />
@@ -56,9 +64,25 @@ function DepartmentCard({
       <CardFooter className="flex flex-col items-start gap-2">
         <p className="text-sm text-muted-foreground">Staff</p>
         <h4 className="">{staffCount}</h4>
-        <Button variant={"outline"} className="w-full text-[#006022] border-[#006022]">
-          View Staff
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant={"outline"}
+              className="w-full text-[#006022] border-[#006022]"
+            >
+              View Staff
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </Card>
   );
