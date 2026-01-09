@@ -34,6 +34,8 @@ function DepartmentPage() {
         <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
         <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
         <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
+        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
+        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
       </div>
     </div>
   );
