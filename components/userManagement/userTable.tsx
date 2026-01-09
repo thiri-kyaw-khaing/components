@@ -8,9 +8,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { colors } from "@/lib/color";
-import { Contact } from "lucide-react";
+import { Contact, DotSquareIcon, Droplets, MoreVertical } from "lucide-react";
 import React from "react";
 import ContactInfo from "./contact";
+import { Button } from "../ui/button";
 
 function userTable() {
   return (
@@ -41,7 +42,13 @@ function userTable() {
             <TableCell>
               <ContactInfo email="thiri@gmail.com" phone="09753244464" />
             </TableCell>
-            <TableCell className="text-right">$250.00</TableCell>
+            <TableCell className="text-right">IT</TableCell>
+            <TableCell className="text-right">Administrator</TableCell>
+            <TableCell className="text-right">
+              <Button variant="ghost" size="icon-sm">
+                <MoreVertical />
+              </Button>
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
