@@ -54,8 +54,8 @@ const items = [
     icon: Search,
   },
   {
-    title: "Calendar",
-    url: "/calendar",
+    title: "Calender",
+    url: "/calender",
     icon: Calendar,
   },
   {
