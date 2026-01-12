@@ -11,20 +11,36 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
-function ButtonDialog({ name }: { name?: string }) {
+function ButtonDialog({
+  name,
+  className,
+  icon,
+  children,
+}: {
+  name?: string;
+  className?: string;
+  icon?: React.ReactNode;
+  children?: React.ReactNode;
+}) {
   return (
     <div>
       <Dialog>
         <form>
           <DialogTrigger asChild>
-            <Button className="bg-[#006022] text-white px-4 py-2 rounded-md hover:bg-[#005018] ">
-              <Plus className="inline-block mr-2 w-4 h-4" />
+            <Button
+              className={cn(
+                "bg-[#006022] text-white px-4 py-2 rounded-md hover:bg-[#005018]",
+                className
+              )}
+            >
+              {icon ? icon : <Plus className="mr-2 h-4 w-4" />}
               {name}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
+            {/* <DialogHeader>
               <DialogTitle>Edit profile</DialogTitle>
               <DialogDescription>
                 Make changes to your profile here. Click save when you&apos;re
@@ -50,7 +66,8 @@ function ButtonDialog({ name }: { name?: string }) {
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
               <Button type="submit">Save changes</Button>
-            </DialogFooter>
+            </DialogFooter> */}
+            {children}
           </DialogContent>
         </form>
       </Dialog>
