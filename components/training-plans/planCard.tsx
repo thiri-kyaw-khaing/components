@@ -11,6 +11,7 @@ import {
 import ButtonDialog from "../dashboard/buttonDialog";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { colors } from "@/lib/color";
+import ViewPlanForm from "./viewPlanForm";
 
 type PlanCardProps = {
   title?: string;
@@ -32,7 +33,9 @@ function PlanCard({ title, name, trainingCount }: PlanCardProps) {
               icon={<EyeIcon className="mr-2 h-4 w-4" />}
               name={"View"}
               className="bg-white border border-[#006022] hover:bg-[#f0fdf4] text-[#006022] px-4 py-2 rounded-md"
-            />
+            >
+              <ViewPlanForm />
+            </ButtonDialog>
           </CardAction>
         </CardHeader>
 
