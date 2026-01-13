@@ -24,14 +24,14 @@ import {
 import { Label } from "../ui/label";
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
+  name: z.string().min(2).max(50),
 });
 
 function DialogForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
     },
   });
 
@@ -41,36 +41,43 @@ function DialogForm() {
     console.log(values);
   }
   return (
-    <div>
-      <DialogHeader>
-        <DialogTitle>Add New Department</DialogTitle>
-      </DialogHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="grid gap-4">
-            <div className="grid gap-3 mt-4">
-              <Label htmlFor="name">Department Name</Label>
-              <Input
-                id="name"
-                name="name"
-                placeholder="Enter Department Name"
-              />
-            </div>
-          </div>
-          <DialogFooter className="mt-4">
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button
-              type="submit"
-              className="bg-[#006022] text-white px-4 py-2  hover:bg-[#005018]"
-            >
-              Add Department
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <DialogHeader>
+          <DialogTitle>Add New Department</DialogTitle>
+        </DialogHeader>
+
+        <div className="grid gap-4 mt-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Department Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Department Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <DialogFooter className="mt-4">
+          <DialogClose asChild>
+            <Button type="button" variant="outline">
+              Cancel
             </Button>
-          </DialogFooter>
-        </form>
-      </Form>
-    </div>
+          </DialogClose>
+          <Button
+            type="submit"
+            className="bg-[#006022] text-white hover:bg-[#005018]"
+          >
+            Add Department
+          </Button>
+        </DialogFooter>
+      </form>
+    </Form>
   );
 }
 
