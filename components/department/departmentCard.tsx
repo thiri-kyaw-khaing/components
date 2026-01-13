@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import DashboardCard from "./DashboardCard";
+import DashboardCard from "../dashboard/DashboardCard";
 import {
   Edit2Icon,
   Edit3Icon,
@@ -26,6 +26,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import StaffTable from "./staffTable";
 
 type DashboardCardProps = {
   title: string;
@@ -75,12 +76,10 @@ function DepartmentCard({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
-              </DialogDescription>
+              <DialogTitle>Human Resources - Staff List</DialogTitle>
+              <DialogDescription>Total Staff : {staffCount}</DialogDescription>
             </DialogHeader>
+            <StaffTable />
           </DialogContent>
         </Dialog>
       </CardFooter>

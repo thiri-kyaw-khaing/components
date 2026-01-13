@@ -1,5 +1,5 @@
 import ButtonDialog from "@/components/dashboard/buttonDialog";
-import DepartmentCard from "@/components/dashboard/departmentCard";
+import DepartmentCard from "@/components/department/departmentCard";
 import DialogForm from "@/components/dashboard/dialogForm";
 import PageHeader from "@/components/dashboard/pageHeader";
 import { Search, UsersIcon } from "lucide-react";
