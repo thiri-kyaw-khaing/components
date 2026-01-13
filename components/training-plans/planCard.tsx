@@ -12,6 +12,7 @@ import ButtonDialog from "../dashboard/buttonDialog";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { colors } from "@/lib/color";
 import ViewPlanForm from "./viewPlanForm";
+import InfoDetail from "./infoDetail";
 
 type PlanCardProps = {
   title?: string;
@@ -39,7 +40,12 @@ function PlanCard({ title, name, trainingCount }: PlanCardProps) {
           </CardAction>
         </CardHeader>
 
-        <CardContent></CardContent>
+        <CardContent className="grid grid-cols-4 gap-4 mt-2">
+          <InfoDetail title="Date" info="2025-11-20" />
+          <InfoDetail title="Mode" info="Online" />
+          <InfoDetail title="Category" info="Technical Skills" />
+          <InfoDetail title="Capacity" info="8 hours,1 days" />
+        </CardContent>
       </Card>
     </div>
   );
