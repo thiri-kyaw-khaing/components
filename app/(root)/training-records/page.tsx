@@ -1,6 +1,12 @@
 import PageHeader from "@/components/dashboard/pageHeader";
 import { Checkbox } from "@/components/ui/checkbox";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 function TrainingRecords() {
   return (
     <>
@@ -38,7 +44,6 @@ function TrainingRecords() {
               <Checkbox id="position" defaultChecked />
               <label htmlFor="position">Position</label>
             </div>
-
             <div className="flex items-center gap-2">
               <Checkbox id="division" defaultChecked />
               <label htmlFor="division">Division</label>
@@ -64,6 +69,20 @@ function TrainingRecords() {
             <div className="flex items-center gap-2">
               <Checkbox id="pre-test-post-test" defaultChecked />
               <label htmlFor="pre-test-post-test">Pre-test/Post-test</label>
+            </div>
+            <div className="flex flex-col gap-4">
+              <p className="text-gray-500">Number of Records to Display</p>
+              <Select>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Total Records" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="50">50 records</SelectItem>
+                  <SelectItem value="100">100 records</SelectItem>
+                  <SelectItem value="200">200 records</SelectItem>
+                  <SelectItem value="500">500 records</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
