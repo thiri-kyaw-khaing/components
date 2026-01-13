@@ -1,4 +1,19 @@
+"use client";
 import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   DialogClose,
   DialogDescription,
@@ -7,34 +22,54 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+
+const formSchema = z.object({
+  username: z.string().min(2).max(50),
+});
 
 function DialogForm() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
   return (
     <div>
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
-        <DialogDescription>
-          Make changes to your profile here. Click save when you&apos;re done.
-        </DialogDescription>
+        <DialogTitle>Add New Department</DialogTitle>
       </DialogHeader>
-      <div className="grid gap-4">
-        <div className="grid gap-3">
-          <Label htmlFor="name-1">Name</Label>
-          <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
-        </div>
-        <div className="grid gap-3">
-          <Label htmlFor="username-1">Username</Label>
-          <Input id="username-1" name="username" defaultValue="@peduarte" />
-        </div>
-      </div>
-      <DialogFooter>
-        <DialogClose asChild>
-          <Button variant="outline">Cancel</Button>
-        </DialogClose>
-        <Button type="submit">Save changes</Button>
-      </DialogFooter>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <div className="grid gap-4">
+            <div className="grid gap-3 mt-4">
+              <Label htmlFor="name">Department Name</Label>
+              <Input
+                id="name"
+                name="name"
+                placeholder="Enter Department Name"
+              />
+            </div>
+          </div>
+          <DialogFooter className="mt-4">
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              className="bg-[#006022] text-white px-4 py-2  hover:bg-[#005018]"
+            >
+              Add Department
+            </Button>
+          </DialogFooter>
+        </form>
+      </Form>
     </div>
   );
 }
