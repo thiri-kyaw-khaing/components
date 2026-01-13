@@ -40,6 +40,11 @@ function TrainingPlans() {
           name="Dr. James Wilson"
           trainingCount={3}
         />
+        <PlanCard
+          title="Compliance Training"
+          name="Dr. James Wilson"
+          trainingCount={3}
+        />
       </div>
     </div>
   );

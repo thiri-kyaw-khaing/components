@@ -7,7 +7,7 @@ import React from "react";
 function TrainingCategories() {
   return (
     <>
-      <div className="m-6 space-y-4 ">
+      <div className="gap-4 m-6 space-y-4">
         <PageHeader
           title="Training Categories"
           subtitle="Manage training categories and classifications"
