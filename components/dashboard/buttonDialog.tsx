@@ -39,7 +39,9 @@ function ButtonDialog({
               {name}
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">{children}</DialogContent>
+          <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
+            {children}
+          </DialogContent>
         </form>
       </Dialog>
     </div>
