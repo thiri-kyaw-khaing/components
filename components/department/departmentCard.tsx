@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -80,6 +81,9 @@ function DepartmentCard({
               <DialogDescription>Total Staff : {staffCount}</DialogDescription>
             </DialogHeader>
             <StaffTable />
+            <DialogClose asChild>
+              <Button variant="outline">Close</Button>
+            </DialogClose>
           </DialogContent>
         </Dialog>
       </CardFooter>

@@ -1,5 +1,6 @@
 import ButtonDialog from "@/components/dashboard/buttonDialog";
 import PageHeader from "@/components/dashboard/pageHeader";
+import UserForm from "@/components/userManagement/UserForm";
 import UserTable from "@/components/userManagement/userTable";
 import { Search, User } from "lucide-react";
 import React from "react";
@@ -11,7 +12,11 @@ function UserManagement() {
         <PageHeader
           title="User Management"
           subtitle="Manage users, assign roles, and view activity"
-          action={<ButtonDialog name="Add User" />}
+          action={
+            <ButtonDialog name="Add User">
+              <UserForm />
+            </ButtonDialog>
+          }
         />
 
         <div className="border border-[#006022] rounded-lg p-2 flex items-center gap-2 my-6">
