@@ -1,5 +1,6 @@
 import ButtonDialog from "@/components/dashboard/buttonDialog";
 import PageHeader from "@/components/dashboard/pageHeader";
+import AddCategoryForm from "@/components/training-categories/AddCategoryForm";
 import CategoryCard from "@/components/training-categories/categoryCard";
 import { Button } from "@/components/ui/button";
 import React from "react";
@@ -11,7 +12,11 @@ function TrainingCategories() {
         <PageHeader
           title="Training Categories"
           subtitle="Manage training categories and classifications"
-          action={<ButtonDialog name="Add Training Category" />}
+          action={
+            <ButtonDialog name="Add Category">
+              <AddCategoryForm />
+            </ButtonDialog>
+          }
         />
         <div className="mt-6 flex flex-wrap gap-10">
           <CategoryCard

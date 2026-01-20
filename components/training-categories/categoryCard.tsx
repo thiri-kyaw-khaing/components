@@ -32,10 +32,10 @@ function categoryCard({
           </CardTitle>
 
           <CardAction className="text-[#006022] font-medium">
-            <Button variant="ghost" size="icon-sm">
+            <Button variant="ghost" size="icon-sm" onClick={() => {}}>
               <Edit2Icon />
             </Button>
-            <Button variant="ghost" size="icon-sm">
+            <Button variant="ghost" size="icon-sm" onClick={() => {}}>
               <Trash2Icon className="text-red-500" />
             </Button>
           </CardAction>
