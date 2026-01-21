@@ -21,20 +21,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Dialog, DialogContent } from "../ui/dialog";
 import EditUserForm from "./EditUserForm";
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  department: string;
-  departmentId: string;
-  role: string;
-  position: string;
-  agency: string;
-  cotton: string;
-  line: string;
-};
+import { User } from "@/app/types/userManagement";
 
 const users: User[] = [
   {
@@ -175,7 +162,7 @@ function UserTable() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   return (
     <>
-      <Table className="table-fixed w-full">
+      <Table className="table-fixed w-full rounded-t-md ">
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
           <TableRow>

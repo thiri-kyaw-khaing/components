@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "../../lib/utils";
+import { User } from "@/app/types/userManagement";
 
 import {
   Form,
@@ -20,7 +20,13 @@ type UserEditFormProps = {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { on } from "events";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -29,8 +35,8 @@ const formSchema = z.object({
   email: z.string().email(),
   phone: z.string().min(10).max(15),
   department: z.string().min(2).max(50),
-
   role: z.string().min(2).max(50),
+  status: z.enum(["active", "inactive", "suspended"]),
 });
 function EditUserForm({ user, onClose }: UserEditFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,6 +49,7 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
       phone: user?.phone || "",
       department: user?.department || "",
       role: user?.role || "",
+      status: user?.status || "active",
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -153,6 +160,31 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>User Status</FormLabel>
+
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger className="w-[220px]">
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                      </FormControl>
+
+                      <SelectContent>
+                        <SelectItem value="active">Active</SelectItem>
+                        <SelectItem value="inactive">Inactive</SelectItem>
+                        <SelectItem value="suspended">Suspended</SelectItem>
+                      </SelectContent>
+                    </Select>
+
                     <FormMessage />
                   </FormItem>
                 )}
