@@ -1,10 +1,18 @@
+"use client";
+
 import ButtonDialog from "@/components/dashboard/buttonDialog";
 import DepartmentCard from "@/components/department/departmentCard";
 import DialogForm from "@/components/dashboard/dialogForm";
 import PageHeader from "@/components/dashboard/pageHeader";
 import { Search, UsersIcon } from "lucide-react";
+import { departments } from "@/lib/data";
+import { Department } from "@/app/types/department";
+import { useState } from "react";
+import StaffDialog from "@/components/department/staffDialog";
 
 function DepartmentPage() {
+  const [selectedDepartment, setSelectedDepartment] =
+    useState<Department | null>(null);
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <PageHeader
@@ -29,19 +37,19 @@ function DepartmentPage() {
       </div>
 
       <div className="mt-6 flex flex-wrap gap-10">
-        <DepartmentCard
-          title="Human Resources"
-          managerName="Sarah"
-          staffCount={12}
-        />
-        <DepartmentCard title="Finance" managerName="John" staffCount={8} />
-        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
-        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
-        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
-        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
-        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
-        <DepartmentCard title="Marketing" managerName="Emily" staffCount={15} />
+        {departments.map((dept) => (
+          <DepartmentCard
+            key={dept.id}
+            department={dept}
+            onViewStaff={(department) => setSelectedDepartment(department)}
+          />
+        ))}
       </div>
+
+      <StaffDialog
+        department={selectedDepartment}
+        onClose={() => setSelectedDepartment(null)}
+      />
     </div>
   );
 }

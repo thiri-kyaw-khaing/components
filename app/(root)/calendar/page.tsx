@@ -1,6 +1,7 @@
 import AdminLayout from "@/app/layout";
 import ButtonDialog from "@/components/dashboard/buttonDialog";
 import PageHeader from "@/components/dashboard/pageHeader";
+import Test from "@/components/dashboard/test";
 
 export default function CalendarPage() {
   return (
@@ -10,6 +11,7 @@ export default function CalendarPage() {
         subtitle="View and manage training schedules"
         action={<ButtonDialog name="Add Training Schedule" />}
       />
+      <Test />
     </div>
   );
 }

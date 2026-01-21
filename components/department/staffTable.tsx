@@ -8,31 +8,45 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { colors } from "@/lib/color";
-import { Contact, DotSquareIcon, Droplets, MoreVertical } from "lucide-react";
-import React from "react";
+import { Staff } from "@/app/types/department";
 
-import { Button } from "../ui/button";
-import userTable from "../userManagement/userTable";
+type StaffTableProps = {
+  staff: Staff[];
+};
 
-function StaffTable() {
+function StaffTable({ staff }: StaffTableProps) {
   return (
-    <>
-      <Table className="table-fixed w-full">
-        <TableCaption>A list of staffs</TableCaption>
-        <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
+    <Table className="table-fixed w-full">
+      <TableCaption>Staff list</TableCaption>
+      <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
+        <TableRow>
+          <TableHead className="w-[120px] font-bold">Employee ID</TableHead>
+          <TableHead className="font-bold">Name</TableHead>
+          <TableHead className="font-bold">Position</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {staff.length === 0 ? (
           <TableRow>
-            <TableHead className="w-[100px] font-bold">Employee ID</TableHead>
-            <TableHead className="w-[200px] font-bold">Name</TableHead>
+            <TableCell
+              colSpan={3}
+              className="text-center text-muted-foreground"
+            >
+              No staff found
+            </TableCell>
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell className="font-medium">EMP001</TableCell>
-            <TableCell>John Smith</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </>
+        ) : (
+          staff.map((member) => (
+            <TableRow key={member.id}>
+              <TableCell className="font-medium">{member.id}</TableCell>
+              <TableCell>{member.name}</TableCell>
+              <TableCell>{member.position}</TableCell>
+            </TableRow>
+          ))
+        )}
+      </TableBody>
+    </Table>
   );
 }
 

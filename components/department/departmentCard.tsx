@@ -28,18 +28,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import StaffTable from "./staffTable";
-
-type DashboardCardProps = {
-  title: string;
-  managerName: string;
-  staffCount: number;
+import { Department } from "@/app/types/department";
+import { useState } from "react";
+type DepartmentCardProps = {
+  department: Department;
+  onViewStaff: (department: Department) => void;
 };
 
-function DepartmentCard({
-  title,
-  managerName,
-  staffCount,
-}: DashboardCardProps) {
+function DepartmentCard({ department, onViewStaff }: DepartmentCardProps) {
   return (
     <Card className="w-full sm:max-w-[360px]">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -58,34 +54,24 @@ function DepartmentCard({
       </CardHeader>
 
       <CardContent>
-        <p className="text-black text-md">{title}</p>
-        <p className="text-gray-600 text-sm "> Manager: {managerName}</p>
+        <p className="text-black text-md">{department.name}</p>
+        <p className="text-gray-600 text-sm ">
+          {" "}
+          Manager: {department.manager.name}
+        </p>
         <Separator className="w-24 self-center mt-4" />
       </CardContent>
 
       <CardFooter className="flex flex-col items-start gap-2">
         <p className="text-sm text-muted-foreground">Staff</p>
-        <h4 className="">{staffCount}</h4>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant={"outline"}
-              className="w-full text-[#006022] border-[#006022]"
-            >
-              View Staff
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Human Resources - Staff List</DialogTitle>
-              <DialogDescription>Total Staff : {staffCount}</DialogDescription>
-            </DialogHeader>
-            <StaffTable />
-            <DialogClose asChild>
-              <Button variant="outline">Close</Button>
-            </DialogClose>
-          </DialogContent>
-        </Dialog>
+        <h4 className="">{department.staff.length}</h4>
+        <Button
+          variant="outline"
+          className="w-full text-[#006022] border-[#006022]"
+          onClick={() => onViewStaff(department)}
+        >
+          View Staff
+        </Button>
       </CardFooter>
     </Card>
   );
