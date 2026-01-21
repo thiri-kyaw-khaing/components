@@ -22,6 +22,23 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Label } from "../ui/label";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Building2Icon, CreditCardIcon, WalletIcon } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -30,6 +47,7 @@ const formSchema = z.object({
   phone: z.string().min(6, "Phone is required"),
   department: z.string().min(1, "Department is required"),
   role: z.string().min(1, "Role is required"),
+  status: z.enum(["active", "inactive", "suspended"]),
 });
 
 function UserForm() {
@@ -42,6 +60,7 @@ function UserForm() {
       phone: "",
       department: "",
       role: "",
+      status: "active",
     },
   });
 
@@ -113,7 +132,7 @@ function UserForm() {
             )}
           />
         </div>
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-2 gap-4 mt-4 mb-4">
           <FormField
             control={form.control}
             name="department"
@@ -140,6 +159,36 @@ function UserForm() {
               </FormItem>
             )}
           />
+        </div>
+
+        <div>
+          <div className="flex flex-col gap-4 mb-4">
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>User Status</FormLabel>
+
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger className="w-[265px]">
+                        <SelectValue placeholder="Select status" />
+                      </SelectTrigger>
+                    </FormControl>
+
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="inactive">Inactive</SelectItem>
+                      <SelectItem value="suspended">Suspended</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
         <DialogFooter className="mt-4">
