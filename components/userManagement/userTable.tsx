@@ -9,7 +9,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { colors } from "@/lib/color";
-import { Contact, DotSquareIcon, Droplets, MoreVertical } from "lucide-react";
+import {
+  Contact,
+  Delete,
+  DotSquareIcon,
+  Droplets,
+  MoreVertical,
+} from "lucide-react";
 import React, { useState } from "react";
 import ContactInfo from "./contact";
 import { Button } from "../ui/button";
@@ -22,9 +28,9 @@ import {
 import { Dialog, DialogContent } from "../ui/dialog";
 import EditUserForm from "./EditUserForm";
 import { User } from "@/app/types/userManagement";
-import UserDetails from "@/app/(root)/user-management/[userId]/page";
 import { useRouter } from "next/navigation";
 import { users } from "@/lib/data";
+import { DeleteUserDialog } from "./DeleteUserDialog";
 
 function UserTable() {
   const router = useRouter();
@@ -104,15 +110,6 @@ function UserTable() {
         </TableBody>
       </Table>
       <Dialog open={open} onOpenChange={setOpen}>
-        {/* <DialogContent>
-    {mode === "view" && <UserView user={selectedUser} />}
-    {mode === "edit" && <UserEditForm user={selectedUser} />
-    {mode === "delete" && (
-      <ConfirmDelete
-        onConfirm={() => deleteUser(selectedUser!.id)}
-      />
-    )}
-  </DialogContent> */}
         <DialogContent>
           {mode === "edit" && (
             <EditUserForm
@@ -120,7 +117,16 @@ function UserTable() {
               onClose={() => setOpen(false)}
             />
           )}
-          {mode === "delete" && <div>Delete User - To be implemented</div>}
+          {mode === "delete" && (
+            <DeleteUserDialog
+              user={selectedUser!}
+              onConfirm={() => {
+                // deleteUser(selectedUser!.id);
+                setOpen(false);
+              }}
+              onCancel={() => setOpen(false)}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </>
