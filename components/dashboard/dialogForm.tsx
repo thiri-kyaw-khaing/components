@@ -25,6 +25,7 @@ import { Label } from "../ui/label";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
+  division: z.string().min(2).max(50),
 });
 
 function DialogForm() {
@@ -32,6 +33,7 @@ function DialogForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      division: "",
     },
   });
 
@@ -53,9 +55,23 @@ function DialogForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Department Name</FormLabel>
+                <FormLabel>Add Department Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter Department Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="division"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Add Division Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Division Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
