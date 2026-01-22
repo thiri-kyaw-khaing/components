@@ -27,6 +27,7 @@ export const departments: Department[] = [
         position: "Training Coordinator",
       },
     ],
+    division: "Corporate Services",
   },
   {
     id: "dept-it",
@@ -58,6 +59,7 @@ export const departments: Department[] = [
         position: "QA Engineer",
       },
     ],
+    division: "Technology Services",
   },
   {
     id: "dept-fin",
@@ -79,6 +81,7 @@ export const departments: Department[] = [
         position: "Financial Analyst",
       },
     ],
+    division: "Corporate Services",
   },
 ];
 

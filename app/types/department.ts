@@ -9,4 +9,5 @@ export type Department = {
   name: string;
   manager: Staff;
   staff: Staff[];
+  division: string;
 };

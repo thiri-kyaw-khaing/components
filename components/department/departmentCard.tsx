@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import DashboardCard from "../dashboard/DashboardCard";
 import {
   Edit2Icon,
   Edit3Icon,
@@ -18,24 +17,24 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import StaffTable from "./staffTable";
+
 import { Department } from "@/app/types/department";
 import { useState } from "react";
+import { set } from "zod";
+
 type DepartmentCardProps = {
   department: Department;
   onViewStaff: (department: Department) => void;
+  onEdit: (department: Department) => void;
+  onDelete: (department: Department) => void;
 };
 
-function DepartmentCard({ department, onViewStaff }: DepartmentCardProps) {
+function DepartmentCard({
+  department,
+  onViewStaff,
+  onEdit,
+  onDelete,
+}: DepartmentCardProps) {
   return (
     <Card className="w-full sm:max-w-[360px]">
       <CardHeader className="flex flex-row items-center justify-between">
@@ -44,10 +43,18 @@ function DepartmentCard({ department, onViewStaff }: DepartmentCardProps) {
         </CardTitle>
 
         <CardAction className="text-[#006022] font-medium">
-          <Button variant="ghost" size="icon-sm">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => onEdit(department)}
+          >
             <Edit2Icon />
           </Button>
-          <Button variant="ghost" size="icon-sm">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => onDelete(department)}
+          >
             <Trash2Icon className="text-red-500" />
           </Button>
         </CardAction>
@@ -55,6 +62,9 @@ function DepartmentCard({ department, onViewStaff }: DepartmentCardProps) {
 
       <CardContent>
         <p className="text-black text-md">{department.name}</p>
+        <p className="text-gray-600 text-sm ">
+          {""}Division: {department.division}
+        </p>
         <p className="text-gray-600 text-sm ">
           {" "}
           Manager: {department.manager.name}
