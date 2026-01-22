@@ -1,24 +1,27 @@
 import { User } from "@/app/types/userManagement";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 type Props = {
   user: User;
 };
 
 function UserDetails({ user }: Props) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Detail label="Employee ID" value={user.id} />
-      <Detail label="Name" value={user.name} />
-      <Detail label="Email" value={user.email} />
-      <Detail label="Phone" value={user.phone} />
-      <Detail label="Department" value={user.department} />
-      <Detail label="Role" value={user.role} />
-      <Detail label="Position" value={user.position} />
-      <Detail label="Agency" value={user.agency} />
-      <Detail label="Cotton" value={user.cotton} />
-      <Detail label="Line" value={user.line} />
-      <Detail label="Status" value={user.status} />
-    </div>
+    <>
+      {/* Profile */}
+      <div className="bg-[#006022] h-40 w-full flex items-center px-20">
+        <Avatar className="bg-green h-24 w-24 border-2 border-[#E8F7EC]">
+          <AvatarFallback className="bg-[#4E7F57] text-white text-4xl">
+            {user.name.charAt(0)}
+          </AvatarFallback>
+        </Avatar>
+        {/* User Information */}
+        <div className="ml-6 text-white">
+          <h1 className="text-3xl font-semibold">{user.name}</h1>
+          <p className="text-md">{user.position}</p>
+          <p className="text-md">{user.email}</p>
+        </div>
+      </div>
+    </>
   );
 }
 

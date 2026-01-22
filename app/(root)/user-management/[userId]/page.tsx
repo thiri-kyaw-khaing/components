@@ -17,9 +17,7 @@ export default async function UserDetailsPage({ params }: Props) {
   }
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-xl font-semibold mb-6">User Details</h1>
-
+    <div className="mx-auto">
       <UserDetails user={user} />
     </div>
   );
