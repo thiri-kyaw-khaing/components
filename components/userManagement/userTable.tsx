@@ -67,7 +67,9 @@ function UserTable() {
               <TableCell>
                 <ContactInfo email={user.email} phone={user.phone} />
               </TableCell>
-              <TableCell className="text-right">{user.department}</TableCell>
+              <TableCell className="text-right">
+                {user.department.name}
+              </TableCell>
               <TableCell className="text-right">{user.role}</TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>

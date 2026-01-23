@@ -47,7 +47,7 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
       departmentId: user?.departmentId || "",
       email: user?.email || "",
       phone: user?.phone || "",
-      department: user?.department || "",
+      department: user?.department.name || "",
       role: user?.role || "",
       status: user?.status || "active",
     },
