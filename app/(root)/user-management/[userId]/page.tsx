@@ -43,6 +43,12 @@ export default async function UserDetailsPage({ params }: Props) {
         trainingPlan: "Container Orchestration",
         category: "DevOps",
       },
+      {
+        id: "CERT003",
+        name: "Certified Kubernetes Administrator",
+        trainingPlan: "Container Orchestration",
+        category: "DevOps",
+      },
     ],
   };
 
