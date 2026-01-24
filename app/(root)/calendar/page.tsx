@@ -11,7 +11,6 @@ export default function CalendarPage() {
         subtitle="View and manage training schedules"
         action={<ButtonDialog name="Add Training Schedule" />}
       />
-      <Test />
     </div>
   );
 }

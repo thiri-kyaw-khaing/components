@@ -35,10 +35,10 @@ function UserDetails({ user }: Props) {
         </div>
       </div>
       {/* Profile */}
-      {/* Content Area (aligned) */}
-      <div className="mx-8 mt-8 space-y-6">
+      {/* Content Area */}
+      <div className="mx-12 mt-8 space-y-6">
         {/* Details Section */}
-        <div className="flex flex-col md:flex-row gap-6">
+        <div className="flex flex-col md:flex-row gap-18">
           <Section icon={<Mail />} title="Contact Information">
             <div className="space-y-4">
               <Detail label="Email" value={user.email} />

@@ -11,7 +11,7 @@ type Props = {
 
 export function CertificateCard({ certificate }: Props) {
   return (
-    <Card className="rounded-xl border border-muted w-full">
+    <Card className="rounded-xl border border-muted w-[500px]">
       <CardContent className="p-6 space-y-4">
         {/* Header */}
         <div className="flex items-start justify-between">
