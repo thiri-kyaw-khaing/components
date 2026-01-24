@@ -1,4 +1,5 @@
 import type { Department } from "@/app/types/department";
+import { Course } from "@/app/types/trainingPlan";
 import { User } from "@/app/types/userManagement";
 
 export const departments: Department[] = [
@@ -293,5 +294,72 @@ export const users: User[] = [
     cotton: "C",
     line: "4",
     status: "active",
+  },
+];
+
+export const courses: Course[] = [
+  {
+    id: 1,
+    name: "Cybersecurity Best Practices",
+    calendarEventId: "cal_001",
+    speakerInstitute: "Dr. James Wilson",
+    type: "Online",
+    category: "Technical Skills",
+    date: "2025-11-20",
+    numberOfDays: 1,
+    numberOfHours: 8,
+    location: "Online",
+    numberOfPerson: 8,
+    costPerPerson: 150,
+    totalCost: 1200,
+    budgetCode: "IT-SEC-2025",
+  },
+  {
+    id: 2,
+    name: "Leadership Excellence",
+    calendarEventId: "cal_002",
+    speakerInstitute: "Sarah Martinez",
+    type: "Onsite",
+    category: "Leadership",
+    date: "2025-11-22T",
+    numberOfDays: 2,
+    numberOfHours: 12,
+    location: "Bangkok Office",
+    numberOfPerson: 20,
+    costPerPerson: 200,
+    totalCost: 4000,
+    budgetCode: "HR-LDR-2025",
+  },
+  {
+    id: 3,
+    name: "Workplace Safety Protocols",
+    calendarEventId: "cal_003",
+    speakerInstitute: "Michael Brown",
+    type: "Onsite",
+    category: "Safety",
+    date: "2025-11-25",
+    numberOfDays: 1,
+    numberOfHours: 6,
+    location: "Chiang Mai Branch",
+    numberOfPerson: 15,
+    costPerPerson: 80,
+    totalCost: 1200,
+    budgetCode: "OPS-SAFE-2025",
+  },
+  {
+    id: 4,
+    name: "Data Privacy Compliance",
+    calendarEventId: "cal_004",
+    speakerInstitute: "Lisa Chen",
+    type: "Online",
+    category: "Compliance",
+    date: "2025-11-28",
+    numberOfDays: 1,
+    numberOfHours: 10,
+    location: "Online",
+    numberOfPerson: 12,
+    costPerPerson: 120,
+    totalCost: 1440,
+    budgetCode: "LEGAL-DATA-2025",
   },
 ];

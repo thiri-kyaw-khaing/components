@@ -2,6 +2,7 @@ import ButtonDialog from "@/components/dashboard/buttonDialog";
 import PageHeader from "@/components/dashboard/pageHeader";
 import PlanCard from "@/components/training-plans/planCard";
 import { Button } from "@/components/ui/button";
+import { courses } from "@/lib/data";
 import { Search } from "lucide-react";
 import React from "react";
 
@@ -25,26 +26,9 @@ function TrainingPlans() {
         />
       </div>
       <div className="space-y-6">
-        <PlanCard
-          title="Leadership Development"
-          name="Dr. James Wilson"
-          trainingCount={5}
-        />
-        <PlanCard
-          title="Technical Skills"
-          name="Dr. James Wilson"
-          trainingCount={8}
-        />
-        <PlanCard
-          title="Compliance Training"
-          name="Dr. James Wilson"
-          trainingCount={3}
-        />
-        <PlanCard
-          title="Compliance Training"
-          name="Dr. James Wilson"
-          trainingCount={3}
-        />
+        {courses.map((plan) => (
+          <PlanCard key={plan.id} plan={plan} />
+        ))}
       </div>
     </div>
   );
