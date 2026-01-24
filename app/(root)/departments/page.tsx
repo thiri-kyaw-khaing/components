@@ -12,7 +12,6 @@ import StaffDialog from "@/components/department/staffDialog";
 import DeleteDepartmentDialog from "@/components/department/DeleteDepartmentDialog";
 import EditDepartmentDialog from "@/components/department/EditDepartmentDialog";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import EditDepartmentForm from "@/components/department/EditDepartmentForm";
 
 function DepartmentPage() {
   const [selectedDepartment, setSelectedDepartment] =

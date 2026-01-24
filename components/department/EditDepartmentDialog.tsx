@@ -27,12 +27,11 @@ const schema = z.object({
 });
 
 type Props = {
-  division: string;
   department: Department | null;
   onClose: () => void;
 };
 
-function EditDepartmentDialog({ division, department, onClose }: Props) {
+function EditDepartmentDialog({ department, onClose }: Props) {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {

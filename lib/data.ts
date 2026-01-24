@@ -363,3 +363,13 @@ export const courses: Course[] = [
     budgetCode: "LEGAL-DATA-2025",
   },
 ];
+
+export const TrainingTypeEnum = ["Online", "Onsite", "Hybrid"] as const;
+
+export const TrainingCategoryEnum = [
+  "Technical Skills",
+  "Soft Skills",
+  "Leadership",
+  "Safety",
+  "Compliance",
+] as const;
