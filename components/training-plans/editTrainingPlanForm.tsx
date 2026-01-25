@@ -99,7 +99,7 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
         <h1 className="text-lg font-semibold mb-4">Training Plan Details</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-6">
               {/* Title */}
               <FormField
                 control={form.control}
@@ -130,7 +130,7 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                 )}
               />
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-6">
               {/* Category */}
               <FormField
                 control={form.control}
@@ -183,7 +183,7 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                 )}
               />
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-6">
               {/* Date */}
               <FormField
                 control={form.control}
@@ -219,7 +219,7 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
             </div>
 
             {/* Budget Code */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="budgetCode"
@@ -261,7 +261,7 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="numberOfHours"
@@ -317,13 +317,24 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                 </FormItem>
               )}
             />
-
-            <Button
-              type="submit"
-              className="w-full bg-[#006022] hover:bg-[#005018] text-white mt-4"
-            >
-              Create Training Plan
-            </Button>
+            <div className="justify-end gap-6 flex">
+              <Button
+                type="submit"
+                variant={"outline"}
+                className=" text-[#006022] mt-4"
+                onClick={() => {
+                  router.push("/training-plans");
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="bg-[#006022] hover:bg-[#005018] text-white mt-4"
+              >
+                Update Training Plan
+              </Button>
+            </div>
           </form>
         </Form>
       </div>
