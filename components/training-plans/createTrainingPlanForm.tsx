@@ -37,8 +37,8 @@ export const createTrainingPlanSchema = z.object({
 
   date: z.string().min(1),
 
-  numberOfHours: z.coerce.number().min(1),
-  numberOfDays: z.coerce.number().min(1),
+  numberOfHours: z.coerce.number().int().min(1),
+  numberOfDays: z.coerce.number().int().min(1),
 
   location: z.string().optional(),
 
@@ -67,6 +67,7 @@ export default function CreateTrainingPlanForm() {
       costPerPerson: 0,
       content: "",
       budgetCode: "",
+      location: "",
     },
   });
 
@@ -187,7 +188,11 @@ export default function CreateTrainingPlanForm() {
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input type="text" {...field} />
+                  <Input
+                    type="text"
+                    placeholder="e.g., Conference Room A or Online"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -195,7 +200,45 @@ export default function CreateTrainingPlanForm() {
           />
         </div>
 
-        {/* Numbers */}
+        {/* Budget Code */}
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="budgetCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Budget Code</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    {...field}
+                    value={field.value === undefined ? "" : String(field.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Cost Per Person */}
+          <FormField
+            control={form.control}
+            name="costPerPerson"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Cost Per Person</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    value={field.value === undefined ? "" : String(field.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}
