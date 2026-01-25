@@ -28,6 +28,8 @@ import { TrainingCategoryEnum, TrainingTypeEnum } from "@/lib/data";
 import { z } from "zod";
 import { DialogHeader, DialogTitle } from "../ui/dialog";
 import { Course } from "@/app/types/trainingPlan";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const createTrainingPlanSchema = z.object({
   title: z.string().min(2).max(50),
@@ -54,6 +56,7 @@ export const createTrainingPlanSchema = z.object({
 export type CreateTrainingPlanInput = z.infer<typeof createTrainingPlanSchema>;
 
 export default function EditTrainingPlanForm({ course }: { course: Course }) {
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(createTrainingPlanSchema),
     defaultValues: {
@@ -78,7 +81,22 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
 
   return (
     <>
-      <div className="m-4 rounded-md border p-6 shadow-md">
+      <div className="m-6 space-y-4">
+        <Button
+          variant={"outline"}
+          className="text-[#006022] border-[#006022]"
+          onClick={() => {
+            router.push("/training-plans");
+          }}
+        >
+          <ArrowLeft />
+          Back to Training Plans
+        </Button>
+        <h1 className="text-xl font-bold">Edit Training Plan</h1>
+        <span>Update Training Plan Details</span>
+      </div>
+      <div className="m-6 rounded-md border p-6 shadow-md">
+        <h1 className="text-lg font-semibold mb-4">Training Plan Details</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-2 gap-2">
