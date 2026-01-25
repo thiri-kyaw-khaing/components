@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import ButtonDialog from "../dashboard/buttonDialog";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import ViewPlanForm from "./viewPlanForm";
+import ViewPlanForm from "./viewPlanDetails";
 import InfoDetail from "./infoDetail";
 import { Course } from "@/app/types/trainingPlan";
 
@@ -35,7 +35,7 @@ function PlanCard({ plan }: PlanCardProps) {
               name={"View"}
               className="bg-white border border-[#006022] hover:bg-[#f0fdf4] text-[#006022] px-4 py-2 rounded-md"
             >
-              <ViewPlanForm />
+              <ViewPlanForm plan={plan} />
             </ButtonDialog>
           </CardAction>
         </CardHeader>

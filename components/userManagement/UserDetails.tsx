@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Separator } from "@radix-ui/react-separator";
 import { CertificateCard } from "./certificationCard";
+import Detail from "./detailText";
 type Props = {
   user: any;
 };
@@ -70,15 +71,6 @@ function UserDetails({ user }: Props) {
         </div>
       </div>
     </>
-  );
-}
-
-function Detail({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="space-y-1">
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="font-medium">{value}</p>
-    </div>
   );
 }
 

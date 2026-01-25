@@ -19,11 +19,12 @@ export type Course = {
   numberOfDays: number;
   numberOfHours: number;
 
-  location?: string;
+  location: string;
 
   totalCost: number;
-  budgetCode?: string;
+  budgetCode: string;
 
   numberOfPerson: number;
   costPerPerson: number;
+  content?: string;
 };

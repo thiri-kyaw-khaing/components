@@ -313,6 +313,7 @@ export const courses: Course[] = [
     costPerPerson: 150,
     totalCost: 1200,
     budgetCode: "IT-SEC-2025",
+    content: "An in-depth course on cybersecurity principles and practices.",
   },
   {
     id: 2,
