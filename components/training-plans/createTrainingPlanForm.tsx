@@ -79,7 +79,7 @@ export default function CreateTrainingPlanForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <DialogHeader>
-          <DialogTitle>Edit Department</DialogTitle>
+          <DialogTitle>Add Training Plan</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-2 gap-2">
           {/* Title */}
@@ -292,7 +292,10 @@ export default function CreateTrainingPlanForm() {
           )}
         />
 
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          className="w-full bg-[#006022] hover:bg-[#005018] text-white mt-4"
+        >
           Create Training Plan
         </Button>
       </form>

@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import {
   DialogClose,
   DialogDescription,
@@ -6,13 +6,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Course } from "@/app/types/trainingPlan";
 import Detail from "../userManagement/detailText";
+import { useRouter } from "next/navigation";
 
 function ViewPlanForm({ plan }: { plan: Course }) {
+  const router = useRouter();
   return (
     <div>
       <DialogHeader>
@@ -34,11 +34,20 @@ function ViewPlanForm({ plan }: { plan: Course }) {
         label="Content of Training Plan"
         value={plan.content ?? "No content available"}
       />
-      <DialogFooter>
+      <DialogFooter className="mt-4">
         <DialogClose asChild>
-          <Button variant="outline">Cancel</Button>
+          <Button variant="outline">Close</Button>
         </DialogClose>
-        <Button type="submit">Save changes</Button>
+        <Button
+          type="submit"
+          className="bg-[#006022]"
+          onClick={() => {
+            router.push(`/training-plans/${plan.id}/edit`);
+            console.log("plan.id =", plan.id, typeof plan.id);
+          }}
+        >
+          Edit Training Plan
+        </Button>
       </DialogFooter>
     </div>
   );
