@@ -1,21 +1,20 @@
-import CustomizeButton from "@/components/customizeButton";
+"use client";
+
 import PageHeader from "@/components/dashboard/pageHeader";
 import CategorySelect from "@/components/training-records/CategorySelect";
 import DepartmentSelect from "@/components/training-records/DepartmentSelect";
 import StatusSelect from "@/components/training-records/StatusSelect";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { SearchIcon } from "lucide-react";
+import { useState } from "react";
 function TrainingRecords() {
+  const [department, setDepartment] = useState("");
+  const [category, setCategory] = useState("");
+  const [status, setStatus] = useState("");
+
+  const handleSearch = async () => {
+    // call API with filters
+  };
   return (
     <>
       <div className="space-y-4 m-6">
@@ -126,14 +125,14 @@ function TrainingRecords() {
             <label htmlFor="location">Location</label>
           </div>
         </div> */}
-        <div className="border rounded-md m-4 p-4">
+        <div className="border rounded-md p-4 space-y-4">
           <h1>Filter Options</h1>
-          <div className="p-4 flex flex-wrap gap-4">
-            <DepartmentSelect />
+          <div className="flex flex-wrap gap-4">
+            <DepartmentSelect value={department} onChange={setDepartment} />
             {/* Category Filter */}
-            <CategorySelect />
+            <CategorySelect value={category} onChange={setCategory} />
             {/* Status Filter */}
-            <StatusSelect />
+            <StatusSelect value={status} onChange={setStatus} />
           </div>
           {/* Search Button */}
           <div className="mt-6">

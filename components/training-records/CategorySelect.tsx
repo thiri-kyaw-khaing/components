@@ -8,12 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-
-function CategorySelect() {
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+};
+function CategorySelect({ value, onChange }: Props) {
   return (
     <div>
       {/* Category Filter */}
-      <Select>
+      <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="w-[180px] border-[#006022]">
           <SelectValue placeholder="สนับสนุนนโยบายสิ่งแวดล้อม" />
         </SelectTrigger>

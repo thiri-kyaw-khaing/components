@@ -8,12 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-
-function DepartmentSelect() {
+type Props = {
+  value: string;
+  onChange: (value: string) => void;
+};
+function DepartmentSelect({ value, onChange }: Props) {
   return (
     <div>
       {/* DepartmentFilter */}
-      <Select>
+      <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="w-[180px] border-[#006022]">
           <SelectValue placeholder="All Departments" />
         </SelectTrigger>
