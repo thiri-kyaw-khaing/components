@@ -1,6 +1,8 @@
 import CustomizeButton from "@/components/customizeButton";
 import PageHeader from "@/components/dashboard/pageHeader";
+import CategorySelect from "@/components/training-records/CategorySelect";
 import DepartmentSelect from "@/components/training-records/DepartmentSelect";
+import StatusSelect from "@/components/training-records/StatusSelect";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -126,24 +128,13 @@ function TrainingRecords() {
         </div> */}
         <div className="border rounded-md m-4 p-4">
           <h1>Filter Options</h1>
-          <DepartmentSelect />
-
-          {/* Category Filter */}
-          <Select>
-            <SelectTrigger className="w-[180px] border-[#006022]">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="1">สนับสนุนนโยบายสิ่งแวดล้อม</SelectItem>
-              <SelectItem value="2">ความปลอดภัยและอาชีวอนามัย</SelectItem>
-              <SelectItem value="3">ความปลอดภัยและอาชีวอนามัย</SelectItem>
-              <SelectItem value="4">ความปลอดภัยและอาชีวอนามัย</SelectItem>
-              <SelectItem value="5">ความปลอดภัยและอาชีวอนามัย</SelectItem>
-              <SelectItem value="6">ความปลอดภัยและอาชีวอนามัย</SelectItem>
-
-              <SelectItem value="suspended">Suspended</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="p-4 flex flex-wrap gap-4">
+            <DepartmentSelect />
+            {/* Category Filter */}
+            <CategorySelect />
+            {/* Status Filter */}
+            <StatusSelect />
+          </div>
           {/* Search Button */}
           <div className="mt-6">
             <Button className="bg-[#006022] text-white px-4 py-2 rounded-lg hover:bg-[#005018]">
