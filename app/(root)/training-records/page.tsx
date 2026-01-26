@@ -5,6 +5,7 @@ import CategorySelect from "@/components/training-records/CategorySelect";
 import DepartmentSelect from "@/components/training-records/DepartmentSelect";
 import RangeCalendar from "@/components/training-records/RangeCalendar";
 import StatusSelect from "@/components/training-records/StatusSelect";
+import TrainingRecordTable from "@/components/training-records/TrainingRecordTable";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
@@ -145,6 +146,12 @@ function TrainingRecords() {
         </div>
 
         {/* </div> */}
+        {/* Training Record Table */}
+        <div className="overflow-x-auto">
+          <div className="min-w-[1200px]">
+            <TrainingRecordTable />
+          </div>
+        </div>
       </div>
     </>
   );
