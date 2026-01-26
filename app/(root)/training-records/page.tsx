@@ -3,6 +3,7 @@
 import PageHeader from "@/components/dashboard/pageHeader";
 import CategorySelect from "@/components/training-records/CategorySelect";
 import DepartmentSelect from "@/components/training-records/DepartmentSelect";
+import RangeCalendar from "@/components/training-records/RangeCalendar";
 import StatusSelect from "@/components/training-records/StatusSelect";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
@@ -134,6 +135,7 @@ function TrainingRecords() {
             {/* Status Filter */}
             <StatusSelect value={status} onChange={setStatus} />
           </div>
+          <RangeCalendar />
           {/* Search Button */}
           <div className="mt-6">
             <Button className="bg-[#006022] text-white px-4 py-2 rounded-lg hover:bg-[#005018]">
