@@ -3,11 +3,12 @@
 import PageHeader from "@/components/dashboard/pageHeader";
 import CategorySelect from "@/components/training-records/CategorySelect";
 import DepartmentSelect from "@/components/training-records/DepartmentSelect";
+import FilterGroup from "@/components/training-records/FilterGroup";
 import RangeCalendar from "@/components/training-records/RangeCalendar";
 import StatusSelect from "@/components/training-records/StatusSelect";
 import TrainingRecordTable from "@/components/training-records/TrainingRecordTable";
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
+import { Filter, SearchIcon } from "lucide-react";
 import { useState } from "react";
 function TrainingRecords() {
   const [department, setDepartment] = useState("");
@@ -127,27 +128,11 @@ function TrainingRecords() {
             <label htmlFor="location">Location</label>
           </div>
         </div> */}
-        <div className="border rounded-md p-4 space-y-4">
-          <h1>Filter Options</h1>
-          <div className="flex flex-wrap gap-4">
-            <DepartmentSelect value={department} onChange={setDepartment} />
-            {/* Category Filter */}
-            <CategorySelect value={category} onChange={setCategory} />
-            {/* Status Filter */}
-            <StatusSelect value={status} onChange={setStatus} />
-          </div>
-          <RangeCalendar />
-          {/* Search Button */}
-          <div className="mt-6">
-            <Button className="bg-[#006022] text-white px-4 py-2 rounded-lg hover:bg-[#005018]">
-              <SearchIcon className="mr-2 h-4 w-4" /> Search
-            </Button>
-          </div>
-        </div>
+        <FilterGroup children={<RangeCalendar />} />
 
         {/* </div> */}
         {/* Training Record Table */}
-        <div className="">
+        <div className="overflow-x-auto">
           <div className="">
             <TrainingRecordTable />
           </div>

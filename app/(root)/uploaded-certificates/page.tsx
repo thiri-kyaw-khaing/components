@@ -1,5 +1,6 @@
 import PageHeader from "@/components/dashboard/pageHeader";
-import React from "react";
+
+import FilterGroupClient from "@/components/training-records/FilterGroupClient";
 
 function UploadedCertificates() {
   return (
@@ -9,6 +10,7 @@ function UploadedCertificates() {
           title="Uploaded Certificates"
           subtitle="Review and approve external training certificates uploaded by staff"
         />
+        <FilterGroupClient />
       </div>
     </>
   );
