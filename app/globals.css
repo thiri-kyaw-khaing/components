@@ -123,3 +123,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+[data-sidebar-wrapper] {
+  width: auto !important;
+}
+
+[data-sidebar-wrapper] {
+  flex: 0 0 auto !important;
+}

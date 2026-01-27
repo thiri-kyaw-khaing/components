@@ -147,8 +147,8 @@ function TrainingRecords() {
 
         {/* </div> */}
         {/* Training Record Table */}
-        <div className="overflow-x-auto">
-          <div className="min-w-[1200px]">
+        <div className="">
+          <div className="">
             <TrainingRecordTable />
           </div>
         </div>

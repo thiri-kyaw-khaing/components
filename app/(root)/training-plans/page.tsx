@@ -19,7 +19,7 @@ import React, { act } from "react";
 
 function TrainingPlans() {
   return (
-    <div className="m-6 space-y-4">
+    <div className="p-6 max-w-7xl mx-auto space-y-4">
       <PageHeader
         title="Training Plans"
         subtitle="Create and manage organization-wide training programs"
@@ -31,9 +31,9 @@ function TrainingPlans() {
       />
       {/* Search bar */}
 
-      <div className="flex items-center gap-4 my-6 justify-between">
+      <div className="flex flex-wrap items-center gap-4 my-6">
         {/* Search */}
-        <div className="relative w-[70%]">
+        <div className="relative flex-1 min-w-[240px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
           <Input
             placeholder="Search by name, email, or employee ID..."

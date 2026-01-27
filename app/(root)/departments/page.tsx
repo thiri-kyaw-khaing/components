@@ -11,7 +11,6 @@ import { useState } from "react";
 import StaffDialog from "@/components/department/staffDialog";
 import DeleteDepartmentDialog from "@/components/department/DeleteDepartmentDialog";
 import EditDepartmentDialog from "@/components/department/EditDepartmentDialog";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 function DepartmentPage() {
   const [selectedDepartment, setSelectedDepartment] =
