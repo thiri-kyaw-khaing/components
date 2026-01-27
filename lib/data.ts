@@ -1,3 +1,4 @@
+import { Certificate } from "@/app/types/certificate";
 import type { Department } from "@/app/types/department";
 import { Course } from "@/app/types/trainingPlan";
 import { User } from "@/app/types/userManagement";
@@ -374,3 +375,53 @@ export const TrainingCategoryEnum = [
   "Safety",
   "Compliance",
 ] as const;
+
+export const certificates: Certificate[] = [
+  {
+    id: "CERT001",
+    userId: "EMP001",
+    trainingName: "Cybersecurity Best Practices",
+    category: "Technical Skills",
+    type: "Online",
+    image: "/certificates/cert-001.png",
+    description: "Certificate awarded for completing cybersecurity training.",
+
+    status: "Approved",
+    issuedAt: "2024-05-15",
+  },
+  {
+    id: "CERT002",
+    userId: "EMP002",
+    trainingName: "Leadership Excellence",
+    category: "Leadership",
+    type: "Internal",
+    image: "/certificates/cert-002.png",
+    description: "Leadership training for mid-level managers.",
+
+    status: "Pending",
+    issuedAt: "2024-06-10",
+  },
+  {
+    id: "CERT003",
+    userId: "EMP003",
+    trainingName: "Workplace Safety Protocols",
+    category: "Safety",
+    type: "Onsite",
+    image: "/certificates/cert-003.png",
+    description: "Onsite safety and emergency response training.",
+
+    status: "Approved",
+    issuedAt: "2024-04-20",
+  },
+  {
+    id: "CERT004",
+    userId: "EMP004",
+    trainingName: "Environmental Policy Awareness",
+    category: "Environment",
+    type: "External",
+    image: "/certificates/cert-004.png",
+    description: "External training on environmental sustainability policies.",
+    status: "Rejected",
+    issuedAt: "2024-03-18",
+  },
+];

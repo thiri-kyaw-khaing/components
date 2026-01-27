@@ -133,7 +133,7 @@ function TrainingRecords() {
         {/* </div> */}
         {/* Training Record Table */}
         <div className="overflow-x-auto">
-          <div className="">
+          <div className="border rounded-md">
             <TrainingRecordTable />
           </div>
         </div>
