@@ -18,14 +18,14 @@ import { colors } from "@/lib/color";
 
 function TrainingRecordTable() {
   return (
-    <div className="">
-      <Table className="table-fixed w-full rounded-t-md ">
+    <div className="overflow-x-auto">
+      <Table className="min-w-[1200px] table-auto whitespace-nowrap rounded-t-md">
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
           <TableRow>
-            <TableHead className="w-[100px] font-bold">Employee ID</TableHead>
-            <TableHead className="w-[200px] font-bold">Name</TableHead>
-            <TableHead className="w-[250px] font-bold">Contact</TableHead>
+            <TableHead className="w-[200px] font-bold">Course Code</TableHead>
+            <TableHead className="w-[200px] font-bold">Course Name</TableHead>
+            <TableHead className="w-[250px] font-bold">Location</TableHead>
             <TableHead className="text-right w-[300px] font-bold">
               Department
             </TableHead>

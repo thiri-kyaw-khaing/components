@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SidebarProvider>
-          <div className="flex min-h-screen w-full overflow-hidden">
+          <div className="flex min-h-screen w-full">
             <div className="flex-shrink-0">
               <AppSidebar />
             </div>
