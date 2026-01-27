@@ -34,7 +34,7 @@ export default function RootLayout({
             <div className="flex-shrink-0">
               <AppSidebar />
             </div>
-            <main className="flex-1 w-full">{children}</main>
+            <main className="flex-1 min-w-0">{children}</main>
           </div>
         </SidebarProvider>
       </body>
