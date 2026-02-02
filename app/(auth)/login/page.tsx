@@ -23,6 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Contact2Icon, Shield, Users2Icon } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().min(2).max(50),
@@ -53,6 +54,18 @@ function LoginForm() {
         <Card className="w-full max-w-sm">
           <div className="flex flex-col space-y-4">
             <CardContent>
+              {/* Logo + Title */}
+              <div className="flex items-start gap-4 mb-6">
+                <div className="bg-[#006022] w-16 h-16 flex items-center justify-center text-white rounded-lg">
+                  <Shield size={32} />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold mt-2">
+                    Admin(HR) Login
+                  </h2>
+                  <p className="text-gray-500">System administrator login</p>
+                </div>
+              </div>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                   <div className="grid gap-4 mt-4">
