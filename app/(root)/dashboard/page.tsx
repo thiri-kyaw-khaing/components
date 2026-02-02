@@ -1,6 +1,7 @@
 import { UsersIcon } from "lucide-react";
 import PageHeader from "@/components/dashboard/pageHeader";
 import DashboardCard from "@/components/dashboard/DashboardCard";
+import Test from "@/components/dashboard/test";
 
 export default function DashboardPage() {
   return (
@@ -30,6 +31,8 @@ export default function DashboardPage() {
           count={32}
           description="Avg Training Hours"
         />
+
+        <Test />
       </div>
     </div>
   );
