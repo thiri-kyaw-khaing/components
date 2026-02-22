@@ -6,6 +6,7 @@ import FilterGroup from "@/components/training-records/FilterGroup";
 import RangeCalendar from "@/components/training-records/RangeCalendar";
 
 import TrainingRecordTable from "@/components/training-records/TrainingRecordTable";
+import { Button } from "@/components/ui/button";
 
 import { useState } from "react";
 function TrainingRecords() {
@@ -29,6 +30,8 @@ function TrainingRecords() {
         <div className="border rounded-md">
           <TrainingRecordTable />
         </div>
+
+        <Button className="items-center justify-center">Next</Button>
       </div>
     </>
   );

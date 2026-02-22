@@ -9,11 +9,23 @@ import {
 } from "../ui/table";
 import { ojtRecords, users } from "@/lib/data";
 import { colors } from "@/lib/color";
+import { Button } from "../ui/button";
+import { Download } from "lucide-react";
 
 function TrainingRecordTable() {
   return (
     <div className="overflow-x-auto rounded-md border">
-      <Table className="w-full table-fixed  text-sm">
+      <div
+        className="flex justify-end p-2"
+        style={{ backgroundColor: colors.secondary }}
+      >
+        <Button variant="outline" className="gap-2 bg-[#006022] text-white hover:bg-[#005018]">
+          <Download className="w-4 h-4" />
+          Export
+        </Button>
+      </div>
+
+      <Table className="w-full table-fixed text-sm">
         <TableCaption>A list of training plans</TableCaption>
 
         <TableHeader style={{ backgroundColor: colors.secondary }}>

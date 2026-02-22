@@ -23,16 +23,14 @@ function CertificateTable() {
             <TableHead className="w-[200px] font-bold text-left">
               Department
             </TableHead>
-            <TableHead className="text-right w-[200px] font-bold">
-              Training Name
-            </TableHead>
-            <TableHead className="text-right w-[150px] font-bold">
-              Category
+            <TableHead className="w-[200px] font-bold text-left">
+              Division
             </TableHead>
 
-            <TableHead className="text-right w-[150px] font-bold">
-              Upload Date
+            <TableHead className="text-right w-[250px] font-bold">
+              Training Name
             </TableHead>
+
             <TableHead className="text-right w-[150px] font-bold">
               Status
             </TableHead>
@@ -44,14 +42,42 @@ function CertificateTable() {
         <TableBody>
           {certificates.map((certificate) => (
             <TableRow key={certificate.id}>
-              <TableCell className="font-medium">{certificate.id}</TableCell>
-              <TableCell className="text-left">
-                {certificate.trainingName}
+              {/* Employee ID */}
+              <TableCell className="w-[200px] font-medium">
+                {certificate.employeeId || "-"}
+              </TableCell>
+              {/* Employee Name */}
+              <TableCell className="w-[300px]">
+                <div className="max-w-[280px] line-clamp-2 break-words">
+                  {certificate.userName}
+                </div>
+              </TableCell>
+              {/* Department */}
+              <TableCell className="w-[200px] text-left">
+                {certificate.department}
+              </TableCell>
+              {/* Division */}
+              <TableCell className="w-[200px] text-left">
+                <div className="max-w-[180px] line-clamp-2 break-words">
+                  {certificate.division}
+                </div>
               </TableCell>
 
-              <TableCell className="text-left">{certificate.status}</TableCell>
-              <TableCell className="text-right">
-                {certificate.issuedAt}
+              {/* Training Name */}
+              <TableCell className="w-[250px] text-right">
+                <div className="ml-auto line-clamp-2 break-words">
+                  {certificate.trainingName}
+                </div>
+              </TableCell>
+              {/* Status */}
+              <TableCell className="w-[150px] text-right">
+                {certificate.status}
+              </TableCell>
+              {/* Action */}
+              <TableCell className="w-[150px] text-right">
+                <button className="text-blue-600 hover:underline text-sm">
+                  View
+                </button>
               </TableCell>
             </TableRow>
           ))}
