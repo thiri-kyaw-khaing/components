@@ -1,5 +1,6 @@
 import { Certificate } from "@/app/types/certificate";
 import type { Department } from "@/app/types/department";
+import { OjtRecord } from "@/app/types/record";
 import { Course } from "@/app/types/trainingPlan";
 import { User } from "@/app/types/userManagement";
 
@@ -423,5 +424,26 @@ export const certificates: Certificate[] = [
     description: "External training on environmental sustainability policies.",
     status: "Rejected",
     issuedAt: "2024-03-18",
+  },
+];
+
+export const ojtRecords: OjtRecord[] = [
+  {
+    id: 1,
+    staff: users[0],
+    course: courses[0],
+    status: "COMPLETED",
+  },
+  {
+    id: 2,
+    staff: users[1],
+    course: courses[0],
+    status: "IN_PROGRESS",
+  },
+  {
+    id: 3,
+    staff: users[2],
+    course: courses[0],
+    status: "NOT_STARTED",
   },
 ];

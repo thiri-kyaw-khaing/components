@@ -7,50 +7,108 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { users } from "@/lib/data";
+import { ojtRecords, users } from "@/lib/data";
 import { colors } from "@/lib/color";
 
 function TrainingRecordTable() {
   return (
-    <div className="relative w-full">
-      <div className="overflow-x-auto">
-        <Table className="min-w-[1200px] table-auto whitespace-nowrap rounded-t-md">
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
-            <TableRow>
-              <TableHead className="w-[200px] font-bold">Course Code</TableHead>
-              <TableHead className="w-[200px] font-bold">Course Name</TableHead>
-              <TableHead className="w-[250px] font-bold">Location</TableHead>
-              <TableHead className="text-right w-[300px] font-bold">
-                Employee ID
-              </TableHead>
-              <TableHead className="text-right w-[150px] font-bold">
-                Name-Surname
-              </TableHead>
+    <div className="overflow-x-auto rounded-md border">
+      <Table className="w-full table-fixed  text-sm">
+        <TableCaption>A list of training plans</TableCaption>
 
-              <TableHead className="text-right w-[150px] font-bold">
-                Actions
-              </TableHead>
-              <TableHead className="text-right w-[150px] font-bold">
-                Actions
-              </TableHead>
+        <TableHeader style={{ backgroundColor: colors.secondary }}>
+          <TableRow>
+            <TableHead className="w-[250px] font-semibold">
+              Training Plan
+            </TableHead>
+            <TableHead className="w-[150px] font-semibold">Location</TableHead>
+            <TableHead className="w-[140px] font-semibold">
+              Cost Per Person
+            </TableHead>
+            <TableHead className="w-[140px] font-semibold">
+              Budget Code
+            </TableHead>
+            <TableHead className="w-[120px] font-semibold">
+              Employee ID
+            </TableHead>
+            <TableHead className="w-[160px] font-semibold">
+              Name-Surname
+            </TableHead>
+            <TableHead className="w-[140px] font-semibold">Position</TableHead>
+            <TableHead className="w-[140px] font-semibold">
+              Department
+            </TableHead>
+            <TableHead className="w-[180px] font-semibold">Division</TableHead>
+            <TableHead className="w-[120px] font-semibold">Status</TableHead>
+            <TableHead className="w-[160px] font-semibold">
+              Pre/Post Test Score
+            </TableHead>
+            <TableHead className="w-[120px] font-semibold">
+              Evaluation
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {ojtRecords.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>
+                <div className="max-w-[180px] line-clamp-2 break-words">
+                  {user.course.name}
+                </div>
+              </TableCell>
+
+              <TableCell>
+                <div className="max-w-[140px] line-clamp-2 break-words">
+                  {user.course.location}
+                </div>
+              </TableCell>
+
+              <TableCell className="text-center">
+                {user.course.costPerPerson}
+              </TableCell>
+
+              <TableCell>
+                <div className="max-w-[140px] line-clamp-2 break-words">
+                  {user.course.budgetCode}
+                </div>
+              </TableCell>
+
+              <TableCell>{user.staff.id}</TableCell>
+
+              <TableCell>
+                <div className="max-w-[160px] line-clamp-2 break-words">
+                  {user.staff.name}
+                </div>
+              </TableCell>
+
+              <TableCell>
+                <div className="max-w-[140px] line-clamp-2 break-words">
+                  {user.staff.position}
+                </div>
+              </TableCell>
+
+              <TableCell className="text-center">
+                <div className="max-w-[140px] line-clamp-2 break-words">
+                  {user.staff.department?.name}
+                </div>
+              </TableCell>
+
+              <TableCell>
+                <div className="max-w-[180px] line-clamp-2 break-words">
+                  {user.staff.department?.division}
+                </div>
+              </TableCell>
+
+              <TableCell>{user.status}</TableCell>
+
+              <TableCell className="text-center">85</TableCell>
+
+              <TableCell>Excellent</TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>hi</TableCell>
-                <TableCell className="text-right">
-                  {user.department.name}
-                </TableCell>
-                <TableCell className="text-right">{user.role}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
