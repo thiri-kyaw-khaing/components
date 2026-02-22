@@ -22,6 +22,15 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { SelectLabel } from "@radix-ui/react-select";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -64,19 +73,43 @@ function DialogForm() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="division"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Add Division Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Division Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {/* Filter */}
+          {/* Filter */}
+          <div className="space-y-2">
+            <Label>Select Division</Label>
+            <Select>
+              <SelectTrigger className="w-full border-[#006022]">
+                <SelectValue placeholder="Select Division" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Social Enterprise">
+                    Social Enterprise
+                  </SelectItem>
+
+                  <SelectItem value="Development Project">
+                    Development Project
+                  </SelectItem>
+
+                  <SelectItem value="Nature-based Solution and Special Project">
+                    Nature-based Solution and Special Project
+                  </SelectItem>
+
+                  <SelectItem value="Sustainability">Sustainability</SelectItem>
+
+                  <SelectItem value="Accounting and Finance">
+                    Accounting and Finance
+                  </SelectItem>
+
+                  <SelectItem value="Administration">Administration</SelectItem>
+
+                  <SelectItem value="Other (under CEO)">
+                    Other (under CEO)
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <DialogFooter className="mt-4">

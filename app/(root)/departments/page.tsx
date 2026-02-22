@@ -15,8 +15,6 @@ import EditDepartmentDialog from "@/components/department/EditDepartmentDialog";
 function DepartmentPage() {
   const [selectedDepartment, setSelectedDepartment] =
     useState<Department | null>(null);
-  const [mode, setMode] = useState<"edit" | "delete" | null>(null);
-
   const [activeDialog, setActiveDialog] = useState<
     "staff" | "edit" | "delete" | null
   >(null);

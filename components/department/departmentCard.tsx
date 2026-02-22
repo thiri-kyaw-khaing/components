@@ -2,25 +2,15 @@ import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Edit2Icon,
-  Edit3Icon,
-  EditIcon,
-  Trash2Icon,
-  Users,
-  UsersIcon,
-} from "lucide-react";
+import { Edit2Icon, Trash2Icon, UsersIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { Department } from "@/app/types/department";
-import { useState } from "react";
-import { set } from "zod";
 
 type DepartmentCardProps = {
   department: Department;
