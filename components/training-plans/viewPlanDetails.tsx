@@ -29,6 +29,7 @@ function ViewPlanForm({ plan }: { plan: Course }) {
         <Detail label="Total Cost" value={`${plan.totalCost} Baht`} />
         <Detail label="Budget Code" value={plan.budgetCode} />
         <Detail label="Location" value={plan.location} />
+        <Detail label="Cost Per Person" value={`${plan.costPerPerson} Baht`} />
       </div>
       <Detail
         label="Content of Training Plan"

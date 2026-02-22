@@ -1,13 +1,5 @@
 import ButtonDialog from "@/components/dashboard/buttonDialog";
 import PageHeader from "@/components/dashboard/pageHeader";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import UserForm from "@/components/userManagement/UserForm";
 import UserTable from "@/components/userManagement/userTable";
 import { Search, User } from "lucide-react";
@@ -16,7 +8,7 @@ import { Input } from "@/components/ui/input";
 function UserManagement() {
   return (
     <>
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="min-h-screen space-y-4 m-2">
         <PageHeader
           title="User Management"
           subtitle="Manage users, assign roles, and view activity"
@@ -27,9 +19,10 @@ function UserManagement() {
           }
         />
 
-        <div className="flex items-center gap-4 my-6 justify-between">
+        <div className="flex items-center gap-4 my-4 justify-between">
           {/* Search */}
-          <div className="relative w-[70%]">
+          {/* <div className="relative w-[70%]"> */}
+          <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Search by name, email, or employee ID..."
@@ -38,7 +31,7 @@ function UserManagement() {
           </div>
 
           {/* Filter */}
-          <Select>
+          {/* <Select>
             <SelectTrigger className="w-[180px] border-[#006022]">
               <SelectValue placeholder="Suspended" />
             </SelectTrigger>
@@ -47,17 +40,16 @@ function UserManagement() {
               <SelectItem value="inactive">Inactive</SelectItem>
               <SelectItem value="suspended">Suspended</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
 
           {/* Button */}
-          <Button className="bg-[#006022] hover:bg-[#005018] px-8">
+          {/* <Button className="bg-[#006022] hover:bg-[#005018] px-8">
             Search
-          </Button>
+          </Button> */}
         </div>
-      </div>
-
-      <div className="p-4">
-        <UserTable />
+        <div className="">
+          <UserTable />
+        </div>
       </div>
     </>
   );

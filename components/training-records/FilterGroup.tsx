@@ -5,6 +5,8 @@ import { SearchIcon } from "lucide-react";
 import StatusSelect from "./StatusSelect";
 import CategorySelect from "./CategorySelect";
 import DepartmentSelect from "./DepartmentSelect";
+import CategoryMultipleSelect from "./categoryMultipleSelect";
+import DepartmentMultipleSelect from "./departmentMultipleSelect";
 
 function FilterGroup({ children }: { children?: React.ReactNode }) {
   const [department, setDepartment] = useState("");
@@ -15,9 +17,10 @@ function FilterGroup({ children }: { children?: React.ReactNode }) {
       <div className="border rounded-md p-4 space-y-4">
         <h1>Filter Options</h1>
         <div className="flex flex-wrap gap-4">
-          <DepartmentSelect value={department} onChange={setDepartment} />
+          {/* <DepartmentSelect value={department} onChange={setDepartment} /> */}
+          <DepartmentMultipleSelect />
           {/* Category Filter */}
-          <CategorySelect value={category} onChange={setCategory} />
+          <CategoryMultipleSelect />
           {/* Status Filter */}
           <StatusSelect value={status} onChange={setStatus} />
         </div>

@@ -151,7 +151,7 @@ function UserForm() {
         </div>
 
         <div>
-          <div className="flex flex-col gap-4 mb-4">
+          <div className="grid grid-cols-2 gap-4 mb-4">
             <FormField
               control={form.control}
               name="status"
@@ -173,6 +173,19 @@ function UserForm() {
                     </SelectContent>
                   </Select>
 
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., *******" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

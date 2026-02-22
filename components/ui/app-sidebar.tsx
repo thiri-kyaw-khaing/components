@@ -48,11 +48,7 @@ const items = [
     url: "/user-management",
     icon: User,
   },
-  {
-    title: "Training Categories",
-    url: "/training-categories",
-    icon: Search,
-  },
+
   {
     title: "Calendar",
     url: "/calendar",

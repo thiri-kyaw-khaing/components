@@ -6,7 +6,7 @@ import CertificateTable from "@/components/uploaded-certificates/CertificateTabl
 function UploadedCertificates() {
   return (
     <>
-      <div className="m-6 space-y-4">
+      <div className="min-h-screen space-y-4 m-2">
         <PageHeader
           title="Uploaded Certificates"
           subtitle="Review and approve external training certificates uploaded by staff"

@@ -46,9 +46,15 @@ function UserTable() {
                 Department
               </TableHead>
               <TableHead className="text-right w-[150px] font-bold">
+                Dept ID
+              </TableHead>
+              <TableHead className="text-right w-[150px] font-bold">
                 Role
               </TableHead>
 
+              <TableHead className="text-right w-[150px] font-bold">
+                Status
+              </TableHead>
               <TableHead className="text-right w-[150px] font-bold">
                 Actions
               </TableHead>
@@ -65,7 +71,12 @@ function UserTable() {
                 <TableCell className="text-right">
                   {user.department.name}
                 </TableCell>
+                <TableCell className="text-right">
+                  {user.department.id}
+                </TableCell>
                 <TableCell className="text-right">{user.role}</TableCell>
+                <TableCell className="text-right">{user.status}</TableCell>
+
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

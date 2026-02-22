@@ -20,7 +20,7 @@ function DepartmentPage() {
   >(null);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen space-y-4 m-2">
       <PageHeader
         title="Department Management"
         subtitle="Manage departments, assign managers, and view staff"
@@ -42,7 +42,7 @@ function DepartmentPage() {
         />
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-10">
+      <div className="mt-6 grid grid-cols-3 gap-10">
         {departments.map((dept) => (
           <DepartmentCard
             key={dept.id}
