@@ -11,7 +11,7 @@ function UploadedCertificates() {
           title="Uploaded Certificates"
           subtitle="Review and approve external training certificates uploaded by staff"
         />
-        <FilterGroupClient />
+
         <div className="border rounded-md">
           <CertificateTable />
         </div>

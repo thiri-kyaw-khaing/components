@@ -1,6 +1,4 @@
 import UserDetails from "@/components/userManagement/UserDetails";
-import { User } from "@/app/types/userManagement";
-import { users } from "@/lib/data";
 
 type Props = {
   params: {
