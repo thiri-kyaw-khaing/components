@@ -22,7 +22,7 @@ function DashboardCard({
   description,
 }: DashboardCardProps) {
   return (
-    <Card className="bg-[#E8F7EC] min-w-[350px]">
+    <Card className="bg-[#E8F7EC] w-full">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="bg-[#006022] w-16 h-16 flex items-center justify-center text-white rounded-md">
           {icon}

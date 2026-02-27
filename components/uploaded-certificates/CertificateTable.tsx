@@ -225,7 +225,7 @@ function CertificateTable() {
 
           <DialogFooter className="flex flex-col sm:flex-row gap-2">
             <Button
-              className="bg-green-600 text-white hover:bg-green-700"
+              className="bg-[#006022] text-white hover:bg-[#005018]"
               onClick={() => handleUpdateStatus("Approved")}
               disabled={selectedCertificate?.status === "Approved"}
             >

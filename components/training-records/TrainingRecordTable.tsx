@@ -19,7 +19,10 @@ function TrainingRecordTable() {
         className="flex justify-end p-2"
         style={{ backgroundColor: colors.secondary }}
       >
-        <Button variant="outline" className="gap-2 bg-[#006022] text-white hover:bg-[#005018]">
+        <Button
+          variant="outline"
+          className="gap-2 bg-[#006022] text-white hover:bg-[#005018]"
+        >
           <Download className="w-4 h-4" />
           Export
         </Button>
@@ -53,7 +56,10 @@ function TrainingRecordTable() {
             <TableHead className="w-[180px] font-semibold">Division</TableHead>
             <TableHead className="w-[120px] font-semibold">Status</TableHead>
             <TableHead className="w-[160px] font-semibold">
-              Pre/Post Test Score
+              Pre Test Score
+            </TableHead>
+            <TableHead className="w-[160px] font-semibold">
+              Post Test Score
             </TableHead>
             <TableHead className="w-[120px] font-semibold">
               Evaluation
@@ -114,6 +120,7 @@ function TrainingRecordTable() {
 
               <TableCell>{user.status}</TableCell>
 
+              <TableCell className="text-center">85</TableCell>
               <TableCell className="text-center">85</TableCell>
 
               <TableCell>Excellent</TableCell>

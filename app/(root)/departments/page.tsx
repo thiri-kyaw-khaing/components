@@ -42,7 +42,7 @@ function DepartmentPage() {
         />
       </div>
 
-      <div className="mt-6 grid grid-cols-3 gap-10">
+      <div className="mt-6 grid lg:grid-cols-3 gap-4">
         {departments.map((dept) => (
           <DepartmentCard
             key={dept.id}

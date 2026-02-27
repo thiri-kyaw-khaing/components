@@ -49,11 +49,11 @@ const items = [
     icon: User,
   },
 
-  {
-    title: "Calendar",
-    url: "/calendar",
-    icon: Calendar,
-  },
+  // {
+  //   title: "Calendar",
+  //   url: "/calendar",
+  //   icon: Calendar,
+  // },
   {
     title: "Training Plans",
     url: "/training-plans",
@@ -75,7 +75,7 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="none">
+    <Sidebar collapsible="offcanvas">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
