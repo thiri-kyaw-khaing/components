@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
 import { Button } from "@/components/ui/button";
+import React, { useActionState, useState } from "react";
+
 import {
   Form,
   FormControl,
@@ -11,26 +12,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
 import { z } from "zod";
 import {
   DialogClose,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { SelectLabel } from "@radix-ui/react-select";
+import { CreateDepartmentAction, State } from "@/lib/actions/createDepartment";
+import { Field, FieldGroup, FieldLabel } from "../ui/field";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -38,95 +29,95 @@ const formSchema = z.object({
 });
 
 function DialogForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      division: "",
-    },
-  });
+  const initialState: State = { errors: {}, message: null };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const [state, formAction, pending] = useActionState(
+    CreateDepartmentAction,
+    initialState,
+  );
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  //   defaultValues: {
+  //     name: "",
+  //     division: "",
+  //   },
+  // });
+
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   // Do something with the form values.
+  //   // ✅ This will be type-safe and validated.
+  //   console.log("Form submitted with values:", values);
+  // }
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <DialogHeader>
-          <DialogTitle>Add New Department</DialogTitle>
-        </DialogHeader>
+    <form action={formAction}>
+      <DialogHeader>
+        <DialogTitle>Add New Department</DialogTitle>
+      </DialogHeader>
 
-        <div className="grid gap-4 mt-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Add Department Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Department Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      <div className="grid gap-4 mt-4">
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="department">Add Department Name</FieldLabel>
+            <Input
+              id="department"
+              type="text"
+              placeholder="Enter Department Name"
+              name="department"
+              required
+            />
+          </Field>
+        </FieldGroup>
 
-          {/* Filter */}
-          {/* Filter */}
-          <div className="space-y-2">
-            <Label>Select Division</Label>
-            <Select>
-              <SelectTrigger className="w-full border-[#006022]">
-                <SelectValue placeholder="Select Division" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="Social Enterprise">
-                    Social Enterprise
-                  </SelectItem>
+        {/* Filter */}
+        {/* Filter */}
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="division">Select Division</FieldLabel>
 
-                  <SelectItem value="Development Project">
-                    Development Project
-                  </SelectItem>
+            <select
+              id="division"
+              name="division"
+              required
+              className="w-full border border-[#006022] rounded-md px-3 py-2"
+            >
+              <option value="">Select Division</option>
 
-                  <SelectItem value="Nature-based Solution and Special Project">
-                    Nature-based Solution and Special Project
-                  </SelectItem>
+              <option value="Social Enterprise">Social Enterprise</option>
 
-                  <SelectItem value="Sustainability">Sustainability</SelectItem>
+              <option value="Development Project">Development Project</option>
 
-                  <SelectItem value="Accounting and Finance">
-                    Accounting and Finance
-                  </SelectItem>
+              <option value="Nature-based Solution and Special Project">
+                Nature-based Solution and Special Project
+              </option>
 
-                  <SelectItem value="Administration">Administration</SelectItem>
+              <option value="Sustainability">Sustainability</option>
 
-                  <SelectItem value="Other (under CEO)">
-                    Other (under CEO)
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+              <option value="Accounting and Finance">
+                Accounting and Finance
+              </option>
 
-        <DialogFooter className="mt-4">
-          <DialogClose asChild>
-            <Button type="button" variant="outline">
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button
-            type="submit"
-            className="bg-[#006022] text-white hover:bg-[#005018]"
-          >
-            Add Department
+              <option value="Administration">Administration</option>
+
+              <option value="Other (under CEO)">Other (under CEO)</option>
+            </select>
+          </Field>
+        </FieldGroup>
+      </div>
+
+      <DialogFooter className="mt-4">
+        <DialogClose asChild>
+          <Button type="button" variant="outline">
+            Cancel
           </Button>
-        </DialogFooter>
-      </form>
-    </Form>
+        </DialogClose>
+        <Button
+          type="submit"
+          className="bg-[#006022] text-white hover:bg-[#005018]"
+        >
+          Add Department
+        </Button>
+      </DialogFooter>
+    </form>
   );
 }
 

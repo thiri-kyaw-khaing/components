@@ -1,17 +1,16 @@
 "use client";
-import React from "react";
+import React, { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldDescription,
+  FieldSet,
+  FieldLegend,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
 import { z } from "zod";
 import Logo from "@/components/login/logo";
 import {
@@ -24,6 +23,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Contact2Icon, Shield, Users2Icon } from "lucide-react";
+import { LoginAction, State } from "@/lib/actions/login";
 
 const formSchema = z.object({
   email: z.string().min(2).max(50),
@@ -31,17 +31,23 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  const initialState: State = { errors: {}, message: null };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const [state, formAction, pending] = useActionState(
+    LoginAction,
+    initialState,
+  );
+  // const form = useForm<z.infer<typeof formSchema>>({
+  //   resolver: zodResolver(formSchema),
+  //   defaultValues: {
+  //     email: "",
+  //     password: "",
+  //   },
+  // });
+
+  // function onSubmit(values: z.infer<typeof formSchema>) {
+  //   console.log(values);
+  // }
   return (
     <>
       <div className="flex flex-col items-center gap-6 w-full max-w-sm">
@@ -66,48 +72,53 @@ function LoginForm() {
                   <p className="text-gray-500">System administrator login</p>
                 </div>
               </div>
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                  <div className="grid gap-4 mt-4">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email Address</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter Email" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
 
-                  <div className="grid gap-4 mt-4">
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Password</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter Password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+              <form action={formAction} className="w-full">
+                <FieldGroup>
+                  <FieldSet>
+                    {/* <FieldLegend>Login Information</FieldLegend>
+                <FieldDescription>
+                  Please enter your credentials to access the system.
+                </FieldDescription> */}
 
-                  <Button
-                    type="submit"
-                    className="bg-[#006022] text-white hover:bg-[#005018] mt-6 w-full"
-                  >
-                    Login
-                  </Button>
-                </form>
-              </Form>
+                    <FieldGroup className="mt-4">
+                      {/* Email */}
+                      <Field>
+                        <FieldLabel htmlFor="email">Email Address</FieldLabel>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="Enter Email"
+                          name="email"
+                          required
+                        />
+                      </Field>
+
+                      {/* Password */}
+                      <Field>
+                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                        <Input
+                          id="password"
+                          type="password"
+                          placeholder="Enter Password"
+                          name="password"
+                          required
+                        />
+                      </Field>
+                    </FieldGroup>
+                  </FieldSet>
+
+                  {/* Button */}
+                  <Field orientation="horizontal" className="">
+                    <Button
+                      type="submit"
+                      className="bg-[#006022] text-white hover:bg-[#005018] w-full"
+                    >
+                      Login
+                    </Button>
+                  </Field>
+                </FieldGroup>
+              </form>
             </CardContent>
           </div>
         </Card>

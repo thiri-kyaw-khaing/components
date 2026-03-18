@@ -1,10 +1,8 @@
 "use client";
-import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,7 +14,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   DialogClose,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -36,6 +33,7 @@ const formSchema = z.object({
   phone: z.string().min(6, "Phone is required"),
   department: z.string().min(1, "Department is required"),
   role: z.string().min(1, "Role is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
   status: z.enum(["active", "inactive", "suspended"]),
 });
 
@@ -49,6 +47,7 @@ function UserForm() {
       phone: "",
       department: "",
       role: "",
+      password: "",
       status: "active",
     },
   });
@@ -179,7 +178,7 @@ function UserForm() {
             />
             <FormField
               control={form.control}
-              name="role"
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
