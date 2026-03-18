@@ -22,7 +22,7 @@ function StaffDialog({ department, onClose }: Props) {
         <DialogHeader>
           <DialogTitle>{department?.name} - Staff List</DialogTitle>
           <DialogDescription>
-            Total Staff : {department?.staff.length ?? 0}
+            Total Staff : {department?.totalStaff ?? 0}
           </DialogDescription>
         </DialogHeader>
 

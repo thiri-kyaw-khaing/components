@@ -1,15 +1,25 @@
 const API = "http://localhost:8080/api/v1/admin/departments";
 
+import { cookies } from "next/headers";
+
 export async function getDepartments() {
-  const res = await fetch(API, {
-    next: { tags: ["departments"] },
-    credentials: "include",
+  const cookieStore = await cookies(); //  await
+
+  // build cookie string manually
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
+
+  const res = await fetch("http://localhost:8080/api/v1/admin/departments", {
+    method: "GET",
+    credentials: "include", //include credentials
     headers: {
-      "Content-Type": "application/json",
+      Cookie: cookieHeader, // correct now
     },
   });
+  console.log("Response:", res.status); //log status for debugging
 
-  console.log("Fetching departments from API:", API, res);
   if (!res.ok) {
     throw new Error("Failed to fetch departments");
   }

@@ -55,16 +55,13 @@ function DepartmentCard({
         <p className="text-gray-600 text-sm ">
           {""}Division: {department.division}
         </p>
-        <p className="text-gray-600 text-sm ">
-          {" "}
-          Manager: {department.manager.name}
-        </p>
+        <p className="text-gray-600 text-sm "> Manager: {department.name}</p>
         <Separator className="w-24 self-center mt-4" />
       </CardContent>
 
       <CardFooter className="flex flex-col items-start gap-2">
         <p className="text-sm text-muted-foreground">Staff</p>
-        <h4 className="">{department.staff.length}</h4>
+        <h4 className="">{department.totalStaff}</h4>
         <Button
           variant="outline"
           className="w-full text-[#006022] border-[#006022]"
