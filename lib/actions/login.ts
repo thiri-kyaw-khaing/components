@@ -113,17 +113,20 @@ export async function LoginAction(prevState: any, formData: FormData) {
   const setCookie = response.headers.get("set-cookie");
 
   if (setCookie) {
-    // 🔥 extract access_token manually
-    const match = setCookie.match(/access_token=([^;]+)/);
+    const accessMatch = setCookie.match(/access_token=([^;]+)/);
+    const refreshMatch = setCookie.match(/refresh_token=([^;]+)/);
 
-    if (match) {
-      const token = match[1];
+    const cookieStore = await cookies();
 
-      // ✅ store in Next.js cookie (browser will get it)
-      (
-        await // ✅ store in Next.js cookie (browser will get it)
-        cookies()
-      ).set("access_token", token, {
+    if (accessMatch) {
+      cookieStore.set("access_token", accessMatch[1], {
+        httpOnly: true,
+        path: "/",
+      });
+    }
+
+    if (refreshMatch) {
+      cookieStore.set("refresh_token", refreshMatch[1], {
         httpOnly: true,
         path: "/",
       });

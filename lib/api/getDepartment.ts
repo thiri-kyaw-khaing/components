@@ -27,10 +27,25 @@ export async function getDepartments() {
   return res.json();
 }
 
-export async function getDepartment(id: string) {
-  const res = await fetch(`${API}/${id}`, {
-    next: { tags: ["departments"] },
-  });
+export async function getDepartmentById(id: string) {
+  const cookieStore = await cookies();
+
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
+
+  const res = await fetch(
+    `http://localhost:8080/api/v1/admin/departments/${id}`,
+    {
+      method: "GET",
+      credentials: "include", // ✅ send cookies
+      headers: {
+        Cookie: cookieHeader,
+      },
+      next: { tags: ["departments"] },
+    },
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch department");

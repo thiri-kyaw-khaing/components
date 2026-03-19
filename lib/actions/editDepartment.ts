@@ -23,7 +23,8 @@ const FormSchema = z.object({
     .min(2, "Division name must be at least 2 characters!"),
 });
 
-export async function CreateDepartmentAction(
+export async function EditDepartmentAction(
+  id: number,
   prevState: State | void,
   formData: FormData,
 ): Promise<State | void> {
@@ -43,6 +44,11 @@ export async function CreateDepartmentAction(
   console.log("Received form data:", {
     validatedFields,
   });
+  console.log("Department ID:", id);
+  console.log("Form Data:", {
+    name: formData.get("name"),
+    division: formData.get("division"),
+  });
 
   if (!validatedFields.success) {
     const flattened = z.flattenError(validatedFields.error);
@@ -57,8 +63,8 @@ export async function CreateDepartmentAction(
   let isCreated = false;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/departments`, {
-      method: "POST",
+    const response = await fetch(`${API_BASE_URL}/admin/departments/${id}`, {
+      method: "PUT",
       credentials: "include",
       headers: { "Content-Type": "application/json", Cookie: cookieHeader },
       body: JSON.stringify({ name, division }),

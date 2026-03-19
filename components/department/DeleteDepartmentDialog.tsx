@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useActionState } from "react";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { DialogHeader } from "../ui/dialog";
 import { DialogTitle } from "../ui/dialog";
 import { Department } from "@/app/types/department";
+import { DeleteDepartmentAction, State } from "@/lib/actions/deleteDepartment";
 
 type props = {
   department: Department | null;
@@ -11,6 +12,16 @@ type props = {
   onConfirm: () => void;
 };
 function DeleteDepartmentDialog({ department, onCancel, onConfirm }: props) {
+  const initialState: State = {
+    errors: {},
+    message: null,
+  };
+
+  const [state, formAction, pending] = useActionState(
+    DeleteDepartmentAction.bind(null, Number(department?.id)),
+    initialState,
+  );
+
   return (
     <div>
       <Dialog open={true} onOpenChange={(o) => !o && onCancel()}>
@@ -30,9 +41,19 @@ function DeleteDepartmentDialog({ department, onCancel, onConfirm }: props) {
             <Button variant="outline" onClick={onCancel}>
               Cancel
             </Button>
-            <Button variant="destructive" onClick={onConfirm}>
+            <form action={formAction}>
+              <Button
+                type="submit"
+                variant="destructive"
+                disabled={pending}
+                className="bg-[#006022] text-white"
+              >
+                {pending ? "Deleting..." : "Delete"}
+              </Button>
+            </form>
+            {/* <Button variant="destructive" onClick={onConfirm}>
               Delete
-            </Button>
+            </Button> */}
           </div>
         </DialogContent>
       </Dialog>

@@ -2,6 +2,7 @@ import {
   Card,
   CardAction,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -43,7 +44,9 @@ function DepartmentCard({
           <Button
             variant="ghost"
             size="icon-sm"
-            onClick={() => onDelete(department)}
+            onClick={() => {
+              onDelete(department);
+            }}
           >
             <Trash2Icon className="text-red-500" />
           </Button>

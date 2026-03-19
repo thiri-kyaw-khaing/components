@@ -12,26 +12,22 @@ export type State = {
   message?: string | null;
 };
 
-const FormSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Department name must be at least 2 characters!"),
-  division: z
-    .string()
-    .trim()
-    .min(2, "Division name must be at least 2 characters!"),
-});
+// const FormSchema = z.object({
+//   name: z
+//     .string()
+//     .trim()
+//     .min(2, "Department name must be at least 2 characters!"),
+//   division: z
+//     .string()
+//     .trim()
+//     .min(2, "Division name must be at least 2 characters!"),
+// });
 
-export async function CreateDepartmentAction(
+export async function DeleteDepartmentAction(
+  id: number,
   prevState: State | void,
   formData: FormData,
 ): Promise<State | void> {
-  const validatedFields = FormSchema.safeParse({
-    name: formData.get("name"),
-    division: formData.get("division"),
-  });
-
   const cookieStore = await cookies(); //  await
 
   // build cookie string manually
@@ -41,27 +37,26 @@ export async function CreateDepartmentAction(
     .join("; ");
 
   console.log("Received form data:", {
-    validatedFields,
+    id,
   });
 
-  if (!validatedFields.success) {
-    const flattened = z.flattenError(validatedFields.error);
+  //   if (!validatedFields.success) {
+  //     const flattened = z.flattenError(validatedFields.error);
 
-    return {
-      errors: flattened.fieldErrors,
-      message: "Failed to create department. Please check your input.",
-    };
-  }
+  //     return {
+  //       errors: flattened.fieldErrors,
+  //       message: "Failed to create department. Please check your input.",
+  //     };
+  //   }
 
-  const { name, division } = validatedFields.data;
-  let isCreated = false;
+  //   const { name, division } = validatedFields.data;
+  let isDeleted = false;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/departments`, {
-      method: "POST",
+    const response = await fetch(`${API_BASE_URL}/admin/departments/${id}`, {
+      method: "DELETE",
       credentials: "include",
       headers: { "Content-Type": "application/json", Cookie: cookieHeader },
-      body: JSON.stringify({ name, division }),
       cache: "no-store",
     });
 
@@ -71,18 +66,18 @@ export async function CreateDepartmentAction(
       return {
         message:
           errorData?.message ||
-          "Failed to create department. Please try again.",
+          "Failed to delete department. Please try again.",
       };
     }
 
-    isCreated = true;
+    isDeleted = true;
   } catch {
     return {
       message: "Server error. Please try again later.",
     };
   }
 
-  if (isCreated) {
+  if (isDeleted) {
     redirect("/departments");
   }
 }

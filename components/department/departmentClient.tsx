@@ -8,11 +8,13 @@ import { Search, UsersIcon } from "lucide-react";
 import { departments } from "@/lib/data";
 import { Department } from "@/app/types/department";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import StaffDialog from "@/components/department/staffDialog";
 import DeleteDepartmentDialog from "@/components/department/DeleteDepartmentDialog";
 import EditDepartmentDialog from "@/components/department/EditDepartmentDialog";
 
 function DepartmentPage({ departments }: { departments: Department[] }) {
+  const router = useRouter();
   const [selectedDepartment, setSelectedDepartment] =
     useState<Department | null>(null);
   const [activeDialog, setActiveDialog] = useState<
@@ -53,8 +55,9 @@ function DepartmentPage({ departments }: { departments: Department[] }) {
             key={dept.id}
             department={dept}
             onViewStaff={(department) => {
-              setSelectedDepartment(department);
-              setActiveDialog("staff");
+              // setSelectedDepartment(department);
+              // setActiveDialog("staff");
+              router.push(`/departments/${department.id}`); // navigate to staff page
             }}
             onEdit={(department) => {
               setSelectedDepartment(department);
@@ -69,7 +72,7 @@ function DepartmentPage({ departments }: { departments: Department[] }) {
       </div>
 
       {/* STAFF */}
-      {activeDialog === "staff" && selectedDepartment && (
+      {/* {activeDialog === "staff" && selectedDepartment && (
         <StaffDialog
           department={selectedDepartment}
           onClose={() => {
@@ -77,7 +80,7 @@ function DepartmentPage({ departments }: { departments: Department[] }) {
             setSelectedDepartment(null);
           }}
         />
-      )}
+      )} */}
 
       {/* EDIT */}
       {activeDialog === "edit" && selectedDepartment && (

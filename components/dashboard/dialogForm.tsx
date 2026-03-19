@@ -23,10 +23,10 @@ import {
 import { CreateDepartmentAction, State } from "@/lib/actions/createDepartment";
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 
-const formSchema = z.object({
-  name: z.string().min(2).max(50),
-  division: z.string().min(2).max(50),
-});
+// const formSchema = z.object({
+//   name: z.string().min(2).max(50),
+//   division: z.string().min(2).max(50),
+// });
 
 function DialogForm() {
   const initialState: State = { errors: {}, message: null };
@@ -57,12 +57,12 @@ function DialogForm() {
       <div className="grid gap-4 mt-4">
         <FieldGroup>
           <Field>
-            <FieldLabel htmlFor="department">Add Department Name</FieldLabel>
+            <FieldLabel htmlFor="name">Add Department Name</FieldLabel>
             <Input
-              id="department"
+              id="name"
               type="text"
               placeholder="Enter Department Name"
-              name="department"
+              name="name"
               required
             />
           </Field>
