@@ -26,7 +26,6 @@ function StaffTable({ staff }: StaffTableProps) {
             <TableHead className="font-bold">Email</TableHead>
             <TableHead className="font-bold">Phone</TableHead>
             <TableHead className="font-bold">Department ID</TableHead>
-            <TableHead className="font-bold">Department</TableHead>
             <TableHead className="font-bold">Role</TableHead>
 
             <TableHead className="font-bold">Status</TableHead>
@@ -55,7 +54,6 @@ function StaffTable({ staff }: StaffTableProps) {
                 <TableCell>{member.email}</TableCell>
                 <TableCell>{member.phone}</TableCell>
                 <TableCell>{member.departmentId}</TableCell>
-                <TableCell>{member.department}</TableCell>
                 <TableCell>{member.role}</TableCell>
                 <TableCell>{member.status}</TableCell>
                 <TableCell>{member.position}</TableCell>

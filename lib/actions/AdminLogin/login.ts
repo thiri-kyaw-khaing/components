@@ -74,12 +74,24 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { z } from "zod";
+
+export type State = {
+  errors?: {
+    email?: string[];
+    password?: string[];
+  };
+  message?: string | null;
+};
+
 const FormSchema = z.object({
   email: z.string().trim().email("Invalid email address!"),
   password: z.string().trim().min(6, "Password must be at least 6 characters!"),
 });
 
-export async function LoginAction(prevState: any, formData: FormData) {
+export async function LoginAction(
+  prevState: State | void,
+  formData: FormData,
+): Promise<State | void> {
   const validatedFields = FormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),

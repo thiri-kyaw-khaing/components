@@ -23,10 +23,9 @@ import { Dialog, DialogContent } from "../ui/dialog";
 import EditUserForm from "./EditUserForm";
 import { User } from "@/app/types/userManagement";
 import { useRouter } from "next/navigation";
-import { users } from "@/lib/data";
 import { DeleteUserDialog } from "./DeleteUserDialog";
 
-function UserTable() {
+function UserTable({ users }: { users: User[] }) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -34,28 +33,27 @@ function UserTable() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   return (
     <>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto border rounded-md">
         <Table className="table-fixed w-full rounded-t-md ">
-          <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
             <TableRow>
-              <TableHead className="w-[100px] font-bold">Employee ID</TableHead>
-              <TableHead className="w-[200px] font-bold">Name</TableHead>
-              <TableHead className="w-[250px] font-bold">Contact</TableHead>
-              <TableHead className="text-right w-[300px] font-bold">
+              <TableHead className="w-50 font-bold">Employee ID</TableHead>
+              <TableHead className="w-50 font-bold">Name</TableHead>
+              <TableHead className="w-50 font-bold">Contact</TableHead>
+              <TableHead className="text-left w-50 font-bold">
                 Department
               </TableHead>
-              <TableHead className="text-right w-[150px] font-bold">
+              <TableHead className="text-left w-37.5 font-bold">
                 Dept ID
               </TableHead>
-              <TableHead className="text-right w-[150px] font-bold">
+              <TableHead className="text-left w-50 font-bold">
                 Role
               </TableHead>
 
-              <TableHead className="text-right w-[150px] font-bold">
+              <TableHead className="text-left w-37.5 font-bold">
                 Status
               </TableHead>
-              <TableHead className="text-right w-[150px] font-bold">
+              <TableHead className="text-right w-37.5 font-bold">
                 Actions
               </TableHead>
             </TableRow>
@@ -63,19 +61,19 @@ function UserTable() {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.id}</TableCell>
-                <TableCell>{user.name}</TableCell>
+                <TableCell className="font-medium">{user.employeeId}</TableCell>
+                <TableCell>{user.fullName}</TableCell>
                 <TableCell>
                   <ContactInfo email={user.email} phone={user.phone} />
                 </TableCell>
-                <TableCell className="text-right">
-                  {user.department.name}
+                <TableCell className="text-left">
+                  {user.departmentName}
                 </TableCell>
-                <TableCell className="text-right">
-                  {user.department.id}
+                <TableCell className="text-left">
+                  {user.departmentId}
                 </TableCell>
-                <TableCell className="text-right">{user.role}</TableCell>
-                <TableCell className="text-right">{user.status}</TableCell>
+                <TableCell className="text-left">{user.jobRole}</TableCell>
+                <TableCell className="text-left">{user.status}</TableCell>
 
                 <TableCell className="text-right">
                   <DropdownMenu>
@@ -97,7 +95,7 @@ function UserTable() {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() =>
-                          router.push(`/user-management/${user.id}`)
+                          router.push(`/user-management/${user.employeeId}`)
                         }
                       >
                         View Details
@@ -131,7 +129,6 @@ function UserTable() {
               <DeleteUserDialog
                 user={selectedUser!}
                 onConfirm={() => {
-                  // deleteUser(selectedUser!.id);
                   setOpen(false);
                 }}
                 onCancel={() => setOpen(false)}

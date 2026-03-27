@@ -25,7 +25,9 @@ function TrainingRecords() {
           subtitle="Filter and view training records across the organization"
         />
 
-        <FilterGroup children={<RangeCalendar />} />
+        <FilterGroup>
+          <RangeCalendar />
+        </FilterGroup>
 
         <div className="border rounded-md">
           <TrainingRecordTable />

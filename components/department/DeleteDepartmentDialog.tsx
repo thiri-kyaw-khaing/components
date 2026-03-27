@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { DialogHeader } from "../ui/dialog";
 import { DialogTitle } from "../ui/dialog";
 import { Department } from "@/app/types/department";
-import { DeleteDepartmentAction, State } from "@/lib/actions/deleteDepartment";
+import { DeleteDepartmentAction, State } from "@/lib/actions/AdminDepartment/deleteDepartment";
 
 type props = {
   department: Department | null;

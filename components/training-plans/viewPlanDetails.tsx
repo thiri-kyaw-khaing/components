@@ -10,9 +10,21 @@ import { Button } from "../ui/button";
 import { Course } from "@/app/types/trainingPlan";
 import Detail from "../userManagement/detailText";
 import { useRouter } from "next/navigation";
+import { useActionState } from "react";
+import {
+  DeleteTrainingPlanAction,
+  State,
+} from "@/lib/actions/AdminTrainingPlan/deleteTrainingPlan";
 
 function ViewPlanForm({ plan }: { plan: Course }) {
   const router = useRouter();
+  const initialState: State = { message: null };
+
+  const [state, deleteAction, pending] = useActionState(
+    DeleteTrainingPlanAction.bind(null, Number(plan.id)),
+    initialState,
+  );
+
   return (
     <div>
       <DialogHeader>
@@ -36,6 +48,11 @@ function ViewPlanForm({ plan }: { plan: Course }) {
         value={plan.content ?? "No content available"}
       />
       <DialogFooter className="mt-4">
+        <form action={deleteAction}>
+          <Button variant="destructive" type="submit" disabled={pending}>
+            {pending ? "Deleting..." : "Delete"}
+          </Button>
+        </form>
         <DialogClose asChild>
           <Button variant="outline">Close</Button>
         </DialogClose>
@@ -44,12 +61,12 @@ function ViewPlanForm({ plan }: { plan: Course }) {
           className="bg-[#006022]"
           onClick={() => {
             router.push(`/training-plans/${plan.id}/edit`);
-            console.log("plan.id =", plan.id, typeof plan.id);
           }}
         >
           Edit Training Plan
         </Button>
       </DialogFooter>
+      {state.message ? <p className="text-sm text-red-600">{state.message}</p> : null}
     </div>
   );
 }

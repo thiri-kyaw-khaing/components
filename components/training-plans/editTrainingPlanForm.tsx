@@ -1,83 +1,31 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
-
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
-import { TrainingCategoryEnum, TrainingTypeEnum } from "@/lib/data";
-
-import { z } from "zod";
-import { DialogHeader, DialogTitle } from "../ui/dialog";
 import { Course } from "@/app/types/trainingPlan";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-export const createTrainingPlanSchema = z.object({
-  title: z.string().min(2).max(50),
-  speaker: z.string().min(2).max(50),
-
-  category: z.enum(TrainingCategoryEnum),
-  type: z.enum(TrainingTypeEnum),
-
-  date: z.string().min(1),
-
-  numberOfHours: z.coerce.number().int().min(1),
-  numberOfDays: z.coerce.number().int().min(1),
-
-  location: z.string().optional(),
-
-  costPerPerson: z.coerce.number().min(0),
-  numberOfPerson: z.coerce.number().min(1),
-
-  budgetCode: z.string().optional(),
-
-  content: z.string().min(10),
-});
-
-export type CreateTrainingPlanInput = z.infer<typeof createTrainingPlanSchema>;
+import { useActionState } from "react";
+import {
+  EditTrainingPlanAction,
+  State,
+} from "@/lib/actions/AdminTrainingPlan/editTrainingPlan";
+import { TrainingCategoryEnum, TrainingTypeEnum } from "@/lib/data";
 
 export default function EditTrainingPlanForm({ course }: { course: Course }) {
   const router = useRouter();
-  const form = useForm({
-    resolver: zodResolver(createTrainingPlanSchema),
-    defaultValues: {
-      title: course.name || "",
-      speaker: course.speakerInstitute || "",
-      category: course.category || undefined,
-      type: course.type || undefined,
-      date: course.date || "",
-      numberOfHours: course.numberOfHours || 1,
-      numberOfDays: course.numberOfDays || 1,
-      numberOfPerson: course.numberOfPerson || 1,
-      costPerPerson: course.costPerPerson || 0,
-      content: course.content || "",
-      budgetCode: course.budgetCode || "",
-      location: course.location || "",
-    },
-  });
 
-  function onSubmit(values: CreateTrainingPlanInput) {
-    console.log("CREATE", values);
-  }
+  const initialState: State = {
+    errors: {},
+    message: null,
+  };
+
+  const [state, formAction, pending] = useActionState(
+    EditTrainingPlanAction.bind(null, String(course.id)),
+    initialState,
+  );
 
   return (
     <>
@@ -95,248 +43,222 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
         <h1 className="text-xl font-bold">Edit Training Plan</h1>
         <span>Update Training Plan Details</span>
       </div>
+
       <div className="m-6 rounded-md border p-6 shadow-md">
         <h1 className="text-lg font-semibold mb-4">Training Plan Details</h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-6">
-              {/* Title */}
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Training Title</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
-              {/* Speaker */}
-              <FormField
-                control={form.control}
-                name="speaker"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Speaker / Trainer</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-6">
-              {/* Category */}
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Category</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {TrainingCategoryEnum.map((cat) => (
-                          <SelectItem key={cat} value={cat}>
-                            {cat}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        <form action={formAction} className="space-y-4">
+          <div className="grid grid-cols-2 gap-6">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="title">Training Title</FieldLabel>
+                <Input id="title" name="title" defaultValue={course.name} required />
+                {state.errors?.title?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.title[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
 
-              {/* Type */}
-              <FormField
-                control={form.control}
-                name="type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Type</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {TrainingTypeEnum.map((type) => (
-                          <SelectItem key={type} value={type}>
-                            {type}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-6">
-              {/* Date */}
-              <FormField
-                control={form.control}
-                name="date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Date</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* Location */}
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Location</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="e.g., Conference Room A or Online"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="speaker">Speaker / Trainer</FieldLabel>
+                <Input
+                  id="speaker"
+                  name="speaker"
+                  defaultValue={course.speakerInstitute}
+                  required
+                />
+                {state.errors?.speaker?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.speaker[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
+          </div>
 
-            {/* Budget Code */}
-            <div className="grid grid-cols-2 gap-6">
-              <FormField
-                control={form.control}
-                name="budgetCode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Budget Code</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        {...field}
-                        value={
-                          field.value === undefined ? "" : String(field.value)
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* Cost Per Person */}
-              <FormField
-                control={form.control}
-                name="costPerPerson"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Cost Per Person</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        value={
-                          field.value === undefined ? "" : String(field.value)
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <div className="grid grid-cols-2 gap-6">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="category">Category</FieldLabel>
+                <select
+                  id="category"
+                  name="category"
+                  defaultValue={course.category}
+                  className="w-full border border-[#006022] rounded-md px-3 py-2"
+                  required
+                >
+                  {TrainingCategoryEnum.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+                {state.errors?.category?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.category[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
 
-            <div className="grid grid-cols-2 gap-6">
-              <FormField
-                control={form.control}
-                name="numberOfHours"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Hours</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        value={
-                          field.value === undefined ? "" : String(field.value)
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="type">Type</FieldLabel>
+                <select
+                  id="type"
+                  name="type"
+                  defaultValue={course.type}
+                  className="w-full border border-[#006022] rounded-md px-3 py-2"
+                  required
+                >
+                  {TrainingTypeEnum.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                {state.errors?.type?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.type[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
+          </div>
 
-              <FormField
-                control={form.control}
-                name="numberOfDays"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Days</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        value={
-                          field.value === undefined ? "" : String(field.value)
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+          <div className="grid grid-cols-2 gap-6">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="date">Date</FieldLabel>
+                <Input id="date" name="date" type="date" defaultValue={course.date} required />
+                {state.errors?.date?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.date[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
 
-            {/* Content */}
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Content</FormLabel>
-                  <FormControl>
-                    <Textarea rows={4} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="justify-end gap-6 flex">
-              <Button
-                type="submit"
-                variant={"outline"}
-                className=" text-[#006022] mt-4"
-                onClick={() => {
-                  router.push("/training-plans");
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="bg-[#006022] hover:bg-[#005018] text-white mt-4"
-              >
-                Update Training Plan
-              </Button>
-            </div>
-          </form>
-        </Form>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="location">Location</FieldLabel>
+                <Input id="location" name="location" defaultValue={course.location} />
+              </Field>
+            </FieldGroup>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="budgetCode">Budget Code</FieldLabel>
+                <Input id="budgetCode" name="budgetCode" defaultValue={course.budgetCode} />
+              </Field>
+            </FieldGroup>
+
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="costPerPerson">Cost Per Person</FieldLabel>
+                <Input
+                  id="costPerPerson"
+                  name="costPerPerson"
+                  type="number"
+                  min={0}
+                  defaultValue={course.costPerPerson}
+                  required
+                />
+                {state.errors?.costPerPerson?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.costPerPerson[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="numberOfHours">Hours</FieldLabel>
+                <Input
+                  id="numberOfHours"
+                  name="numberOfHours"
+                  type="number"
+                  min={1}
+                  defaultValue={course.numberOfHours}
+                  required
+                />
+                {state.errors?.numberOfHours?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.numberOfHours[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
+
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="numberOfDays">Days</FieldLabel>
+                <Input
+                  id="numberOfDays"
+                  name="numberOfDays"
+                  type="number"
+                  min={1}
+                  defaultValue={course.numberOfDays}
+                  required
+                />
+                {state.errors?.numberOfDays?.[0] ? (
+                  <p className="text-sm text-red-600">{state.errors.numberOfDays[0]}</p>
+                ) : null}
+              </Field>
+            </FieldGroup>
+          </div>
+
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="numberOfPerson">Number Of Person</FieldLabel>
+              <Input
+                id="numberOfPerson"
+                name="numberOfPerson"
+                type="number"
+                min={1}
+                defaultValue={course.numberOfPerson}
+                required
+              />
+              {state.errors?.numberOfPerson?.[0] ? (
+                <p className="text-sm text-red-600">{state.errors.numberOfPerson[0]}</p>
+              ) : null}
+            </Field>
+          </FieldGroup>
+
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="content">Content</FieldLabel>
+              <Textarea
+                id="content"
+                name="content"
+                rows={4}
+                defaultValue={course.content ?? ""}
+                required
+              />
+              {state.errors?.content?.[0] ? (
+                <p className="text-sm text-red-600">{state.errors.content[0]}</p>
+              ) : null}
+            </Field>
+          </FieldGroup>
+
+          {state.message ? (
+            <p className="text-sm text-red-600">{state.message}</p>
+          ) : null}
+
+          <div className="justify-end gap-6 flex">
+            <Button
+              type="button"
+              variant={"outline"}
+              className=" text-[#006022] mt-4"
+              onClick={() => {
+                router.push("/training-plans");
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="bg-[#006022] hover:bg-[#005018] text-white mt-4"
+              disabled={pending}
+            >
+              {pending ? "Updating..." : "Update Training Plan"}
+            </Button>
+          </div>
+        </form>
       </div>
     </>
   );

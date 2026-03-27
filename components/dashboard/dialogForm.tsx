@@ -20,7 +20,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { CreateDepartmentAction, State } from "@/lib/actions/createDepartment";
+import { CreateDepartmentAction, State } from "@/lib/actions/AdminDepartment/createDepartment";
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 
 // const formSchema = z.object({

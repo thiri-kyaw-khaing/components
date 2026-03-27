@@ -1,5 +1,6 @@
 import EditTrainingPlanForm from "@/components/training-plans/editTrainingPlanForm";
-import { courses } from "@/lib/data";
+import { getTrainingPlanById } from "@/lib/api/getTrainingPlan";
+import { Course } from "@/app/types/trainingPlan";
 import { notFound } from "next/navigation";
 
 export default async function EditTrainingPlan({
@@ -8,9 +9,9 @@ export default async function EditTrainingPlan({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const courseId = Number(id);
-
-  const course = courses.find((c) => c.id === courseId);
+  const response = await getTrainingPlanById(id);
+  const course: Course | null =
+    response?.data?.item ?? response?.data ?? response ?? null;
 
   if (!course) {
     notFound();

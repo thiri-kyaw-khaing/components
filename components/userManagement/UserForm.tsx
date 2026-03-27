@@ -1,17 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import {
   DialogClose,
   DialogFooter,
@@ -19,194 +9,179 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-
-const formSchema = z.object({
-  fullName: z.string().min(2, "Full name is required"),
-  employeeId: z.string().min(1, "Employee ID is required"),
-  email: z.string().email("Invalid email"),
-  phone: z.string().min(6, "Phone is required"),
-  department: z.string().min(1, "Department is required"),
-  role: z.string().min(1, "Role is required"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  status: z.enum(["active", "inactive", "suspended"]),
-});
+  CreateUserAction,
+  State,
+} from "@/lib/actions/AdminUser/createUser";
+import { useActionState } from "react";
 
 function UserForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: "",
-      employeeId: "",
-      email: "",
-      phone: "",
-      department: "",
-      role: "",
-      password: "",
-      status: "active",
-    },
-  });
+  const initialState: State = {
+    errors: {},
+    message: null,
+  };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const [state, formAction, pending] = useActionState(
+    CreateUserAction,
+    initialState,
+  );
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <DialogHeader>
-          <DialogTitle>Add New User</DialogTitle>
-        </DialogHeader>
+    <form action={formAction}>
+      <DialogHeader>
+        <DialogTitle>Add New User</DialogTitle>
+      </DialogHeader>
 
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <FormField
-            control={form.control}
-            name="fullName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter Full Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="employeeId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Employee ID</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g., EMP021" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="email@company.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g., +1234567890" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid grid-cols-2 gap-4 mt-4 mb-4">
-          <FormField
-            control={form.control}
-            name="department"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Department</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g., Sales" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Role</FormLabel>
-                <FormControl>
-                  <Input placeholder="e.g., Manager" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="name">Full Name</FieldLabel>
+            <Input id="name" name="name" placeholder="Enter Full Name" required />
+            {state.errors?.name?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.name[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
 
-        <div>
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <FormField
-              control={form.control}
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="employeeId">Employee ID</FieldLabel>
+            <Input
+              id="employeeId"
+              name="employeeId"
+              placeholder="e.g., EMP021"
+              required
+            />
+            {state.errors?.employeeId?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.employeeId[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="email">Email</FieldLabel>
+            <Input id="email" name="email" type="email" placeholder="email@company.com" required />
+            {state.errors?.email?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.email[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
+
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="phone">Phone</FieldLabel>
+            <Input id="phone" name="phone" placeholder="e.g., +1234567890" required />
+            {state.errors?.phone?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.phone[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="departmentId">Department ID</FieldLabel>
+            <Input
+              id="departmentId"
+              name="departmentId"
+              placeholder="e.g., DPT001"
+              required
+            />
+            {state.errors?.departmentId?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.departmentId[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
+
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="role">Role</FieldLabel>
+            <Input id="role" name="role" placeholder="e.g., Manager" required />
+            {state.errors?.role?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.role[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="position">Position</FieldLabel>
+            <Input
+              id="position"
+              name="position"
+              placeholder="e.g., Senior Developer"
+              required
+            />
+            {state.errors?.position?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.position[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
+
+        <div />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="status">User Status</FieldLabel>
+            <select
+              id="status"
               name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User Status</FormLabel>
+              defaultValue="active"
+              className="w-full border border-[#006022] rounded-md px-3 py-2"
+            >
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="suspended">Suspended</option>
+            </select>
+            {state.errors?.status?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.status[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
 
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select status" />
-                      </SelectTrigger>
-                    </FormControl>
-
-                    <SelectContent>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="suspended">Suspended</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <Input
+              id="password"
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., *******" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              type="password"
+              placeholder="Enter password"
+              required
             />
-          </div>
-        </div>
+            {state.errors?.password?.[0] ? (
+              <p className="text-sm text-red-600">{state.errors.password[0]}</p>
+            ) : null}
+          </Field>
+        </FieldGroup>
+      </div>
 
-        <DialogFooter className="mt-4">
-          <DialogClose asChild>
-            <Button type="button" variant="outline">
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button
-            type="submit"
-            className="bg-[#006022] text-white hover:bg-[#005018]"
-          >
-            Create User
+      {state.message ? (
+        <p className="text-sm text-red-600 mt-4">{state.message}</p>
+      ) : null}
+
+      <DialogFooter className="mt-4">
+        <DialogClose asChild>
+          <Button type="button" variant="outline">
+            Cancel
           </Button>
-        </DialogFooter>
-      </form>
-    </Form>
+        </DialogClose>
+        <Button
+          type="submit"
+          className="bg-[#006022] text-white hover:bg-[#005018]"
+          disabled={pending}
+        >
+          {pending ? "Creating..." : "Create User"}
+        </Button>
+      </DialogFooter>
+    </form>
   );
 }
 

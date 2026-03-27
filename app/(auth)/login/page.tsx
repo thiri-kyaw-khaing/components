@@ -23,7 +23,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Contact2Icon, Shield, Users2Icon } from "lucide-react";
-import { LoginAction, State } from "@/lib/actions/login";
+import { LoginAction } from "@/lib/actions/AdminLogin/login";
 
 const formSchema = z.object({
   email: z.string().min(2).max(50),
@@ -31,7 +31,10 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
-  const initialState: State = { errors: {}, message: null };
+  const initialState = {
+    errors: {},
+    message: null,
+  };
 
   const [state, formAction, pending] = useActionState(
     LoginAction,

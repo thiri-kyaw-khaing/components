@@ -27,7 +27,7 @@ function DepartmentCard({
   onDelete,
 }: DepartmentCardProps) {
   return (
-    <Card className="w-full sm:max-w-[360px]">
+    <Card className="w-full sm:max-w-90">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="bg-[#E8F7EC] w-16 h-16 flex items-center justify-center text-white rounded-md">
           <UsersIcon className="w-6 h-6 text-[#006022]" />

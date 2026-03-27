@@ -6,11 +6,27 @@ import Link from "next/link";
 import { Separator } from "@radix-ui/react-separator";
 import { CertificateCard } from "./certificationCard";
 import Detail from "./detailText";
+
+type UserCertification = {
+  id: string | number;
+  name: string;
+  trainingPlan: string;
+  category: string;
+};
+
+type UserDetailsData = User & {
+  certifications?: UserCertification[];
+};
+
 type Props = {
-  user: any;
+  user: UserDetailsData;
 };
 
 function UserDetails({ user }: Props) {
+  const certifications = Array.isArray(user?.certifications)
+    ? user.certifications
+    : [];
+
   return (
     <>
       <div className="bg-[#006022] h-40 w-full flex items-center px-12">
@@ -48,8 +64,8 @@ function UserDetails({ user }: Props) {
           </Section>
 
           <Section icon={<Building />} title="Work Details">
-            <Detail label="Department" value={user.department.name} />
-            <Detail label="Division" value={user.department.division} />
+            <Detail label="Department" value={user.department?.name ?? "-"} />
+            <Detail label="Division" value={user.department?.division ?? "-"} />
             <Detail label="Status" value={user.status} />
             <Detail label="Employee ID" value={user.id} />
           </Section>
@@ -65,7 +81,7 @@ function UserDetails({ user }: Props) {
 
         {/* Certifications Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {user.certifications.map((cert: any) => (
+          {certifications.map((cert: UserCertification) => (
             <CertificateCard key={cert.id} certificate={cert} />
           ))}
         </div>
@@ -84,7 +100,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[#E8F7EC] p-2 rounded-md text-[#006022] w-[500px] p-6 space-y-4">
+    <div className="bg-[#E8F7EC] rounded-md text-[#006022] w-125 p-6 space-y-4">
       <h2 className="text-xl font-semibold flex items-center gap-2 mb-4 border-rounded-md">
         {icon}
         <span className="text-xl font-semibold">{title}</span>

@@ -2,10 +2,42 @@ import ButtonDialog from "@/components/dashboard/buttonDialog";
 import PageHeader from "@/components/dashboard/pageHeader";
 import UserForm from "@/components/userManagement/UserForm";
 import UserTable from "@/components/userManagement/userTable";
-import { Search, User } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { getUsers } from "@/lib/api/getUser";
+import { User } from "@/app/types/userManagement";
 
-function UserManagement() {
+function normalizeUsers(payload: unknown): User[] {
+  const data = payload as {
+    data?: {
+      items?: User[];
+    } | User[];
+  };
+
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (Array.isArray(data?.data) && data.data.every((u) => !!u)) {
+    return data.data;
+  }
+
+  if (
+    data?.data &&
+    !Array.isArray(data.data) &&
+    Array.isArray(data.data.items)
+  ) {
+    return data.data.items;
+  }
+
+  return [];
+}
+
+async function UserManagement() {
+  const userResponse = await getUsers();
+  const users = normalizeUsers(userResponse);
+  console.log("Fetched users:", users);
+
   return (
     <>
       <div className="min-h-screen space-y-4 m-2">
@@ -48,7 +80,7 @@ function UserManagement() {
           </Button> */}
         </div>
         <div className="">
-          <UserTable />
+          <UserTable users={users} />
         </div>
       </div>
     </>

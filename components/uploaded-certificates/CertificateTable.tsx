@@ -85,7 +85,6 @@ function CertificateTable() {
   return (
     <div>
       <Table className="table-fixed w-full rounded-t-md ">
-        <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
           <TableRow>
             <TableHead className="w-[200px] font-bold">Employee ID</TableHead>

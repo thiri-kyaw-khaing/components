@@ -1,16 +1,28 @@
-import { Department } from "./department";
-
-export type User = {
-  id: string;
+// API response (backend)
+export type ApiUser = {
+  employeeID: string;
   name: string;
   email: string;
   phone: string;
-  department: Department;
-  departmentId: string;
+  departmentId: number;
+  department: string;
   role: string;
   position: string;
-  agency: string;
-  cotton: string;
-  line: string;
+  status: string;
+};
+
+// Frontend clean type
+export type User = {
+  employeeId: string;
+  name: string;
+  email: string;
+  phone: string;
+  department: {
+    id: number;
+    name: string;
+  };
+  departmentId: number;
+  role: string;
+  position: string;
   status: "active" | "inactive" | "suspended";
 };

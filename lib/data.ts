@@ -405,14 +405,23 @@ export const courses: Course[] = [
   },
 ];
 
-export const TrainingTypeEnum = ["Online", "Onsite", "Hybrid"] as const;
+export const TrainingTypeEnum = ["In-house", "Public", "OJT", "Self-learning", "Online/Virtual"] as const;
 
 export const TrainingCategoryEnum = [
-  "Technical Skills",
-  "Soft Skills",
-  "Leadership",
-  "Safety",
-  "Compliance",
+  "สนับสนุนนโยบายสิ่งแวดล้อม",
+        "ความปลอดภัยและอาชีวอนามัย",
+        "งานขายและงานบริการ",
+        "การใช้งาน Software",
+        "การนำเสนอ",
+        "Leadership Development",
+        "การใช้งานเครื่องจักรและซ่อมบำรุง",
+        "กระบวนการคิด วิเคราะห์",
+        "พัฒนาทักษะกระบวนการทำงาน",
+        "การจัดซื้อจัดจ้าง",
+        "การสื่อสาร",
+        "โครงการสัมมนาอื่นๆ",
+        "พัฒนาขีดความสามารถระดับบริหาร",
+        "การเงินและการบัญชี"
 ] as const;
 
 export const certificates: Certificate[] = [

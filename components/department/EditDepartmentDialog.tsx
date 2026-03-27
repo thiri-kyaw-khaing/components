@@ -120,7 +120,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useActionState } from "react";
 import { Department } from "@/app/types/department";
-import { EditDepartmentAction, State } from "@/lib/actions/editDepartment";
+import { EditDepartmentAction, State } from "@/lib/actions/AdminDepartment/editDepartment";
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 
 type Props = {
