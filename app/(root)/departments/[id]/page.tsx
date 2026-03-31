@@ -10,16 +10,15 @@ export default async function DepartmentDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  console.log("Department ID:", id); //log id for debugging
   const department = await getDepartmentById(id);
-  console.log("Department Detail:", department);
-  console.log("staff members:", department.data.staff); //log department for debugging
+  // console.log("Department Detail:", department);
+  // console.log("staff members:", department.data.staff); //log department for debugging
 
   return (
     <div>
       <div>
         <Link
-          href="/training-plans"
+          href="/departments"
           className="text-[#006022] border-[#006022] border px-4 py-2 inline-flex items-center gap-2 rounded-lg mb-4"
         >
           <ArrowLeft />

@@ -37,30 +37,26 @@ function UserTable({ users }: { users: User[] }) {
         <Table className="table-fixed w-full rounded-t-md ">
           <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
             <TableRow>
-              <TableHead className="w-50 font-bold">Employee ID</TableHead>
-              <TableHead className="w-50 font-bold">Name</TableHead>
-              <TableHead className="w-50 font-bold">Contact</TableHead>
-              <TableHead className="text-left w-50 font-bold">
+              <TableHead className="w-[120px] font-bold">Employee ID</TableHead>
+              <TableHead className="w-[150px] font-bold">Name</TableHead>
+              <TableHead className="w-[200px] font-bold">Contact</TableHead>
+              <TableHead className="text-left w-[150px] font-bold">
                 Department
               </TableHead>
-              <TableHead className="text-left w-37.5 font-bold">
+              <TableHead className="text-left w-[120px] font-bold">
                 Dept ID
               </TableHead>
-              <TableHead className="text-left w-50 font-bold">
+              <TableHead className="text-left w-[150px] font-bold">
                 Role
               </TableHead>
 
-              <TableHead className="text-left w-37.5 font-bold">
-                Status
-              </TableHead>
-              <TableHead className="text-right w-37.5 font-bold">
-                Actions
-              </TableHead>
+              <TableHead className="text-left font-bold">Status</TableHead>
+              <TableHead className="font-bold">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.id}>
+              <TableRow key={user.employeeId}>
                 <TableCell className="font-medium">{user.employeeId}</TableCell>
                 <TableCell>{user.fullName}</TableCell>
                 <TableCell>
@@ -69,13 +65,11 @@ function UserTable({ users }: { users: User[] }) {
                 <TableCell className="text-left">
                   {user.departmentName}
                 </TableCell>
-                <TableCell className="text-left">
-                  {user.departmentId}
-                </TableCell>
+                <TableCell className="text-left">{user.departmentId}</TableCell>
                 <TableCell className="text-left">{user.jobRole}</TableCell>
                 <TableCell className="text-left">{user.status}</TableCell>
 
-                <TableCell className="text-right">
+                <TableCell className="">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon">

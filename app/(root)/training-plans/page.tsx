@@ -10,9 +10,11 @@ import { Course } from "@/app/types/trainingPlan";
 
 function normalizePlans(payload: unknown): Course[] {
   const data = payload as {
-    data?: {
-      items?: Course[];
-    } | Course[];
+    data?:
+      | {
+          items?: Course[];
+        }
+      | Course[];
   };
 
   if (Array.isArray(payload)) {
@@ -37,6 +39,7 @@ function normalizePlans(payload: unknown): Course[] {
 async function TrainingPlans() {
   const response = await getTrainingPlans();
   const plans = normalizePlans(response);
+  console.log("Fetched training plans:", plans);
 
   return (
     <div className="min-h-screen space-y-4 m-2">

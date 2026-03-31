@@ -53,9 +53,9 @@ function ViewPlanForm({ plan }: { plan: Course }) {
             {pending ? "Deleting..." : "Delete"}
           </Button>
         </form>
-        <DialogClose asChild>
+        {/* <DialogClose asChild>
           <Button variant="outline">Close</Button>
-        </DialogClose>
+        </DialogClose> */}
         <Button
           type="submit"
           className="bg-[#006022]"
@@ -66,7 +66,9 @@ function ViewPlanForm({ plan }: { plan: Course }) {
           Edit Training Plan
         </Button>
       </DialogFooter>
-      {state.message ? <p className="text-sm text-red-600">{state.message}</p> : null}
+      {state.message ? (
+        <p className="text-sm text-red-600">{state.message}</p>
+      ) : null}
     </div>
   );
 }

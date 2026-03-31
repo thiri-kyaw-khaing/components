@@ -16,6 +16,9 @@ import { TrainingCategoryEnum, TrainingTypeEnum } from "@/lib/data";
 
 export default function EditTrainingPlanForm({ course }: { course: Course }) {
   const router = useRouter();
+  const formattedDate = course.date
+    ? new Date(course.date).toISOString().split("T")[0]
+    : "";
 
   const initialState: State = {
     errors: {},
@@ -52,9 +55,16 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="title">Training Title</FieldLabel>
-                <Input id="title" name="title" defaultValue={course.name} required />
-                {state.errors?.title?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.title[0]}</p>
+                <Input
+                  id="title"
+                  name="title"
+                  defaultValue={course.name}
+                  required
+                />
+                {state?.errors?.title?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.title?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -68,8 +78,10 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                   defaultValue={course.speakerInstitute}
                   required
                 />
-                {state.errors?.speaker?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.speaker[0]}</p>
+                {state?.errors?.speaker?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.speaker?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -92,8 +104,10 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                     </option>
                   ))}
                 </select>
-                {state.errors?.category?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.category[0]}</p>
+                {state?.errors?.category?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.category?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -114,8 +128,10 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                     </option>
                   ))}
                 </select>
-                {state.errors?.type?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.type[0]}</p>
+                {state?.errors?.type?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.type?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -125,9 +141,18 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="date">Date</FieldLabel>
-                <Input id="date" name="date" type="date" defaultValue={course.date} required />
-                {state.errors?.date?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.date[0]}</p>
+                <Input
+                  id="date"
+                  name="date"
+                  type="date"
+                  defaultValue={formattedDate}
+                  required
+                />
+
+                {state?.errors?.date?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.date?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -135,7 +160,11 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="location">Location</FieldLabel>
-                <Input id="location" name="location" defaultValue={course.location} />
+                <Input
+                  id="location"
+                  name="location"
+                  defaultValue={course.location}
+                />
               </Field>
             </FieldGroup>
           </div>
@@ -144,7 +173,11 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="budgetCode">Budget Code</FieldLabel>
-                <Input id="budgetCode" name="budgetCode" defaultValue={course.budgetCode} />
+                <Input
+                  id="budgetCode"
+                  name="budgetCode"
+                  defaultValue={course.budgetCode}
+                />
               </Field>
             </FieldGroup>
 
@@ -159,8 +192,10 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                   defaultValue={course.costPerPerson}
                   required
                 />
-                {state.errors?.costPerPerson?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.costPerPerson[0]}</p>
+                {state?.errors?.costPerPerson?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.costPerPerson?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -178,8 +213,10 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                   defaultValue={course.numberOfHours}
                   required
                 />
-                {state.errors?.numberOfHours?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.numberOfHours[0]}</p>
+                {state?.errors?.numberOfHours?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.numberOfHours?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -195,8 +232,10 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                   defaultValue={course.numberOfDays}
                   required
                 />
-                {state.errors?.numberOfDays?.[0] ? (
-                  <p className="text-sm text-red-600">{state.errors.numberOfDays[0]}</p>
+                {state?.errors?.numberOfDays?.[0] ? (
+                  <p className="text-sm text-red-600">
+                    {state?.errors?.numberOfDays?.[0]}
+                  </p>
                 ) : null}
               </Field>
             </FieldGroup>
@@ -213,8 +252,10 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                 defaultValue={course.numberOfPerson}
                 required
               />
-              {state.errors?.numberOfPerson?.[0] ? (
-                <p className="text-sm text-red-600">{state.errors.numberOfPerson[0]}</p>
+              {state?.errors?.numberOfPerson?.[0] ? (
+                <p className="text-sm text-red-600">
+                  {state?.errors?.numberOfPerson?.[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -229,14 +270,16 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
                 defaultValue={course.content ?? ""}
                 required
               />
-              {state.errors?.content?.[0] ? (
-                <p className="text-sm text-red-600">{state.errors.content[0]}</p>
+              {state?.errors?.content?.[0] ? (
+                <p className="text-sm text-red-600">
+                  {state?.errors?.content?.[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
 
-          {state.message ? (
-            <p className="text-sm text-red-600">{state.message}</p>
+          {state?.message ? (
+            <p className="text-sm text-red-600">{state?.message}</p>
           ) : null}
 
           <div className="justify-end gap-6 flex">
