@@ -1,7 +1,7 @@
 "use server";
 
 import { API_BASE_URL } from "@/app/api/api";
-import { cookies } from "next/headers";
+import { authFetch } from "@/lib/api/authFetch";
 import { redirect } from "next/navigation";
 
 export type State = {
@@ -13,22 +13,17 @@ export async function DeleteTrainingPlanAction(
   prevState: State | void,
   formData: FormData,
 ): Promise<State | void> {
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/training-plans/${id}`, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookieHeader,
+    const { response } = await authFetch(
+      `${API_BASE_URL}/admin/training-plans/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
       },
-      cache: "no-store",
-    });
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);

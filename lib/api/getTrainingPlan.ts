@@ -1,23 +1,14 @@
 import { API_BASE_URL } from "@/app/api/api";
-import { cookies } from "next/headers";
-
-async function getCookieHeader(): Promise<string> {
-  const cookieStore = await cookies();
-  return cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-}
+import { authFetch } from "@/lib/api/authFetch";
 
 export async function getTrainingPlans() {
-  const res = await fetch(`${API_BASE_URL}/admin/training-plans`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      Cookie: await getCookieHeader(),
+  const { response: res } = await authFetch(
+    `${API_BASE_URL}/admin/training-plans`,
+    {
+      method: "GET",
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch training plans");
@@ -27,14 +18,13 @@ export async function getTrainingPlans() {
 }
 
 export async function getTrainingPlanById(id: string) {
-  const res = await fetch(`${API_BASE_URL}/admin/training-plans/${id}`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      Cookie: await getCookieHeader(),
+  const { response: res } = await authFetch(
+    `${API_BASE_URL}/admin/training-plans/${id}`,
+    {
+      method: "GET",
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch training plan");

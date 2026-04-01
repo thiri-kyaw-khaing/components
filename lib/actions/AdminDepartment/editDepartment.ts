@@ -1,7 +1,7 @@
 "use server";
 
 import { API_BASE_URL } from "@/app/api/api";
-import { cookies } from "next/headers";
+import { authFetch } from "@/lib/api/authFetch";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -33,14 +33,6 @@ export async function EditDepartmentAction(
     division: formData.get("division"),
   });
 
-  const cookieStore = await cookies(); //  await
-
-  // build cookie string manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
   console.log("Received form data:", {
     validatedFields,
   });
@@ -63,13 +55,15 @@ export async function EditDepartmentAction(
   let isCreated = false;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/departments/${id}`, {
-      method: "PUT",
-      credentials: "include",
-      headers: { "Content-Type": "application/json", Cookie: cookieHeader },
-      body: JSON.stringify({ name, division }),
-      cache: "no-store",
-    });
+    const { response } = await authFetch(
+      `${API_BASE_URL}/admin/departments/${id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, division }),
+        cache: "no-store",
+      },
+    );
 
     if (!response.ok) {
       const errorData = await response.json();

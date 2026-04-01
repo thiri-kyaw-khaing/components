@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Separator } from "@radix-ui/react-separator";
 import { CertificateCard } from "./certificationCard";
 import Detail from "./detailText";
+import { Department } from "@/app/types/department";
 
 type UserCertification = {
   id: string | number;
@@ -15,17 +16,19 @@ type UserCertification = {
 };
 
 type UserDetailsData = User & {
+  department: Department;
   certifications?: UserCertification[];
 };
 
-type Props = {
-  user: UserDetailsData;
-};
+// type Props = {
+//   user: UserDetailsData;
+// };
 
-function UserDetails({ user }: Props) {
+function UserDetails({ user }: { user: UserDetailsData }) {
   const certifications = Array.isArray(user?.certifications)
     ? user.certifications
     : [];
+  console.log("User details received in UserDetails component:", user);
 
   return (
     <>
@@ -41,7 +44,7 @@ function UserDetails({ user }: Props) {
         </Button>
         <Avatar className="bg-green h-24 w-24 border-2 border-[#E8F7EC]">
           <AvatarFallback className="bg-[#4E7F57] text-white text-4xl">
-            {user.name.charAt(0)}
+            {user.name}
           </AvatarFallback>
         </Avatar>
         {/* User Information */}
@@ -67,7 +70,7 @@ function UserDetails({ user }: Props) {
             <Detail label="Department" value={user.department?.name ?? "-"} />
             <Detail label="Division" value={user.department?.division ?? "-"} />
             <Detail label="Status" value={user.status} />
-            <Detail label="Employee ID" value={user.id} />
+            <Detail label="Employee ID" value={user.employeeID} />
           </Section>
         </div>
 

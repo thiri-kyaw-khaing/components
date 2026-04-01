@@ -20,7 +20,7 @@ function StatusSelect({ value, onChange }: Props) {
         <SelectContent>
           <SelectItem value="active">Active</SelectItem>
           <SelectItem value="inactive">Inactive</SelectItem>
-          <SelectItem value="suspended">Suspended</SelectItem>
+          <SelectItem value="absent">Absent</SelectItem>
         </SelectContent>
       </Select>
     </div>

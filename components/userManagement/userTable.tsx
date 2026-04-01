@@ -89,7 +89,7 @@ function UserTable({ users }: { users: User[] }) {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={() =>
-                          router.push(`/user-management/${user.employeeId}`)
+                          router.push(`/user-management/${user.id}`)
                         }
                       >
                         View Details

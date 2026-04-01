@@ -29,18 +29,35 @@ const CATEGORIES = [
   { id: "15", name: "hi" },
 ];
 
-export default function Test() {
+type Props = {
+  value: string[];
+  onChange: (value: string[]) => void;
+};
+
+export default function CategoryMultipleSelect({
+  value: selectedCategories,
+  onChange,
+}: Props) {
   const [value, setValue] = React.useState("");
-  const [selected, setSelected] = React.useState<typeof CATEGORIES>([]);
+
+  const selected = React.useMemo(
+    () =>
+      CATEGORIES.filter((category) =>
+        selectedCategories.includes(category.name),
+      ),
+    [selectedCategories],
+  );
 
   const addCategory = (category: (typeof CATEGORIES)[number]) => {
-    if (selected.find((c) => c.id === category.id)) return;
-    setSelected([...selected, category]);
+    if (selectedCategories.includes(category.name)) return;
+    onChange([...selectedCategories, category.name]);
     setValue("");
   };
 
-  const removeCategory = (id: string) => {
-    setSelected(selected.filter((c) => c.id !== id));
+  const removeCategory = (name: string) => {
+    onChange(
+      selectedCategories.filter((categoryName) => categoryName !== name),
+    );
   };
 
   return (
@@ -49,7 +66,7 @@ export default function Test() {
         {selected.map((category) => (
           <Badge key={category.id} variant="secondary" className="gap-1">
             {category.name}
-            <button onClick={() => removeCategory(category.id)}>
+            <button type="button" onClick={() => removeCategory(category.name)}>
               <X className="h-3 w-3" />
             </button>
           </Badge>

@@ -12,7 +12,24 @@ import { colors } from "@/lib/color";
 import { Button } from "../ui/button";
 import { Download } from "lucide-react";
 
-function TrainingRecordTable() {
+type Props = {
+  records?: any[];
+};
+function TrainingRecordTable({ records }: Props) {
+  const displayRecords = records ?? [];
+  console.log("Displaying records:", displayRecords);
+
+  if (displayRecords.length === 0) {
+    return (
+      <div className="rounded-md border p-6 text-center">
+        <p className="text-gray-500 font-medium">
+          No training records found. Use the filters and click Search to view
+          records.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-x-auto rounded-md border">
       <div
@@ -68,62 +85,68 @@ function TrainingRecordTable() {
         </TableHeader>
 
         <TableBody>
-          {ojtRecords.map((user) => (
-            <TableRow key={user.id}>
+          {displayRecords.map((record) => (
+            <TableRow key={record.id}>
               <TableCell>
-                <div className="max-w-[180px] line-clamp-2 break-words">
-                  {user.course.name}
+                <div className="max-w-[180px] line-clamp-2 whitespace-pre-line break-words">
+                  {record.trainingPlanName}
                 </div>
               </TableCell>
 
               <TableCell>
-                <div className="max-w-[140px] line-clamp-2 break-words">
-                  {user.course.location}
+                <div className="max-w-[140px] whitespace-pre-line line-clamp-2 break-words">
+                  {record.location}
                 </div>
               </TableCell>
 
               <TableCell className="text-center">
-                {user.course.costPerPerson}
+                {record.costPerPerson}
               </TableCell>
 
               <TableCell>
                 <div className="max-w-[140px] line-clamp-2 break-words">
-                  {user.course.budgetCode}
+                  {record.budgetCode}
                 </div>
               </TableCell>
 
-              <TableCell>{user.staff.id}</TableCell>
+              <TableCell>{record.employeeId}</TableCell>
 
               <TableCell>
                 <div className="max-w-[160px] line-clamp-2 break-words">
-                  {user.staff.name}
+                  {record.employeeName}
                 </div>
               </TableCell>
 
               <TableCell>
                 <div className="max-w-[140px] line-clamp-2 break-words">
-                  {user.staff.position}
+                  {record.position}
                 </div>
               </TableCell>
 
               <TableCell className="text-center">
                 <div className="max-w-[140px] line-clamp-2 break-words">
-                  {user.staff.department?.name}
+                  {record.department}
                 </div>
               </TableCell>
 
               <TableCell>
                 <div className="max-w-[180px] line-clamp-2 break-words">
-                  {user.staff.department?.division}
+                  {record.division}
                 </div>
               </TableCell>
 
-              <TableCell>{user.status}</TableCell>
+              <TableCell>{record.status}</TableCell>
 
-              <TableCell className="text-center">85</TableCell>
-              <TableCell className="text-center">85</TableCell>
+              <TableCell className="text-center">
+                {record.preTestScore}
+              </TableCell>
+              <TableCell className="text-center">
+                {record.postTestScore}
+              </TableCell>
 
-              <TableCell>Excellent</TableCell>
+              <TableCell>
+                {record.evaluation ? record.evaluation : "-"}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

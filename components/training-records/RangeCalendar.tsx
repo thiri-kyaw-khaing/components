@@ -3,24 +3,24 @@
 import * as React from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent } from "@/components/ui/card";
-import { addDays } from "date-fns";
 import { type DateRange } from "react-day-picker";
 
-export default function CalendarRange() {
-  const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
-    from: new Date(new Date().getFullYear(), 0, 12),
-    to: addDays(new Date(new Date().getFullYear(), 0, 12), 30),
-  });
+type Props = {
+  value?: DateRange;
+  onChange: (value: DateRange | undefined) => void;
+};
 
+export default function CalendarRange({ value, onChange }: Props) {
   return (
     <Card className="w-fit p-0">
       <CardContent className="p-0">
         <Calendar
           mode="range"
-          defaultMonth={dateRange?.from}
-          selected={dateRange}
-          onSelect={setDateRange}
+          defaultMonth={value?.from}
+          selected={value}
+          onSelect={onChange}
           numberOfMonths={2}
+          showOutsideDays={false}
           disabled={(date) =>
             date > new Date() || date < new Date("1900-01-01")
           }

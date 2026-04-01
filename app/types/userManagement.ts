@@ -13,14 +13,21 @@ export type ApiUser = {
 
 // Frontend clean type
 export type User = {
-  id: number;
-  employeeId: string;
-  fullName: string;
+  employeeID: string;
+  name: string;
   email: string;
   phone: string;
-  departmentName: string;
   departmentId: number;
-  jobRole: string;
+  department: {
+    id: number;
+    name: string;
+    division: string;
+    totalStaff: number;
+  };
+  role: string;
   position: string;
   status: "active" | "inactive" | "suspended";
+  createdBy: string;
+  createdAt: number;
+  updatedAt: number;
 };

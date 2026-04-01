@@ -10,9 +10,8 @@ type Props = {
 
 export default async function UserDetailsPage({ params }: Props) {
   const { userId } = await params;
-  const userResponse = await getUserById(userId);
-  const user: User | null =
-    userResponse?.data?.item ?? userResponse?.data ?? userResponse ?? null;
+  const user = await getUserById(userId);
+  console.log("User Detail:", user); //log user for debugging
 
   if (!user) {
     return <div className="p-6">User not found</div>;
@@ -20,7 +19,7 @@ export default async function UserDetailsPage({ params }: Props) {
 
   return (
     <div className="mx-auto">
-      <UserDetails user={user} />
+      <UserDetails user={user.data} />
     </div>
   );
 }

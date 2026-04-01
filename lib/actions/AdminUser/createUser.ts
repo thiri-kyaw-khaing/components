@@ -1,7 +1,7 @@
 "use server";
 
 import { API_BASE_URL } from "@/app/api/api";
-import { cookies } from "next/headers";
+import { authFetch } from "@/lib/api/authFetch";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -48,12 +48,6 @@ export async function CreateUserAction(
     status: formData.get("status"),
   });
 
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
   console.log("Received form data:", {
     validatedFields,
   });
@@ -81,12 +75,10 @@ export async function CreateUserAction(
   let isCreated = false;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/users`, {
+    const { response } = await authFetch(`${API_BASE_URL}/admin/users`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Cookie: cookieHeader,
       },
       body: JSON.stringify({
         name,
@@ -107,8 +99,7 @@ export async function CreateUserAction(
 
       return {
         message:
-          errorData?.message ||
-          "Failed to create user. Please try again.",
+          errorData?.message || "Failed to create user. Please try again.",
       };
     }
 

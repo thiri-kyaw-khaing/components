@@ -10,46 +10,57 @@ import {
   CommandGroup,
   CommandItem,
 } from "@/components/ui/command";
+import { Department } from "@/app/types/department";
 
-const CATEGORIES = [
-  { id: "1", name: "สนับสนุนนโยบายสิ่งแวดล้อม" },
-  { id: "2", name: "ความปลอดภัยและอาชีวอนามัย" },
-  { id: "3", name: "งานขายและงานบริการ" },
-  { id: "4", name: "การใช้งาน Software" },
-  { id: "5", name: "การนำเสนอ" },
-  { id: "6", name: "Leadership Development" },
-  { id: "7", name: "การใช้งานเครื่องจักรและซ่อมบำรุง" },
-  { id: "8", name: "กระบวนการคิด วิเคราะห์" },
-  { id: "9", name: "พัฒนาทักษะกระบวนการทำงาน" },
-  { id: "10", name: "การจัดซื้อจัดจ้าง" },
-  { id: "11", name: "การสื่อสาร" },
-  { id: "12", name: "โครงการสัมนาอื่นๆ" },
-  { id: "13", name: "พัฒนาขีดความสามารถระดับบริหาร" },
-  { id: "14", name: "การเงินและการบัญชี" },
-  { id: "15", name: "hi" },
-];
+type Props = {
+  departments: Department[];
+  value: number[];
+  onChange: (value: number[]) => void;
+};
 
-export default function DepartmentMultipleSelect() {
+export default function DepartmentMultipleSelect({
+  departments,
+  value: selectedDepartmentIds,
+  onChange,
+}: Props) {
   const [value, setValue] = React.useState("");
-  const [selected, setSelected] = React.useState<typeof CATEGORIES>([]);
 
-  const addCategory = (category: (typeof CATEGORIES)[number]) => {
-    if (selected.find((c) => c.id === category.id)) return;
-    setSelected([...selected, category]);
+  const selected = React.useMemo(
+    () =>
+      departments.filter((department) =>
+        selectedDepartmentIds.includes(Number(department.id)),
+      ),
+    [departments, selectedDepartmentIds],
+  );
+
+  const addDepartment = (department: Department) => {
+    if (selectedDepartmentIds.includes(Number(department.id))) return;
+
+    onChange([...selectedDepartmentIds, Number(department.id)]);
     setValue("");
   };
 
-  const removeCategory = (id: string) => {
-    setSelected(selected.filter((c) => c.id !== id));
+  const removeDepartment = (id: number) => {
+    onChange(
+      selectedDepartmentIds.filter((departmentId) => departmentId !== id),
+    );
   };
+
+  const filteredDepartments = departments.filter((d) =>
+    d.name.toLowerCase().includes(value.toLowerCase()),
+  );
 
   return (
     <div className="w-full rounded-md border px-3 py-2">
       <div className="flex flex-wrap gap-2 items-center">
-        {selected.map((category) => (
-          <Badge key={category.id} variant="secondary" className="gap-1">
-            {category.name}
-            <button onClick={() => removeCategory(category.id)}>
+        {selected.map((department) => (
+          <Badge key={department.id} variant="secondary" className="gap-1">
+            {department.name}
+
+            <button
+              type="button"
+              onClick={() => removeDepartment(Number(department.id))}
+            >
               <X className="h-3 w-3" />
             </button>
           </Badge>
@@ -66,15 +77,14 @@ export default function DepartmentMultipleSelect() {
       {value && (
         <Command className="mt-2 rounded-md border">
           <CommandEmpty>No results</CommandEmpty>
+
           <CommandGroup>
-            {CATEGORIES.filter((c) =>
-              c.name.toLowerCase().includes(value.toLowerCase()),
-            ).map((category) => (
+            {filteredDepartments.map((department) => (
               <CommandItem
-                key={category.id}
-                onSelect={() => addCategory(category)}
+                key={department.id}
+                onSelect={() => addDepartment(department)}
               >
-                {category.name}
+                {department.name}
               </CommandItem>
             ))}
           </CommandGroup>

@@ -1,7 +1,7 @@
 "use server";
 
 import { API_BASE_URL } from "@/app/api/api";
-import { cookies } from "next/headers";
+import { authFetch } from "@/lib/api/authFetch";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -28,14 +28,6 @@ export async function DeleteDepartmentAction(
   prevState: State | void,
   formData: FormData,
 ): Promise<State | void> {
-  const cookieStore = await cookies(); //  await
-
-  // build cookie string manually
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
   console.log("Received form data:", {
     id,
   });
@@ -53,12 +45,14 @@ export async function DeleteDepartmentAction(
   let isDeleted = false;
 
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/departments/${id}`, {
-      method: "DELETE",
-      credentials: "include",
-      headers: { "Content-Type": "application/json", Cookie: cookieHeader },
-      cache: "no-store",
-    });
+    const { response } = await authFetch(
+      `${API_BASE_URL}/admin/departments/${id}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+      },
+    );
 
     if (!response.ok) {
       const errorData = await response.json();

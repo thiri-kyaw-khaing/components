@@ -1,21 +1,9 @@
-import { cookies } from "next/headers";
 import { API_BASE_URL } from "@/app/api/api";
-
-async function getCookieHeader(): Promise<string> {
-  const cookieStore = await cookies();
-  return cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-}
+import { authFetch } from "@/lib/api/authFetch";
 
 export async function getUsers() {
-  const res = await fetch(`${API_BASE_URL}/admin/users`, {
+  const { response: res } = await authFetch(`${API_BASE_URL}/admin/users`, {
     method: "GET",
-    credentials: "include",
-    headers: {
-      Cookie: await getCookieHeader(),
-    },
     cache: "no-store",
   });
 
@@ -27,14 +15,13 @@ export async function getUsers() {
 }
 
 export async function getUserById(id: string) {
-  const res = await fetch(`${API_BASE_URL}/admin/users/${id}`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      Cookie: await getCookieHeader(),
+  const { response: res } = await authFetch(
+    `${API_BASE_URL}/admin/users/${id}`,
+    {
+      method: "GET",
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch user");
