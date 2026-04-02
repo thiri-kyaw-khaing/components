@@ -4,7 +4,7 @@ import { useState } from "react";
 import FilterGroup from "./FilterGroup";
 import TrainingRecordTable from "./TrainingRecordTable";
 import { Department } from "@/app/types/department";
-import { API_BASE_URL } from "@/app/api/api";
+import { SearchTrainingRecordsAction } from "@/lib/actions/AdminTrainingRecord/searchRecords";
 
 type Props = {
   departments: Department[];
@@ -20,40 +20,16 @@ export default function TrainingRecordsClient({ departments }: Props) {
     setError(null);
 
     try {
-      console.log(
-        "[FilterGroup] Sending payload:",
-        JSON.stringify(filters, null, 2),
-      );
+      console.log("Searching with filters:", filters); //log filters for debugging
+      const result = await SearchTrainingRecordsAction(filters);
 
-      const response = await fetch(`${API_BASE_URL}/admin/records/search`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(filters),
-      });
-
-      console.log("[Response] Status:", response.status);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("[Response] Error body:", errorText);
-        throw new Error(`Failed to fetch records: ${response.statusText}`);
+      if (!result.ok) {
+        setError(result.message || "Failed to search records");
+        setRecords([]);
+        return;
       }
 
-      const data = await response.json();
-      console.log("[Response] Full data:", data);
-
-      const nextRecords =
-        data?.data?.items ??
-        data?.data?.records ??
-        data?.items ??
-        data?.records ??
-        data?.data ??
-        [];
-
-      setRecords(Array.isArray(nextRecords) ? nextRecords : []);
+      setRecords(Array.isArray(result.data) ? result.data : []);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to search records");
       setRecords([]); // clear records on error

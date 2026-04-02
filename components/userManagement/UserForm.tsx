@@ -8,10 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import {
-  CreateUserAction,
-  State,
-} from "@/lib/actions/AdminUser/createUser";
+import { CreateUserAction, State } from "@/lib/actions/AdminUser/createUser";
 import { useActionState } from "react";
 
 function UserForm() {
@@ -35,8 +32,13 @@ function UserForm() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="name">Full Name</FieldLabel>
-            <Input id="name" name="name" placeholder="Enter Full Name" required />
-            {state.errors?.name?.[0] ? (
+            <Input
+              id="name"
+              name="name"
+              placeholder="Enter Full Name"
+              required
+            />
+            {state?.errors?.name?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.name[0]}</p>
             ) : null}
           </Field>
@@ -51,8 +53,10 @@ function UserForm() {
               placeholder="e.g., EMP021"
               required
             />
-            {state.errors?.employeeId?.[0] ? (
-              <p className="text-sm text-red-600">{state.errors.employeeId[0]}</p>
+            {state?.errors?.employeeId?.[0] ? (
+              <p className="text-sm text-red-600">
+                {state.errors.employeeId[0]}
+              </p>
             ) : null}
           </Field>
         </FieldGroup>
@@ -62,8 +66,14 @@ function UserForm() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
-            <Input id="email" name="email" type="email" placeholder="email@company.com" required />
-            {state.errors?.email?.[0] ? (
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="email@company.com"
+              required
+            />
+            {state?.errors?.email?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.email[0]}</p>
             ) : null}
           </Field>
@@ -72,8 +82,13 @@ function UserForm() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="phone">Phone</FieldLabel>
-            <Input id="phone" name="phone" placeholder="e.g., +1234567890" required />
-            {state.errors?.phone?.[0] ? (
+            <Input
+              id="phone"
+              name="phone"
+              placeholder="e.g., +1234567890"
+              required
+            />
+            {state?.errors?.phone?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.phone[0]}</p>
             ) : null}
           </Field>
@@ -90,8 +105,10 @@ function UserForm() {
               placeholder="e.g., DPT001"
               required
             />
-            {state.errors?.departmentId?.[0] ? (
-              <p className="text-sm text-red-600">{state.errors.departmentId[0]}</p>
+            {state?.errors?.departmentId?.[0] ? (
+              <p className="text-sm text-red-600">
+                {state.errors.departmentId[0]}
+              </p>
             ) : null}
           </Field>
         </FieldGroup>
@@ -100,7 +117,7 @@ function UserForm() {
           <Field>
             <FieldLabel htmlFor="role">Role</FieldLabel>
             <Input id="role" name="role" placeholder="e.g., Manager" required />
-            {state.errors?.role?.[0] ? (
+            {state?.errors?.role?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.role[0]}</p>
             ) : null}
           </Field>
@@ -117,7 +134,7 @@ function UserForm() {
               placeholder="e.g., Senior Developer"
               required
             />
-            {state.errors?.position?.[0] ? (
+            {state?.errors?.position?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.position[0]}</p>
             ) : null}
           </Field>
@@ -140,7 +157,7 @@ function UserForm() {
               <option value="inactive">Inactive</option>
               <option value="suspended">Suspended</option>
             </select>
-            {state.errors?.status?.[0] ? (
+            {state?.errors?.status?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.status[0]}</p>
             ) : null}
           </Field>
@@ -156,14 +173,14 @@ function UserForm() {
               placeholder="Enter password"
               required
             />
-            {state.errors?.password?.[0] ? (
+            {state?.errors?.password?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.password[0]}</p>
             ) : null}
           </Field>
         </FieldGroup>
       </div>
 
-      {state.message ? (
+      {state?.message ? (
         <p className="text-sm text-red-600 mt-4">{state.message}</p>
       ) : null}
 

@@ -1,3 +1,6 @@
+import { Certificate } from "./certificate";
+import { Department } from "./department";
+
 // API response (backend)
 export type ApiUser = {
   employeeID: string;
@@ -13,20 +16,17 @@ export type ApiUser = {
 
 // Frontend clean type
 export type User = {
+  id: number;
   employeeID: string;
   name: string;
   email: string;
   phone: string;
   departmentId: number;
-  department: {
-    id: number;
-    name: string;
-    division: string;
-    totalStaff: number;
-  };
+  department: Department;
+  certificates: Certificate[];
   role: string;
+  status: string;
   position: string;
-  status: "active" | "inactive" | "suspended";
   createdBy: string;
   createdAt: number;
   updatedAt: number;

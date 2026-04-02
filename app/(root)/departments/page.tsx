@@ -3,7 +3,7 @@ import DepartmentClient from "@/components/department/departmentClient";
 
 export default async function Page() {
   const departments = await getDepartments();
-  console.log("Departments:", departments.data.items); //log departments for debugging
+   //log departments for debugging
 
   return <DepartmentClient departments={departments.data.items} />;
 }

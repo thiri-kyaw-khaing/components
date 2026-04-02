@@ -7,17 +7,10 @@ import { Separator } from "@radix-ui/react-separator";
 import { CertificateCard } from "./certificationCard";
 import Detail from "./detailText";
 import { Department } from "@/app/types/department";
-
-type UserCertification = {
-  id: string | number;
-  name: string;
-  trainingPlan: string;
-  category: string;
-};
+import { Certificate } from "@/app/types/certificate";
 
 type UserDetailsData = User & {
   department: Department;
-  certifications?: UserCertification[];
 };
 
 // type Props = {
@@ -25,11 +18,6 @@ type UserDetailsData = User & {
 // };
 
 function UserDetails({ user }: { user: UserDetailsData }) {
-  const certifications = Array.isArray(user?.certifications)
-    ? user.certifications
-    : [];
-  console.log("User details received in UserDetails component:", user);
-
   return (
     <>
       <div className="bg-[#006022] h-40 w-full flex items-center px-12">
@@ -44,7 +32,7 @@ function UserDetails({ user }: { user: UserDetailsData }) {
         </Button>
         <Avatar className="bg-green h-24 w-24 border-2 border-[#E8F7EC]">
           <AvatarFallback className="bg-[#4E7F57] text-white text-4xl">
-            {user.name}
+            {user.name.charAt(0)}
           </AvatarFallback>
         </Avatar>
         {/* User Information */}
@@ -84,7 +72,7 @@ function UserDetails({ user }: { user: UserDetailsData }) {
 
         {/* Certifications Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {certifications.map((cert: UserCertification) => (
+          {user.certificates?.map((cert: Certificate) => (
             <CertificateCard key={cert.id} certificate={cert} />
           ))}
         </div>
