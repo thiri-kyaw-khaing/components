@@ -1,16 +1,17 @@
 "use client";
 
-import { User } from "@/app/types/userManagement";
+import { UserList } from "@/app/types/userManagement";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 type UserEditFormProps = {
-  user?: User;
+  user?: UserList;
   onClose: () => void;
 };
 import { useActionState } from "react";
 import { EditUserAction, State } from "@/lib/actions/AdminUser/editUser";
+import { startOfDecade } from "date-fns";
 
 function EditUserForm({ user, onClose }: UserEditFormProps) {
   const initialState: State = {
@@ -19,7 +20,7 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
   };
 
   const [state, formAction, pending] = useActionState(
-    EditUserAction.bind(null, user?.id ?? ""),
+    EditUserAction.bind(null, String(user?.id) ?? ""),
     initialState,
   );
   const safeState = state ?? initialState;
@@ -35,9 +36,16 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input id="name" name="name" defaultValue={user?.name ?? ""} required />
+              <Input
+                id="name"
+                name="name"
+                defaultValue={user?.fullName ?? ""}
+                required
+              />
               {safeState.errors?.name?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.name[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.name[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -48,11 +56,13 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
               <Input
                 id="employeeId"
                 name="employeeId"
-                defaultValue={user?.id ?? ""}
+                defaultValue={user?.employeeId ?? ""}
                 required
               />
               {safeState.errors?.employeeId?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.employeeId[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.employeeId[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -67,7 +77,9 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
                 required
               />
               {safeState.errors?.departmentId?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.departmentId[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.departmentId[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -75,9 +87,16 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="phone">Phone</FieldLabel>
-              <Input id="phone" name="phone" defaultValue={user?.phone ?? ""} required />
+              <Input
+                id="phone"
+                name="phone"
+                defaultValue={user?.phone ?? ""}
+                required
+              />
               {safeState.errors?.phone?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.phone[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.phone[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -93,7 +112,9 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
                 required
               />
               {safeState.errors?.email?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.email[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.email[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -101,9 +122,16 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="role">Role</FieldLabel>
-              <Input id="role" name="role" defaultValue={user?.role ?? ""} required />
+              <Input
+                id="role"
+                name="role"
+                defaultValue={user?.role ?? ""}
+                required
+              />
               {safeState.errors?.role?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.role[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.role[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -114,12 +142,14 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
               <Input
                 id="position"
                 name="position"
-                defaultValue={user?.position ?? ""}
+                defaultValue={user?.jobRole ?? ""}
                 placeholder="e.g., Senior Developer"
                 required
               />
               {safeState.errors?.position?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.position[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.position[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>
@@ -138,7 +168,9 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
                 <option value="suspended">Suspended</option>
               </select>
               {safeState.errors?.status?.[0] ? (
-                <p className="text-sm text-red-600">{safeState.errors.status[0]}</p>
+                <p className="text-sm text-red-600">
+                  {safeState.errors.status[0]}
+                </p>
               ) : null}
             </Field>
           </FieldGroup>

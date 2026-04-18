@@ -1,16 +1,31 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
+import { redirect } from "next/navigation";
+import { getMe } from "@/lib/api/getMe";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const me = await getMe();
+  const user = me?.user;
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full overflow-hidden">
         {/* Sidebar: fixed on desktop (lg+), drawer on mobile */}
-        <AppSidebar />
+        <AppSidebar
+          user={{
+            name: user.name,
+            position: user.position,
+            employeeID: user.employeeID,
+          }}
+        />
 
         {/* Main content area */}
         <div className="flex flex-1 flex-col min-w-0">

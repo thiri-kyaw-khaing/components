@@ -2,7 +2,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -21,43 +20,60 @@ import {
 } from "../ui/dropdown-menu";
 import { Dialog, DialogContent } from "../ui/dialog";
 import EditUserForm from "./EditUserForm";
-import { User } from "@/app/types/userManagement";
+import { UserList } from "@/app/types/userManagement";
 import { useRouter } from "next/navigation";
 import { DeleteUserDialog } from "./DeleteUserDialog";
 
-function UserTable({ users }: { users: User[] }) {
+function UserTable({ users }: { users: UserList[] }) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"edit" | "delete">("edit");
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserList | null>(null);
   return (
     <>
       <div className="overflow-x-auto border rounded-md">
-        <Table className="table-fixed w-full rounded-t-md ">
-          <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
+        <Table className="w-full min-w-[1300px] rounded-t-md">
+          <TableHeader
+            className="rounded-t-md"
+            style={{ backgroundColor: colors.secondary }}
+          >
             <TableRow>
-              <TableHead className="w-[120px] font-bold">Employee ID</TableHead>
-              <TableHead className="w-[150px] font-bold">Name</TableHead>
-              <TableHead className="w-[200px] font-bold">Contact</TableHead>
-              <TableHead className="text-left w-[150px] font-bold">
-                Department
+              <TableHead className="w-[120px] font-bold whitespace-nowrap">
+                Employee ID
               </TableHead>
-              <TableHead className="text-left w-[120px] font-bold">
-                Dept ID
-              </TableHead>
-              <TableHead className="text-left w-[150px] font-bold">
+              <TableHead className="w-[200px] font-bold whitespace-nowrap">
                 Role
               </TableHead>
+              <TableHead className="w-[150px] font-bold whitespace-nowrap">
+                Name
+              </TableHead>
+              <TableHead className="w-[250px] font-bold whitespace-nowrap">
+                Contact
+              </TableHead>
+              <TableHead className="text-left w-[150px] font-bold whitespace-nowrap">
+                Department
+              </TableHead>
+              <TableHead className="text-left w-[120px] font-bold whitespace-nowrap">
+                Dept ID
+              </TableHead>
+              <TableHead className="text-left w-[150px] font-bold whitespace-nowrap">
+                Position
+              </TableHead>
 
-              <TableHead className="text-left font-bold">Status</TableHead>
-              <TableHead className="font-bold">Actions</TableHead>
+              <TableHead className="text-left w-[130px] font-bold whitespace-nowrap">
+                Status
+              </TableHead>
+              <TableHead className="w-[110px] font-bold whitespace-nowrap text-center">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.employeeId}>
                 <TableCell className="font-medium">{user.employeeId}</TableCell>
+                <TableCell>{user.role}</TableCell>
                 <TableCell>{user.fullName}</TableCell>
                 <TableCell>
                   <ContactInfo email={user.email} phone={user.phone} />

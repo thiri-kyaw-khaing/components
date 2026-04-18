@@ -1,3 +1,4 @@
+import { id, is } from "date-fns/locale";
 import { Certificate } from "./certificate";
 import { Department } from "./department";
 
@@ -30,4 +31,18 @@ export type User = {
   createdBy: string;
   createdAt: number;
   updatedAt: number;
+};
+
+export type UserList = {
+  id: number;
+  employeeId: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  departmentId: number;
+  departmentName: string;
+  role: string;
+  jobRole: string;
+  status: string;
+  isManager: boolean;
 };

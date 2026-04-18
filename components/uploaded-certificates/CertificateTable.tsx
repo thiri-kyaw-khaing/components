@@ -1,16 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { certificates as initialCertificates } from "@/lib/data";
 import { colors } from "@/lib/color";
 import {
   Dialog,
@@ -21,7 +19,19 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import type { Certificate } from "@/app/types/certificate";
-import Image from "next/image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import type { CertificateMeta } from "@/lib/api/getCertificate";
+
+const API_ORIGIN = process.env.NEXT_PUBLIC_API_ORIGIN || "http://localhost:8080";
+
+function getCertificateImageUrl(imagePath: string) {
+  if (!imagePath) return "";
+  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+    return imagePath;
+  }
+
+  return `${API_ORIGIN}/${imagePath.replace(/^\/+/, "")}`;
+}
 
 function StatusBadge({ status }: { status: Certificate["status"] }) {
   const styles: Record<Certificate["status"], string> = {
@@ -56,13 +66,31 @@ function DetailRow({
   );
 }
 
-function CertificateTable() {
-  const [certificates, setCertificates] = useState<Certificate[]>([
-    ...initialCertificates,
-  ]);
+type CertificateTableProps = {
+  items: Certificate[];
+  meta: CertificateMeta;
+  currentPage: number;
+  currentLimit: number;
+};
+
+function CertificateTable({
+  items,
+  meta,
+  currentPage,
+  currentLimit,
+}: CertificateTableProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [certificates, setCertificates] = useState<Certificate[]>(items);
   const [selectedCertificate, setSelectedCertificate] =
     useState<Certificate | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  useEffect(() => {
+    setCertificates(items);
+  }, [items]);
 
   const handleViewDetails = (certificate: Certificate) => {
     setSelectedCertificate(certificate);
@@ -82,33 +110,55 @@ function CertificateTable() {
     setSelectedCertificate((prev) => (prev ? { ...prev, status } : null));
   };
 
+  const handlePageChange = (targetPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(targetPage));
+    params.set("limit", String(currentLimit));
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   return (
-    <div>
-      <Table className="table-fixed w-full rounded-t-md ">
-        <TableHeader className={`bg-[${colors.secondary}] rounded-t-md`}>
+    <div className="overflow-x-auto">
+      <Table className="w-full min-w-[1500px] rounded-t-md">
+        <TableHeader
+          className="rounded-t-md"
+          style={{ backgroundColor: colors.secondary }}
+        >
           <TableRow>
-            <TableHead className="w-[200px] font-bold">Employee ID</TableHead>
-            <TableHead className="w-[300px] font-bold">Employee Name</TableHead>
-            <TableHead className="w-[200px] font-bold text-left">
+            <TableHead className="w-[200px] font-bold whitespace-nowrap">
+              Employee ID
+            </TableHead>
+            <TableHead className="w-[300px] font-bold whitespace-nowrap">
+              Employee Name
+            </TableHead>
+            <TableHead className="w-[200px] font-bold text-left whitespace-nowrap">
               Department
             </TableHead>
-            <TableHead className="w-[200px] font-bold text-left">
+            <TableHead className="w-[200px] font-bold text-left whitespace-nowrap">
               Division
             </TableHead>
 
-            <TableHead className="text-right w-[250px] font-bold">
+            <TableHead className="text-right w-[250px] font-bold whitespace-nowrap">
               Training Name
             </TableHead>
 
-            <TableHead className="text-right w-[150px] font-bold">
+            <TableHead className="text-right w-[150px] font-bold whitespace-nowrap">
               Status
             </TableHead>
-            <TableHead className="text-right w-[150px] font-bold">
+            <TableHead className="text-right w-[150px] font-bold whitespace-nowrap">
               Action
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
+          {certificates.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={7} className="text-center py-8 text-gray-500">
+                No certificates found.
+              </TableCell>
+            </TableRow>
+          ) : null}
+
           {certificates.map((certificate) => (
             <TableRow key={certificate.id}>
               {/* Employee ID */}
@@ -158,6 +208,31 @@ function CertificateTable() {
         </TableBody>
       </Table>
 
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-3 py-4 border-t">
+        <p className="text-sm text-muted-foreground">
+          Page {meta.page} of {meta.totalPages} ({meta.totalItems} total items)
+        </p>
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage <= 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage >= meta.totalPages}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
+
       {/* Certificate Details Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -170,11 +245,9 @@ function CertificateTable() {
               {/* Certificate Image Preview */}
               {selectedCertificate.image && (
                 <div className="w-full rounded-lg border overflow-hidden bg-muted">
-                  <Image
-                    src={`/${selectedCertificate.image}`}
+                  <img
+                    src={getCertificateImageUrl(selectedCertificate.image)}
                     alt="Certificate"
-                    width={600}
-                    height={400}
                     className="w-full h-auto object-contain max-h-[300px]"
                   />
                 </div>

@@ -60,7 +60,6 @@ export async function LoginAction(
   }
 
   const cookieStore = await cookies();
-  console.log("TOKEN AFTER LOGIN:", cookieStore.get("token"));
 
   cookieStore.set("token", accessToken, {
     httpOnly: true,
@@ -69,29 +68,5 @@ export async function LoginAction(
     path: "/",
   });
 
-  // const setCookie = response.headers.get("set-cookie");
-
-  // if (setCookie) {
-  //   const accessMatch = setCookie.match(/access_token=([^;]+)/);
-  //   const refreshMatch = setCookie.match(/refresh_token=([^;]+)/);
-
-  //   const cookieStore = await cookies();
-
-  //   if (accessMatch) {
-  //     cookieStore.set("access_token", accessMatch[1], {
-  //       httpOnly: true,
-  //       path: "/",
-  //     });
-  //   }
-
-  //   if (refreshMatch) {
-  //     cookieStore.set("refresh_token", refreshMatch[1], {
-  //       httpOnly: true,
-  //       path: "/",
-  //     });
-  //   }
-  // }
-
-  // ✅ Redirect (no return needed)
   redirect("/dashboard");
 }

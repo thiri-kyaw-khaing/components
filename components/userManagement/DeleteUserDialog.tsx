@@ -1,11 +1,11 @@
-import { User } from "@/app/types/userManagement";
+import { UserList } from "@/app/types/userManagement";
 import { Button } from "../ui/button";
 import { DialogTitle } from "../ui/dialog";
 import { useActionState } from "react";
 import { DeleteUserAction, State } from "@/lib/actions/AdminUser/deleteUser";
 
 type Props = {
-  user: User;
+  user: UserList;
   onConfirm: () => void;
   onCancel: () => void;
 };
@@ -16,7 +16,7 @@ export function DeleteUserDialog({ user, onConfirm, onCancel }: Props) {
   };
 
   const [state, formAction, pending] = useActionState(
-    DeleteUserAction.bind(null, user.id),
+    DeleteUserAction.bind(null, String(user.id)),
     initialState,
   );
 
@@ -28,8 +28,8 @@ export function DeleteUserDialog({ user, onConfirm, onCancel }: Props) {
 
       <p className="text-sm">
         Are you sure you want to delete{" "}
-        <span className="font-medium">{user.name}</span>? This action cannot be
-        undone.
+        <span className="font-medium">{user.fullName}</span>? This action cannot
+        be undone.
       </p>
 
       <div className="flex justify-end gap-2">
@@ -43,7 +43,9 @@ export function DeleteUserDialog({ user, onConfirm, onCancel }: Props) {
         </form>
       </div>
 
-      {state.message ? <p className="text-sm text-red-600">{state.message}</p> : null}
+      {state && state.message ? (
+        <p className="text-sm text-red-600">{state.message}</p>
+      ) : null}
     </div>
   );
 }

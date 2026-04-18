@@ -1,24 +1,19 @@
 "use client";
 
 import {
-  ArchiveIcon,
   BookOpen,
-  Calendar,
   DownloadIcon,
-  GoalIcon,
   Home,
   Inbox,
+  LogOut,
   Notebook,
-  PersonStandingIcon,
-  SaveIcon,
-  Search,
-  Settings,
   User,
 } from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -30,6 +25,8 @@ import Link from "next/link";
 import LogoCard from "../logoCard";
 import UserInfo from "../userInfo";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { logoutAction } from "@/lib/actions/AdminLogin/logout";
 
 // Menu items.
 const items = [
@@ -71,7 +68,15 @@ const items = [
   },
 ];
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  user: {
+    name: string;
+    position: string;
+    employeeID: string;
+  };
+};
+
+export function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
 
   return (
@@ -82,7 +87,11 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <div className="m-4 space-y-4">
               <LogoCard />
-              <UserInfo />
+              <UserInfo
+                name={user.name}
+                position={user.position}
+                employeeID={user.employeeID}
+              />
             </div>
             <SidebarMenu>
               {items.map((item) => {
@@ -111,6 +120,18 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <form action={logoutAction} className="p-2">
+          <Button
+            type="submit"
+            variant="ghost"
+            className="w-full justify-start gap-2 text-red-600 hover:text-red-700"
+          >
+            <LogOut className="h-4 w-4" />
+            <span>Log out</span>
+          </Button>
+        </form>
+      </SidebarFooter>
     </Sidebar>
   );
 }
