@@ -9,7 +9,9 @@ type UploadedCertificatesPageProps = {
   }>;
 };
 
-async function UploadedCertificates({ searchParams }: UploadedCertificatesPageProps) {
+async function UploadedCertificates({
+  searchParams,
+}: UploadedCertificatesPageProps) {
   const resolvedSearchParams = await searchParams;
   const pageValue = Number(resolvedSearchParams?.page ?? "1");
   const limitValue = Number(resolvedSearchParams?.limit ?? "10");

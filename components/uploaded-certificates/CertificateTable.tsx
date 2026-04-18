@@ -22,7 +22,8 @@ import type { Certificate } from "@/app/types/certificate";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { CertificateMeta } from "@/lib/api/getCertificate";
 
-const API_ORIGIN = process.env.NEXT_PUBLIC_API_ORIGIN || "http://localhost:8080";
+const API_ORIGIN =
+  process.env.NEXT_PUBLIC_API_ORIGIN || "http://localhost:8080";
 
 function getCertificateImageUrl(imagePath: string) {
   if (!imagePath) return "";
