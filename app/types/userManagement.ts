@@ -46,3 +46,10 @@ export type UserList = {
   status: string;
   isManager: boolean;
 };
+
+export type UserMeta = {
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPages: number;
+};

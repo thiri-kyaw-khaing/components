@@ -9,7 +9,6 @@ export async function getDepartments() {
       method: "GET",
     },
   );
-  console.log("Response:", res.status); //log status for debugging
 
   if (!res.ok) {
     throw new Error("Failed to fetch departments");

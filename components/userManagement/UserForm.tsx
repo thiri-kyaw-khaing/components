@@ -10,8 +10,13 @@ import {
 } from "../ui/dialog";
 import { CreateUserAction, State } from "@/lib/actions/AdminUser/createUser";
 import { useActionState } from "react";
+import type { Department } from "@/app/types/department";
 
-function UserForm() {
+type UserFormProps = {
+  departments: Department[];
+};
+
+function UserForm({ departments }: UserFormProps) {
   const initialState: State = {
     errors: {},
     message: null,
@@ -82,12 +87,7 @@ function UserForm() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="phone">Phone</FieldLabel>
-            <Input
-              id="phone"
-              name="phone"
-              placeholder="e.g., +1234567890"
-              required
-            />
+            <Input id="phone" name="phone" placeholder="e.g., +1234567890" />
             {state?.errors?.phone?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.phone[0]}</p>
             ) : null}
@@ -98,13 +98,23 @@ function UserForm() {
       <div className="grid grid-cols-2 gap-4 mt-4">
         <FieldGroup>
           <Field>
-            <FieldLabel htmlFor="departmentId">Department ID</FieldLabel>
-            <Input
+            <FieldLabel htmlFor="departmentId">Department</FieldLabel>
+            <select
               id="departmentId"
               name="departmentId"
-              placeholder="e.g., DPT001"
+              defaultValue=""
+              className="w-full border border-[#006022] rounded-md px-3 py-2"
               required
-            />
+            >
+              <option value="" disabled>
+                Select department
+              </option>
+              {departments.map((department) => (
+                <option key={department.id} value={department.id}>
+                  {department.name}
+                </option>
+              ))}
+            </select>
             {state?.errors?.departmentId?.[0] ? (
               <p className="text-sm text-red-600">
                 {state.errors.departmentId[0]}
@@ -116,7 +126,20 @@ function UserForm() {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="role">Role</FieldLabel>
-            <Input id="role" name="role" placeholder="e.g., Manager" required />
+            <select
+              id="role"
+              name="role"
+              defaultValue=""
+              className="w-full border border-[#006022] rounded-md px-3 py-2"
+              required
+            >
+              <option value="" disabled>
+                Select role
+              </option>
+              <option value="HRAdmin">HR Admin</option>
+              <option value="DepartmentManager">Department Manager</option>
+              <option value="Staff">Staff</option>
+            </select>
             {state?.errors?.role?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.role[0]}</p>
             ) : null}
@@ -150,12 +173,12 @@ function UserForm() {
             <select
               id="status"
               name="status"
-              defaultValue="active"
+              defaultValue="Active"
               className="w-full border border-[#006022] rounded-md px-3 py-2"
             >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="suspended">Suspended</option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="Suspended">Suspended</option>
             </select>
             {state?.errors?.status?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.status[0]}</p>

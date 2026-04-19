@@ -12,7 +12,13 @@ import { DateRange } from "react-day-picker";
 
 type FilterGroupProps = {
   departments: Department[];
-  onSearch: (filters: any) => void;
+  onSearch: (filters: {
+    departmentIds: number[];
+    categories: string[];
+    status: string;
+    startDate: string | null;
+    endDate: string | null;
+  }) => void;
 };
 
 function FilterGroup({ departments, onSearch }: FilterGroupProps) {
@@ -42,7 +48,6 @@ function FilterGroup({ departments, onSearch }: FilterGroupProps) {
       setIsSubmitting(false);
     }
     console.log("Submitting filters");
-    onSearch(filters);
   };
 
   return (

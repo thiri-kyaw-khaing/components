@@ -7,15 +7,23 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { ojtRecords, users } from "@/lib/data";
 import { colors } from "@/lib/color";
 import { Button } from "../ui/button";
 import { Download } from "lucide-react";
+import type { TrainingRecord, TrainingRecordMeta } from "@/app/types/record";
 
 type Props = {
-  records?: any[];
+  records: TrainingRecord[];
+  meta: TrainingRecordMeta;
+  currentPage: number;
+  onPageChange: (page: number) => void;
 };
-function TrainingRecordTable({ records }: Props) {
+function TrainingRecordTable({
+  records,
+  meta,
+  currentPage,
+  onPageChange,
+}: Props) {
   const displayRecords = records ?? [];
   console.log("Displaying records:", displayRecords);
 
@@ -151,6 +159,31 @@ function TrainingRecordTable({ records }: Props) {
           ))}
         </TableBody>
       </Table>
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-3 py-4 border-t">
+        <p className="text-sm text-muted-foreground">
+          Page {meta.page} of {meta.totalPages} ({meta.totalItems} total items)
+        </p>
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage <= 1}
+            onClick={() => onPageChange(currentPage - 1)}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage >= meta.totalPages}
+            onClick={() => onPageChange(currentPage + 1)}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

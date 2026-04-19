@@ -21,15 +21,36 @@ export type State = {
 };
 
 const FormSchema = z.object({
-  name: z.string().trim().min(2, "Full name must be at least 2 characters!"),
-  employeeId: z.string().trim().min(1, "Employee ID is required!"),
-  email: z.string().trim().email("Invalid email address!"),
-  phone: z.string().trim().min(6, "Phone number is required!"),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Full name must be at least 2 characters!")
+    .max(52, "Full name must be at most 52 characters!"),
+  employeeId: z
+    .string()
+    .trim()
+    .min(1, "Employee ID is required!")
+    .max(52, "Employee ID must be at most 52 characters!"),
+  email: z
+    .string()
+    .trim()
+    .email("Invalid email address!")
+    .max(52, "Email must be at most 52 characters!"),
+  phone: z
+    .string()
+    .trim()
+    .max(20, "Phone must be at most 20 characters!")
+    .optional()
+    .or(z.literal("")),
   departmentId: z.coerce.number().int().min(1, "Department ID is required!"),
-  role: z.string().trim().min(2, "Role must be at least 2 characters!"),
-  position: z.string().trim().min(2, "Position must be at least 2 characters!"),
+  role: z.enum(["HRAdmin", "DepartmentManager", "Staff"]),
+  position: z
+    .string()
+    .trim()
+    .min(1, "Position is required!")
+    .max(100, "Position must be at most 100 characters!"),
   password: z.string().trim().min(6, "Password must be at least 6 characters!"),
-  status: z.enum(["active", "inactive", "suspended"]),
+  status: z.enum(["Active", "Inactive", "Suspended"]),
 });
 
 export async function CreateUserAction(
@@ -46,10 +67,6 @@ export async function CreateUserAction(
     position: formData.get("position"),
     password: formData.get("password"),
     status: formData.get("status"),
-  });
-
-  console.log("Received form data:", {
-    validatedFields,
   });
 
   if (!validatedFields.success) {
@@ -82,9 +99,9 @@ export async function CreateUserAction(
       },
       body: JSON.stringify({
         name,
-        employeeId,
+        employeeID: employeeId,
         email,
-        phone,
+        phone: phone || "",
         departmentId,
         role,
         position,

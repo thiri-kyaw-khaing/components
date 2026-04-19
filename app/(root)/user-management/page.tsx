@@ -1,14 +1,66 @@
 import ButtonDialog from "@/components/dashboard/buttonDialog";
 import PageHeader from "@/components/dashboard/pageHeader";
 import UserForm from "@/components/userManagement/UserForm";
-import UserTable from "@/components/userManagement/userTable";
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import UserManagementClient from "@/components/userManagement/UserManagementClient";
 import { getUsers } from "@/lib/api/getUser";
-import { User } from "@/app/types/userManagement";
+import { getDepartments } from "@/lib/api/getDepartment";
+import type { Department } from "@/app/types/department";
+import type { UserMeta } from "@/app/types/userManagement";
 
-async function UserManagement() {
-  const userResponse = await getUsers();
+type UserManagementProps = {
+  searchParams?: Promise<{
+    page?: string;
+    limit?: string;
+    search?: string;
+    status?: string;
+    departmentId?: string;
+    sortBy?: string;
+    sortOrder?: string;
+  }>;
+};
+
+async function UserManagement({ searchParams }: UserManagementProps) {
+  const resolvedSearchParams = await searchParams;
+  const pageValue = Number(resolvedSearchParams?.page ?? "1");
+  const limitValue = Number(resolvedSearchParams?.limit ?? "10");
+  const search = (resolvedSearchParams?.search ?? "").trim();
+  const status = (resolvedSearchParams?.status ?? "").trim();
+  const departmentIdValue = Number(resolvedSearchParams?.departmentId ?? "0");
+  const sortBy = (resolvedSearchParams?.sortBy ?? "employee_id").trim();
+  const sortOrderValue = (resolvedSearchParams?.sortOrder ?? "asc").trim();
+
+  const page = Number.isFinite(pageValue) && pageValue > 0 ? pageValue : 1;
+  const limit =
+    Number.isFinite(limitValue) && limitValue > 0 && limitValue <= 100
+      ? limitValue
+      : 10;
+  const departmentId =
+    Number.isFinite(departmentIdValue) && departmentIdValue > 0
+      ? departmentIdValue
+      : undefined;
+  const sortOrder = sortOrderValue === "desc" ? "desc" : "asc";
+
+  const userResponse = await getUsers({
+    page,
+    limit,
+    search: search || undefined,
+    status: status || undefined,
+    departmentId,
+    sortBy: sortBy || undefined,
+    sortOrder,
+  });
+  const items = userResponse.data?.items ?? [];
+  const meta: UserMeta =
+    userResponse.data?.meta ??
+    ({
+      page,
+      limit,
+      totalItems: items.length,
+      totalPages: 1,
+    } as const);
+
+  const departmentsResponse = await getDepartments();
+  const departments: Department[] = departmentsResponse?.data?.items ?? [];
 
   return (
     <>
@@ -18,42 +70,23 @@ async function UserManagement() {
           subtitle="Manage users, assign roles, and view activity"
           action={
             <ButtonDialog name="Add User">
-              <UserForm />
+              <UserForm departments={departments} />
             </ButtonDialog>
           }
         />
 
-        <div className="flex items-center gap-4 my-4 justify-between">
-          {/* Search */}
-          {/* <div className="relative w-[70%]"> */}
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              placeholder="Search by name, email, or employee ID..."
-              className="pl-9 border-[#006022]"
-            />
-          </div>
-
-          {/* Filter */}
-          {/* <Select>
-            <SelectTrigger className="w-[180px] border-[#006022]">
-              <SelectValue placeholder="Suspended" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="inactive">Inactive</SelectItem>
-              <SelectItem value="suspended">Suspended</SelectItem>
-            </SelectContent>
-          </Select> */}
-
-          {/* Button */}
-          {/* <Button className="bg-[#006022] hover:bg-[#005018] px-8">
-            Search
-          </Button> */}
-        </div>
-        <div className="">
-          <UserTable users={userResponse.data?.items || []} />
-        </div>
+        <UserManagementClient
+          users={items}
+          meta={meta}
+          currentPage={page}
+          currentLimit={limit}
+          departments={departments}
+          initialSearch={search}
+          initialStatus={status}
+          initialDepartmentId={departmentId ? String(departmentId) : ""}
+          initialSortBy={sortBy}
+          initialSortOrder={sortOrder}
+        />
       </div>
     </>
   );

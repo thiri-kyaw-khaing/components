@@ -1,16 +1,28 @@
 "use server";
 
 import { API_BASE_URL } from "@/app/api/api";
+import type { TrainingRecord, TrainingRecordMeta } from "@/app/types/record";
 import { authFetch } from "@/lib/api/authFetch";
 
 export type SearchRecordsResult = {
   ok: boolean;
   message?: string;
-  data?: unknown[];
+  data?: TrainingRecord[];
+  meta?: TrainingRecordMeta;
+};
+
+export type SearchRecordsFilters = {
+  departmentIds?: number[];
+  categories?: string[];
+  status?: string;
+  startDate?: string | null;
+  endDate?: string | null;
+  page?: number;
+  limit?: number;
 };
 
 export async function SearchTrainingRecordsAction(
-  filters: Record<string, unknown>,
+  filters: SearchRecordsFilters,
 ): Promise<SearchRecordsResult> {
   try {
     const { response } = await authFetch(
@@ -51,10 +63,19 @@ export async function SearchTrainingRecordsAction(
       json?.records ??
       json?.data ??
       [];
+    const meta: TrainingRecordMeta =
+      json?.data?.meta ??
+      ({
+        page: typeof filters?.page === "number" ? filters.page : 1,
+        limit: typeof filters?.limit === "number" ? filters.limit : 10,
+        totalItems: Array.isArray(records) ? records.length : 0,
+        totalPages: 1,
+      } as const);
 
     return {
       ok: true,
-      data: Array.isArray(records) ? records : [],
+      data: Array.isArray(records) ? (records as TrainingRecord[]) : [],
+      meta,
     };
   } catch {
     return {

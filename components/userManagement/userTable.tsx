@@ -20,16 +20,32 @@ import {
 } from "../ui/dropdown-menu";
 import { Dialog, DialogContent } from "../ui/dialog";
 import EditUserForm from "./EditUserForm";
-import { UserList } from "@/app/types/userManagement";
-import { useRouter } from "next/navigation";
+import { UserList, UserMeta } from "@/app/types/userManagement";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DeleteUserDialog } from "./DeleteUserDialog";
 
-function UserTable({ users }: { users: UserList[] }) {
+type UserTableProps = {
+  users: UserList[];
+  meta: UserMeta;
+  currentPage: number;
+  currentLimit: number;
+};
+
+function UserTable({ users, meta, currentPage, currentLimit }: UserTableProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"edit" | "delete">("edit");
   const [selectedUser, setSelectedUser] = useState<UserList | null>(null);
+
+  const handlePageChange = (targetPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(targetPage));
+    params.set("limit", String(currentLimit));
+    router.push(`${pathname}?${params.toString()}`);
+  };
   return (
     <>
       <div className="overflow-x-auto border rounded-md">
@@ -70,6 +86,16 @@ function UserTable({ users }: { users: UserList[] }) {
             </TableRow>
           </TableHeader>
           <TableBody>
+            {users.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={9}
+                  className="text-center py-8 text-gray-500"
+                >
+                  No users found.
+                </TableCell>
+              </TableRow>
+            ) : null}
             {users.map((user) => (
               <TableRow key={user.employeeId}>
                 <TableCell className="font-medium">{user.employeeId}</TableCell>
@@ -127,6 +153,31 @@ function UserTable({ users }: { users: UserList[] }) {
             ))}
           </TableBody>
         </Table>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-3 py-4 border-t">
+          <p className="text-sm text-muted-foreground">
+            Page {meta.page} of {meta.totalPages} ({meta.totalItems} total
+            staffs)
+          </p>
+
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={currentPage <= 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={currentPage >= meta.totalPages}
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogContent>
             {mode === "edit" && (

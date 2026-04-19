@@ -11,7 +11,22 @@ type UserEditFormProps = {
 };
 import { useActionState } from "react";
 import { EditUserAction, State } from "@/lib/actions/AdminUser/editUser";
-import { startOfDecade } from "date-fns";
+
+const normalizeStatus = (status?: string) => {
+  if (!status) return "Active";
+  const normalized = status.toLowerCase();
+  if (normalized === "inactive") return "Inactive";
+  if (normalized === "suspended") return "Suspended";
+  return "Active";
+};
+
+const normalizeRole = (role?: string) => {
+  if (!role) return "Staff";
+  const normalized = role.toLowerCase();
+  if (normalized.includes("admin")) return "HRAdmin";
+  if (normalized.includes("manager")) return "DepartmentManager";
+  return "Staff";
+};
 
 function EditUserForm({ user, onClose }: UserEditFormProps) {
   const initialState: State = {
@@ -122,12 +137,17 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="role">Role</FieldLabel>
-              <Input
+              <select
                 id="role"
                 name="role"
-                defaultValue={user?.role ?? ""}
+                defaultValue={normalizeRole(user?.role)}
+                className="w-full border border-[#006022] rounded-md px-3 py-2"
                 required
-              />
+              >
+                <option value="HRAdmin">HR Admin</option>
+                <option value="DepartmentManager">Department Manager</option>
+                <option value="Staff">Staff</option>
+              </select>
               {safeState.errors?.role?.[0] ? (
                 <p className="text-sm text-red-600">
                   {safeState.errors.role[0]}
@@ -160,12 +180,12 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
               <select
                 id="status"
                 name="status"
-                defaultValue={user?.status ?? "active"}
+                defaultValue={normalizeStatus(user?.status)}
                 className="w-full border border-[#006022] rounded-md px-3 py-2"
               >
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-                <option value="suspended">Suspended</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Suspended">Suspended</option>
               </select>
               {safeState.errors?.status?.[0] ? (
                 <p className="text-sm text-red-600">

@@ -11,7 +11,6 @@ type Props = {
 export default async function UserDetailsPage({ params }: Props) {
   const { userId } = await params;
   const user = await getUserById(userId);
-  console.log("User Detail:", user); //log user for debugging
 
   if (!user) {
     return <div className="p-6">User not found</div>;

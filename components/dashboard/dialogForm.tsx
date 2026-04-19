@@ -20,7 +20,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { CreateDepartmentAction, State } from "@/lib/actions/AdminDepartment/createDepartment";
+import {
+  CreateDepartmentAction,
+  State,
+} from "@/lib/actions/AdminDepartment/createDepartment";
 import { Field, FieldGroup, FieldLabel } from "../ui/field";
 
 // const formSchema = z.object({
@@ -43,11 +46,6 @@ function DialogForm() {
   //   },
   // });
 
-  // function onSubmit(values: z.infer<typeof formSchema>) {
-  //   // Do something with the form values.
-  //   // ✅ This will be type-safe and validated.
-  //   console.log("Form submitted with values:", values);
-  // }
   return (
     <form action={formAction}>
       <DialogHeader>

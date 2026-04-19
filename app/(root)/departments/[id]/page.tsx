@@ -11,8 +11,6 @@ export default async function DepartmentDetailPage({
 }) {
   const { id } = await params;
   const department = await getDepartmentById(id);
-  // console.log("Department Detail:", department);
-  // console.log("staff members:", department.data.staff); //log department for debugging
 
   return (
     <div>
