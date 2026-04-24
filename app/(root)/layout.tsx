@@ -10,6 +10,7 @@ export default async function DashboardLayout({
 }) {
   const me = await getMe();
   const user = me?.user;
+  console.log("DashboardLayout - User Info:", user); // Debug log to check user info
 
   if (!user) {
     redirect("/login");
