@@ -23,8 +23,10 @@ const normalizeStatus = (status?: string) => {
 const normalizeRole = (role?: string) => {
   if (!role) return "Staff";
   const normalized = role.toLowerCase();
-  if (normalized.includes("admin")) return "HRAdmin";
-  if (normalized.includes("manager")) return "DepartmentManager";
+  console.log("Normalizing role:", role, "->", normalized);
+  if (normalized.includes("hr(admin)")) return "HRAdmin";
+  if (normalized.includes("departmenthead(manager)"))
+    return "DepartmentManager";
   return "Staff";
 };
 
@@ -140,12 +142,14 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
               <select
                 id="role"
                 name="role"
-                defaultValue={normalizeRole(user?.role)}
+                defaultValue={user?.role}
                 className="w-full border border-[#006022] rounded-md px-3 py-2"
                 required
               >
-                <option value="HRAdmin">HR Admin</option>
-                <option value="DepartmentManager">Department Manager</option>
+                <option value="Hr(admin)">Hr(admin)</option>
+                <option value="DepartmentHead(manager)">
+                  DepartmentHead(manager)
+                </option>
                 <option value="Staff">Staff</option>
               </select>
               {safeState.errors?.role?.[0] ? (
