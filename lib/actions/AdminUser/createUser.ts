@@ -43,7 +43,7 @@ const FormSchema = z.object({
     .optional()
     .or(z.literal("")),
   departmentId: z.coerce.number().int().min(1, "Department ID is required!"),
-  role: z.enum(["HRAdmin", "DepartmentManager", "Staff"]),
+  role: z.enum(["DepartmentHead(manager)", "Staff"]),
   position: z
     .string()
     .trim()

@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -31,7 +30,6 @@ function StaffTable({ staff }: StaffTableProps) {
   return (
     <div className="overflow-x-auto border rounded-md">
       <Table className="w-full min-w-[1200px] table-auto">
-        <TableCaption>Staff list</TableCaption>
         <TableHeader className={`bg-[${colors.secondary}] rounded-t-md w-full`}>
           <TableRow>
             <TableHead className="w-[120px] font-bold">Employee ID</TableHead>

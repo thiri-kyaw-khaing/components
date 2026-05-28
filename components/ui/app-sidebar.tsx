@@ -83,7 +83,6 @@ export function AppSidebar({ user }: AppSidebarProps) {
     <Sidebar collapsible="offcanvas">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <div className="m-4 space-y-4">
               <LogoCard />
