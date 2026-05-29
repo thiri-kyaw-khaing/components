@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -21,6 +21,10 @@ import { Button } from "../ui/button";
 import type { Certificate } from "@/app/types/certificate";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { CertificateMeta } from "@/lib/api/getCertificate";
+import {
+  approveCertificate,
+  rejectCertificate,
+} from "@/lib/actions/AdminCertificate/updateCertificateStatus";
 
 const API_ORIGIN =
   process.env.NEXT_PUBLIC_API_ORIGIN || "http://localhost:8080";
@@ -88,6 +92,8 @@ function CertificateTable({
   const [selectedCertificate, setSelectedCertificate] =
     useState<Certificate | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     setCertificates(items);
@@ -95,20 +101,44 @@ function CertificateTable({
 
   const handleViewDetails = (certificate: Certificate) => {
     setSelectedCertificate(certificate);
+    setActionError(null);
     setDialogOpen(true);
   };
 
-  const handleUpdateStatus = (status: Certificate["status"]) => {
+  // Hits the backend's approve/reject endpoint, then refreshes the table from
+  // the server. The local optimistic update is just for snappy UI; the real
+  // truth lives in the DB and is re-read after router.refresh().
+  const handleUpdateStatus = (status: "Approved" | "Rejected") => {
     if (!selectedCertificate) return;
+    setActionError(null);
+    const id = selectedCertificate.id;
 
-    setCertificates((prev) =>
-      prev.map((c) =>
-        c.id === selectedCertificate.id
-          ? { ...c, status, updatedAt: new Date().toISOString() }
-          : c,
-      ),
-    );
-    setSelectedCertificate((prev) => (prev ? { ...prev, status } : null));
+    startTransition(async () => {
+      const result =
+        status === "Approved"
+          ? await approveCertificate(id)
+          : await rejectCertificate(id);
+
+      if (!result.ok) {
+        setActionError(result.message ?? "Failed to update certificate.");
+        return;
+      }
+
+      // Optimistically update locally
+      setCertificates((prev) =>
+        prev.map((c) =>
+          c.id === id
+            ? { ...c, status, updatedAt: new Date().toISOString() }
+            : c,
+        ),
+      );
+      setSelectedCertificate((prev) => (prev ? { ...prev, status } : null));
+      setDialogOpen(false);
+
+      // Pull fresh data from the server (admin endpoint only returns Pending,
+      // so the row will disappear naturally after approve/reject)
+      router.refresh();
+    });
   };
 
   const handlePageChange = (targetPage: number) => {
@@ -296,22 +326,34 @@ function CertificateTable({
             </div>
           )}
 
+          {actionError && (
+            <p className="text-sm text-red-600 mt-2">{actionError}</p>
+          )}
+
           <DialogFooter className="flex flex-col sm:flex-row gap-2">
             <Button
               className="bg-[#006022] text-white hover:bg-[#005018]"
               onClick={() => handleUpdateStatus("Approved")}
-              disabled={selectedCertificate?.status === "Approved"}
+              disabled={
+                isPending || selectedCertificate?.status === "Approved"
+              }
             >
-              Approve
+              {isPending ? "Saving..." : "Approve"}
             </Button>
             <Button
               className="bg-red-600 text-white hover:bg-red-700"
               onClick={() => handleUpdateStatus("Rejected")}
-              disabled={selectedCertificate?.status === "Rejected"}
+              disabled={
+                isPending || selectedCertificate?.status === "Rejected"
+              }
             >
-              Reject
+              {isPending ? "Saving..." : "Reject"}
             </Button>
-            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setDialogOpen(false)}
+              disabled={isPending}
+            >
               Close
             </Button>
           </DialogFooter>

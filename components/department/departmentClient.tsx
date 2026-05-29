@@ -10,13 +10,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DeleteDepartmentDialog from "@/components/department/DeleteDepartmentDialog";
 import EditDepartmentDialog from "@/components/department/EditDepartmentDialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 function DepartmentPage({ departments }: { departments: Department[] }) {
   const router = useRouter();
   const [selectedDepartment, setSelectedDepartment] =
     useState<Department | null>(null);
   const [activeDialog, setActiveDialog] = useState<
-    "staff" | "edit" | "delete" | null
+    "staff" | "edit" | "delete" | "delete-blocked" | null
   >(null);
   const [search, setSearch] = useState("");
 
@@ -60,8 +67,12 @@ function DepartmentPage({ departments }: { departments: Department[] }) {
               setActiveDialog("edit");
             }}
             onDelete={(department) => {
+              const hasStaff =
+                department.totalStaff > 0 ||
+                (department.staff && department.staff.length > 0);
+
               setSelectedDepartment(department);
-              setActiveDialog("delete");
+              setActiveDialog(hasStaff ? "delete-blocked" : "delete");
             }}
           />
         ))}
@@ -94,12 +105,32 @@ function DepartmentPage({ departments }: { departments: Department[] }) {
         />
       )}
 
-      {/* <DeleteDepartmentDialog
-      // open={mode === "delete"}
-      // department={selectedDepartment}
-      // onClose={() => setMode(null)}
-      // onConfirm={handleDelete}
-      /> */}
+      {activeDialog === "delete-blocked" && selectedDepartment && (
+        <Dialog open={true} onOpenChange={(o) => !o && setActiveDialog(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle className="text-red-600">
+                Cannot Delete Department
+              </DialogTitle>
+            </DialogHeader>
+            <p>
+              This department has staff and can&apos;t be deleted. Please move
+              or remove all staff first.
+            </p>
+            <div className="flex justify-end">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setActiveDialog(null);
+                  setSelectedDepartment(null);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }

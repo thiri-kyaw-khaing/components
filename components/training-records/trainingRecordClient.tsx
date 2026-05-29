@@ -32,6 +32,45 @@ export default function TrainingRecordsClient({ departments }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentLimit] = useState(10);
   const [lastFilters, setLastFilters] = useState<ClientFilters>({});
+  const [isExporting, setIsExporting] = useState(false);
+
+  // Hit the Next.js proxy route, get an .xlsx blob back, then trigger
+  // a browser download. The current filter state is sent so the export
+  // matches whatever the user is looking at.
+  const handleExport = async () => {
+    setError(null);
+    setIsExporting(true);
+    try {
+      const res = await fetch("/api/training-records/export", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lastFilters),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data?.message || "Failed to export records.");
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `training-records-${new Date()
+        .toISOString()
+        .slice(0, 10)}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Export error:", err);
+      setError("Server error. Please try again.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const performSearch = async (
     filters: ClientFilters,
@@ -111,6 +150,8 @@ export default function TrainingRecordsClient({ departments }: Props) {
           meta={meta}
           currentPage={currentPage}
           onPageChange={handlePageChange}
+          onExport={handleExport}
+          isExporting={isExporting}
         />
       </div>
     </>

@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -17,15 +16,18 @@ type Props = {
   meta: TrainingRecordMeta;
   currentPage: number;
   onPageChange: (page: number) => void;
+  onExport?: () => void | Promise<void>;
+  isExporting?: boolean;
 };
 function TrainingRecordTable({
   records,
   meta,
   currentPage,
   onPageChange,
+  onExport,
+  isExporting,
 }: Props) {
   const displayRecords = records ?? [];
-  console.log("Displaying records:", displayRecords);
 
   if (displayRecords.length === 0) {
     return (
@@ -46,16 +48,16 @@ function TrainingRecordTable({
       >
         <Button
           variant="outline"
-          className="gap-2 bg-[#006022] text-white hover:bg-[#005018]"
+          onClick={() => onExport?.()}
+          disabled={!onExport || isExporting}
+          className="gap-2 bg-[#006022] text-white hover:bg-[#005018] disabled:opacity-60"
         >
           <Download className="w-4 h-4" />
-          Export
+          {isExporting ? "Exporting..." : "Export"}
         </Button>
       </div>
 
       <Table className="w-full table-fixed text-sm">
-        <TableCaption>A list of training plans</TableCaption>
-
         <TableHeader style={{ backgroundColor: colors.secondary }}>
           <TableRow>
             <TableHead className="w-[250px] font-semibold">

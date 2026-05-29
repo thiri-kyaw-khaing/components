@@ -23,12 +23,20 @@ const normalizeStatus = (status?: string) => {
 const normalizeRole = (role?: string) => {
   if (!role) return "Staff";
   const normalized = role.toLowerCase();
+<<<<<<< HEAD
   console.log("Normalizing role:", role, "->", normalized);
   if (normalized.includes("hr(admin)")) return "HRAdmin";
   if (normalized.includes("departmenthead(manager)"))
     return "DepartmentManager";
+=======
+  if (normalized.includes("admin")) return "Hr(admin)";
+  if (normalized.includes("manager")) return "DepartmentHead(manager)";
+>>>>>>> dd78ac6dd9504a443470ab542908ae2cdaf08869
   return "Staff";
 };
+
+const isHRAdmin = (role?: string) =>
+  !!role && role.toLowerCase().includes("admin");
 
 function EditUserForm({ user, onClose }: UserEditFormProps) {
   const initialState: State = {
@@ -139,6 +147,7 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="role">Role</FieldLabel>
+<<<<<<< HEAD
               <select
                 id="role"
                 name="role"
@@ -152,6 +161,36 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
                 </option>
                 <option value="Staff">Staff</option>
               </select>
+=======
+              {isHRAdmin(user?.role) ? (
+                <>
+                  <Input
+                    value="HR Admin"
+                    readOnly
+                    disabled
+                    className="bg-gray-100 cursor-not-allowed"
+                  />
+                  {/* Keep submitting the real backend value so the role isn't lost */}
+                  <input type="hidden" name="role" value="Hr(admin)" />
+                  <p className="text-xs text-gray-500">
+                    The HR Admin role cannot be reassigned.
+                  </p>
+                </>
+              ) : (
+                <select
+                  id="role"
+                  name="role"
+                  defaultValue={normalizeRole(user?.role)}
+                  className="w-full border border-[#006022] rounded-md px-3 py-2"
+                  required
+                >
+                  <option value="DepartmentHead(manager)">
+                    Department Manager
+                  </option>
+                  <option value="Staff">Staff</option>
+                </select>
+              )}
+>>>>>>> dd78ac6dd9504a443470ab542908ae2cdaf08869
               {safeState.errors?.role?.[0] ? (
                 <p className="text-sm text-red-600">
                   {safeState.errors.role[0]}

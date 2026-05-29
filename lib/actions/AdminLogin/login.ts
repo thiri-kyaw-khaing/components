@@ -66,6 +66,9 @@ export async function LoginAction(
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
+    // Match JWT lifetime (7 days). Without maxAge the cookie is session-only
+    // and dies on browser close — which feels like "the login expired".
+    maxAge: 60 * 60 * 24 * 7,
   });
 
   redirect("/dashboard");

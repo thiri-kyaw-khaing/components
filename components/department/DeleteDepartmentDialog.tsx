@@ -4,14 +4,17 @@ import { Button } from "../ui/button";
 import { DialogHeader } from "../ui/dialog";
 import { DialogTitle } from "../ui/dialog";
 import { Department } from "@/app/types/department";
-import { DeleteDepartmentAction, State } from "@/lib/actions/AdminDepartment/deleteDepartment";
+import {
+  DeleteDepartmentAction,
+  State,
+} from "@/lib/actions/AdminDepartment/deleteDepartment";
 
 type props = {
   department: Department | null;
   onCancel: () => void;
   onConfirm: () => void;
 };
-function DeleteDepartmentDialog({ department, onCancel, onConfirm }: props) {
+function DeleteDepartmentDialog({ department, onCancel }: props) {
   const initialState: State = {
     errors: {},
     message: null,
@@ -51,9 +54,6 @@ function DeleteDepartmentDialog({ department, onCancel, onConfirm }: props) {
                 {pending ? "Deleting..." : "Delete"}
               </Button>
             </form>
-            {/* <Button variant="destructive" onClick={onConfirm}>
-              Delete
-            </Button> */}
           </div>
         </DialogContent>
       </Dialog>

@@ -136,8 +136,7 @@ function UserForm({ departments }: UserFormProps) {
               <option value="" disabled>
                 Select role
               </option>
-              <option value="HRAdmin">HR Admin</option>
-              <option value="DepartmentManager">Department Manager</option>
+              <option value="DepartmentHead(manager)">Department Manager</option>
               <option value="Staff">Staff</option>
             </select>
             {state?.errors?.role?.[0] ? (
