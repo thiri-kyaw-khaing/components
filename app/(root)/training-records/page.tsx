@@ -4,7 +4,7 @@
 
 // import TrainingRecordTable from "@/components/training-records/TrainingRecordTable";
 // import { Button } from "@/components/ui/button";
-// import { getDepartments } from "@/lib/actions/AdminDepartment/getDepartment";
+// import { getDepartments } from "@/lib/api/getDepartment";
 
 // async function TrainingRecords() {
 //   const handleSearch = async () => {
@@ -38,7 +38,7 @@
 
 import PageHeader from "@/components/dashboard/pageHeader";
 import TrainingRecordsClient from "@/components/training-records/trainingRecordClient";
-import { getDepartments } from "@/lib/actions/AdminDepartment/getDepartment";
+import { getDepartments } from "@/lib/api/getDepartment";
 
 async function TrainingRecords() {
   const departments = await getDepartments();

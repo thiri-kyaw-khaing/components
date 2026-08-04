@@ -243,25 +243,6 @@ export default function EditTrainingPlanForm({ course }: { course: Course }) {
 
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="numberOfPerson">Number Of Person</FieldLabel>
-              <Input
-                id="numberOfPerson"
-                name="numberOfPerson"
-                type="number"
-                min={1}
-                defaultValue={course.numberOfPerson}
-                required
-              />
-              {state?.errors?.numberOfPerson?.[0] ? (
-                <p className="text-sm text-red-600">
-                  {state?.errors?.numberOfPerson?.[0]}
-                </p>
-              ) : null}
-            </Field>
-          </FieldGroup>
-
-          <FieldGroup>
-            <Field>
               <FieldLabel htmlFor="content">Content</FieldLabel>
               <Textarea
                 id="content"

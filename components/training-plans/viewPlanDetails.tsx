@@ -38,7 +38,11 @@ function ViewPlanForm({ plan }: { plan: Course }) {
         <Detail label="Type" value={plan.type} />
         <Detail label="Number of Hours" value={`${plan.numberOfHours} hours`} />
         <Detail label="Number of Days" value={`${plan.numberOfDays} days`} />
-        <Detail label="Total Cost" value={`${plan.totalCost} Baht`} />
+        <Detail label="Number of Person" value={`${plan.numberOfPerson}`} />
+        <Detail
+          label="Total Cost"
+          value={`${plan.costPerPerson * plan.numberOfPerson} Baht`}
+        />
         <Detail label="Budget Code" value={plan.budgetCode} />
         <Detail label="Location" value={plan.location} />
         <Detail label="Cost Per Person" value={`${plan.costPerPerson} Baht`} />

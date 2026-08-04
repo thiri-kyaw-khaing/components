@@ -196,23 +196,6 @@ export default function CreateTrainingPlanForm() {
 
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor="numberOfPerson">Number Of Person</FieldLabel>
-          <Input
-            id="numberOfPerson"
-            name="numberOfPerson"
-            type="number"
-            min={1}
-            defaultValue={1}
-            required
-          />
-          {state.errors?.numberOfPerson?.[0] ? (
-            <p className="text-sm text-red-600">{state.errors.numberOfPerson[0]}</p>
-          ) : null}
-        </Field>
-      </FieldGroup>
-
-      <FieldGroup>
-        <Field>
           <FieldLabel htmlFor="content">Content</FieldLabel>
           <Textarea id="content" name="content" rows={4} required />
           {state.errors?.content?.[0] ? (

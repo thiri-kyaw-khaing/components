@@ -16,7 +16,6 @@ export type State = {
     numberOfDays?: string[];
     location?: string[];
     costPerPerson?: string[];
-    numberOfPerson?: string[];
     budgetCode?: string[];
     content?: string[];
   };
@@ -42,10 +41,6 @@ const FormSchema = z.object({
     .number()
     .int()
     .min(0, "Cost per person must be 0 or more!"),
-  numberOfPerson: z.coerce
-    .number()
-    .int()
-    .min(1, "Number of person must be at least 1!"),
   budgetCode: z.string().trim().optional(),
   content: z.string().trim().min(10, "Content must be at least 10 characters!"),
 });
@@ -78,7 +73,6 @@ export async function EditTrainingPlanAction(
     numberOfDays: formData.get("numberOfDays"),
     location: formData.get("location") || undefined,
     costPerPerson: formData.get("costPerPerson"),
-    numberOfPerson: formData.get("numberOfPerson"),
     budgetCode: formData.get("budgetCode") || undefined,
     content: formData.get("content"),
   });
@@ -101,11 +95,9 @@ export async function EditTrainingPlanAction(
     numberOfDays,
     location,
     costPerPerson,
-    numberOfPerson,
     budgetCode,
     content,
   } = validatedFields.data;
-  const totalCost = costPerPerson * numberOfPerson;
   const isoDate = toIsoDateTime(date);
 
   if (!isoDate) {
@@ -133,8 +125,6 @@ export async function EditTrainingPlanAction(
           content,
           numberOfDays,
           numberOfHours,
-          totalCost,
-          numberOfPerson,
           costPerPerson,
           ...(location ? { location } : {}),
           ...(budgetCode ? { budgetCode } : {}),

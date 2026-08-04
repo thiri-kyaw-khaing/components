@@ -23,15 +23,8 @@ const normalizeStatus = (status?: string) => {
 const normalizeRole = (role?: string) => {
   if (!role) return "Staff";
   const normalized = role.toLowerCase();
-<<<<<<< HEAD
-  console.log("Normalizing role:", role, "->", normalized);
-  if (normalized.includes("hr(admin)")) return "HRAdmin";
-  if (normalized.includes("departmenthead(manager)"))
-    return "DepartmentManager";
-=======
   if (normalized.includes("admin")) return "Hr(admin)";
   if (normalized.includes("manager")) return "DepartmentHead(manager)";
->>>>>>> dd78ac6dd9504a443470ab542908ae2cdaf08869
   return "Staff";
 };
 
@@ -147,21 +140,6 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="role">Role</FieldLabel>
-<<<<<<< HEAD
-              <select
-                id="role"
-                name="role"
-                defaultValue={user?.role}
-                className="w-full border border-[#006022] rounded-md px-3 py-2"
-                required
-              >
-                <option value="Hr(admin)">Hr(admin)</option>
-                <option value="DepartmentHead(manager)">
-                  DepartmentHead(manager)
-                </option>
-                <option value="Staff">Staff</option>
-              </select>
-=======
               {isHRAdmin(user?.role) ? (
                 <>
                   <Input
@@ -190,7 +168,6 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
                   <option value="Staff">Staff</option>
                 </select>
               )}
->>>>>>> dd78ac6dd9504a443470ab542908ae2cdaf08869
               {safeState.errors?.role?.[0] ? (
                 <p className="text-sm text-red-600">
                   {safeState.errors.role[0]}

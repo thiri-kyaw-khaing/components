@@ -1,14 +1,10 @@
-const API = "http://localhost:8080/api/v1/admin/departments";
-
+import { API_BASE_URL } from "@/app/api/api";
 import { authFetch } from "@/lib/api/authFetch";
 
 export async function getDepartments() {
-  const { response: res } = await authFetch(
-    "http://localhost:8080/api/v1/admin/departments",
-    {
-      method: "GET",
-    },
-  );
+  const { response: res } = await authFetch(`${API_BASE_URL}/admin/departments`, {
+    method: "GET",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch departments");
@@ -19,7 +15,7 @@ export async function getDepartments() {
 
 export async function getDepartmentById(id: string) {
   const { response: res } = await authFetch(
-    `http://localhost:8080/api/v1/admin/departments/${id}`,
+    `${API_BASE_URL}/admin/departments/${id}`,
     {
       method: "GET",
       next: { tags: ["departments"] },
