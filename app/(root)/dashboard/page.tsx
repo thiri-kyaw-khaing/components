@@ -1,8 +1,11 @@
-import { UsersIcon } from "lucide-react";
+import { UsersIcon, BookOpenIcon, Building2Icon } from "lucide-react";
 import PageHeader from "@/components/dashboard/pageHeader";
 import DashboardCard from "@/components/dashboard/DashboardCard";
+import { getAdminDashboardStats } from "@/lib/api/getDashboardStats";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const stats = await getAdminDashboardStats();
+
   return (
     <div className="min-h-screen space-y-4 m-2">
       <PageHeader
@@ -12,23 +15,20 @@ export default function DashboardPage() {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <DashboardCard
           icon={<UsersIcon className="w-6 h-6" />}
-          percentChange="+12%"
-          count={245}
-          description="Total Staff"
+          count={stats?.totalUsers ?? 0}
+          description="Total Users"
         />
 
         <DashboardCard
-          icon={<UsersIcon className="w-6 h-6" />}
-          percentChange="+8%"
-          count={120}
-          description="Active Trainers"
+          icon={<BookOpenIcon className="w-6 h-6" />}
+          count={stats?.totalTrainingPlans ?? 0}
+          description="Total Training Plans"
         />
 
         <DashboardCard
-          icon={<UsersIcon className="w-6 h-6" />}
-          percentChange="+5%"
-          count={32}
-          description="Avg Training Hours"
+          icon={<Building2Icon className="w-6 h-6" />}
+          count={stats?.totalDepartments ?? 0}
+          description="Total Departments"
         />
 
         {/* <Test /> */}

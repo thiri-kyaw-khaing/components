@@ -2,18 +2,10 @@ import { Certificate } from "@/app/types/certificate";
 import { Card, CardContent } from "@/components/ui/card";
 import { Award } from "lucide-react";
 
-function getCertificateImageUrl(imagePath: string): string {
-  if (!imagePath) return "";
-  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-    return imagePath;
-  }
-
-  const origin = process.env.NEXT_PUBLIC_API_ORIGIN || "http://localhost:8080";
-  return `${origin}/${imagePath.replace(/^\/+/, "")}`;
-}
-
 export function CertificateCard({ certificate }: { certificate: Certificate }) {
-  const imageUrl = getCertificateImageUrl(certificate.image);
+  // Load via the authenticated same-origin proxy (backend /uploads is no longer
+  // public).
+  const imageUrl = `/api/certificate-file/${certificate.id}`;
   const isPending = certificate.status.toLowerCase() === "pending";
 
   return (

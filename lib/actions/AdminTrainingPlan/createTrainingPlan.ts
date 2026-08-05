@@ -59,9 +59,9 @@ function toIsoDateTime(input: string): string | null {
 }
 
 export async function CreateTrainingPlanAction(
-  prevState: State | void,
+  prevState: State,
   formData: FormData,
-): Promise<State | void> {
+): Promise<State> {
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     speaker: formData.get("speaker"),
@@ -158,4 +158,9 @@ export async function CreateTrainingPlanAction(
   if (isCreated) {
     redirect("/training-plans");
   }
+
+  // Unreachable in practice (redirect above terminates on success), but keeps
+  // the return type State rather than State | void so the form's useActionState
+  // state is always State.
+  return { message: "Failed to create training plan. Please try again." };
 }

@@ -39,7 +39,7 @@ function normalizePlans(payload: unknown): Course[] {
 async function TrainingPlans() {
   const response = await getTrainingPlans();
   const plans = normalizePlans(response);
-  console.log("Fetched training plans:", plans);
+  // console.log("Fetched training plans:", plans);
 
   return (
     <div className="min-h-screen space-y-4 m-2">

@@ -33,7 +33,7 @@ const formSchema = z.object({
 function LoginForm() {
   const initialState = {
     errors: {},
-    message: null,
+    message: "",
   };
 
   const [state, formAction, pending] = useActionState(

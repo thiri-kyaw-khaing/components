@@ -33,15 +33,6 @@ export async function EditDepartmentAction(
     division: formData.get("division"),
   });
 
-  console.log("Received form data:", {
-    validatedFields,
-  });
-  console.log("Department ID:", id);
-  console.log("Form Data:", {
-    name: formData.get("name"),
-    division: formData.get("division"),
-  });
-
   if (!validatedFields.success) {
     const flattened = z.flattenError(validatedFields.error);
 

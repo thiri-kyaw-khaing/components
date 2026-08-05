@@ -47,7 +47,6 @@ function FilterGroup({ departments, onSearch }: FilterGroupProps) {
     } finally {
       setIsSubmitting(false);
     }
-    console.log("Submitting filters");
   };
 
   return (

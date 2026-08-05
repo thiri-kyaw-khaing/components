@@ -28,10 +28,6 @@ export async function DeleteDepartmentAction(
   prevState: State | void,
   formData: FormData,
 ): Promise<State | void> {
-  console.log("Received form data:", {
-    id,
-  });
-
   //   if (!validatedFields.success) {
   //     const flattened = z.flattenError(validatedFields.error);
 

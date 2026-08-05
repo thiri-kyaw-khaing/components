@@ -32,10 +32,6 @@ export async function CreateDepartmentAction(
     division: formData.get("division"),
   });
 
-  console.log("Received form data:", {
-    validatedFields,
-  });
-
   if (!validatedFields.success) {
     const flattened = z.flattenError(validatedFields.error);
 

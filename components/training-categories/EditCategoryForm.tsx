@@ -38,7 +38,8 @@ function EditCategoryForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    // TODO: wire up the edit-category submit action
+    // console.log(values);
   }
   return (
     <Form {...form}>

@@ -10,9 +10,16 @@ export default async function DashboardLayout({
 }) {
   const me = await getMe();
   const user = me?.user;
-  console.log("DashboardLayout - User Info:", user); // Debug log to check user info
+  // console.log("DashboardLayout - User Info:", user); // Debug log to check user info
 
   if (!user) {
+    redirect("/login");
+  }
+
+  // This is the admin dashboard. Only an HR admin token may render it; managers
+  // and staff have their own app. Backend role string, see model/user.go:
+  // admin = "Hr(admin)".
+  if (user.role !== "Hr(admin)") {
     redirect("/login");
   }
 

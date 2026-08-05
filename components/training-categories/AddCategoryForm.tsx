@@ -38,7 +38,8 @@ function AddCategoryForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    // TODO: wire up the add-category submit action
+    // console.log(values);
   }
   return (
     <Form {...form}>

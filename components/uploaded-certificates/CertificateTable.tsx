@@ -26,16 +26,11 @@ import {
   rejectCertificate,
 } from "@/lib/actions/AdminCertificate/updateCertificateStatus";
 
-const API_ORIGIN =
-  process.env.NEXT_PUBLIC_API_ORIGIN || "http://localhost:8080";
-
-function getCertificateImageUrl(imagePath: string) {
-  if (!imagePath) return "";
-  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-    return imagePath;
-  }
-
-  return `${API_ORIGIN}/${imagePath.replace(/^\/+/, "")}`;
+// Certificate images load through the authenticated same-origin proxy
+// (/api/certificate-file/:id) instead of the removed open backend /uploads
+// route, so the Bearer token can be attached server-side.
+function getCertificateImageUrl(certificateId: number) {
+  return `/api/certificate-file/${certificateId}`;
 }
 
 function StatusBadge({ status }: { status: Certificate["status"] }) {
@@ -277,7 +272,7 @@ function CertificateTable({
               {selectedCertificate.image && (
                 <div className="w-full rounded-lg border overflow-hidden bg-muted">
                   <img
-                    src={getCertificateImageUrl(selectedCertificate.image)}
+                    src={getCertificateImageUrl(selectedCertificate.id)}
                     alt="Certificate"
                     className="w-full h-auto object-contain max-h-[300px]"
                   />

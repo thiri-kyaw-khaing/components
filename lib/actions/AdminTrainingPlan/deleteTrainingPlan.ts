@@ -10,9 +10,9 @@ export type State = {
 
 export async function DeleteTrainingPlanAction(
   id: number,
-  prevState: State | void,
+  prevState: State,
   formData: FormData,
-): Promise<State | void> {
+): Promise<State> {
   try {
     const { response } = await authFetch(
       `${API_BASE_URL}/admin/training-plans/${id}`,
