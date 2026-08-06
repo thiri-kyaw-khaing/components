@@ -112,7 +112,7 @@ export default function UserManagementClient({
               <option value="">All departments</option>
               {departments.map((department) => (
                 <option key={department.id} value={department.id}>
-                  {department.name}
+                  {department.name} ({department.division})
                 </option>
               ))}
             </select>
@@ -142,6 +142,7 @@ export default function UserManagementClient({
       <div>
         <UserTable
           users={users}
+          departments={departments}
           meta={meta}
           currentPage={currentPage}
           currentLimit={currentLimit}

@@ -9,7 +9,8 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import { CreateUserAction, State } from "@/lib/actions/AdminUser/createUser";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import type { Department } from "@/app/types/department";
 
 type UserFormProps = {
@@ -26,6 +27,8 @@ function UserForm({ departments }: UserFormProps) {
     CreateUserAction,
     initialState,
   );
+
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <form action={formAction}>
@@ -111,7 +114,7 @@ function UserForm({ departments }: UserFormProps) {
               </option>
               {departments.map((department) => (
                 <option key={department.id} value={department.id}>
-                  {department.name}
+                  {department.name} ({department.division})
                 </option>
               ))}
             </select>
@@ -188,13 +191,28 @@ function UserForm({ departments }: UserFormProps) {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="password">Password</FieldLabel>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter password"
-              required
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter password"
+                required
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute inset-y-0 right-2 flex items-center text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
             {state?.errors?.password?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.password[0]}</p>
             ) : null}

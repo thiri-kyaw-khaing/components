@@ -1,12 +1,14 @@
 "use client";
 
 import { UserList } from "@/app/types/userManagement";
+import { Department } from "@/app/types/department";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 type UserEditFormProps = {
   user?: UserList;
+  departments: Department[];
   onClose: () => void;
 };
 import { useActionState } from "react";
@@ -31,7 +33,7 @@ const normalizeRole = (role?: string) => {
 const isHRAdmin = (role?: string) =>
   !!role && role.toLowerCase().includes("admin");
 
-function EditUserForm({ user, onClose }: UserEditFormProps) {
+function EditUserForm({ user, departments, onClose }: UserEditFormProps) {
   const initialState: State = {
     errors: {},
     message: null,
@@ -87,13 +89,25 @@ function EditUserForm({ user, onClose }: UserEditFormProps) {
 
           <FieldGroup>
             <Field>
-              <FieldLabel htmlFor="departmentId">Department ID</FieldLabel>
-              <Input
+              <FieldLabel htmlFor="departmentId">Department</FieldLabel>
+              <select
                 id="departmentId"
                 name="departmentId"
-                defaultValue={user?.departmentId ?? ""}
+                defaultValue={
+                  user?.departmentId != null ? String(user.departmentId) : ""
+                }
                 required
-              />
+                className="w-full border border-[#006022] rounded-md px-3 py-2"
+              >
+                <option value="" disabled>
+                  Select department
+                </option>
+                {departments.map((department) => (
+                  <option key={department.id} value={department.id}>
+                    {department.name} ({department.division})
+                  </option>
+                ))}
+              </select>
               {safeState.errors?.departmentId?.[0] ? (
                 <p className="text-sm text-red-600">
                   {safeState.errors.departmentId[0]}

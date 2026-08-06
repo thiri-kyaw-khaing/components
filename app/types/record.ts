@@ -5,7 +5,7 @@ export type OjtRecord = {
   id: number;
   staff: User;
   course: Course;
-  status: "COMPLETED" | "IN_PROGRESS" | "NOT_STARTED";
+  status: "Register" | "Attended" | "Absent";
   evaluation?: string;
   prePostTestScore?: string;
 };

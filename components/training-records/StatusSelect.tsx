@@ -18,9 +18,9 @@ function StatusSelect({ value, onChange }: Props) {
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="active">Active</SelectItem>
-          <SelectItem value="inactive">Inactive</SelectItem>
-          <SelectItem value="absent">Absent</SelectItem>
+          <SelectItem value="Register">Register</SelectItem>
+          <SelectItem value="Attended">Attended</SelectItem>
+          <SelectItem value="Absent">Absent</SelectItem>
         </SelectContent>
       </Select>
     </div>

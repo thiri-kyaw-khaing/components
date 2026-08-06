@@ -21,17 +21,25 @@ import {
 import { Dialog, DialogContent } from "../ui/dialog";
 import EditUserForm from "./EditUserForm";
 import { UserList, UserMeta } from "@/app/types/userManagement";
+import { Department } from "@/app/types/department";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { DeleteUserDialog } from "./DeleteUserDialog";
 
 type UserTableProps = {
   users: UserList[];
+  departments: Department[];
   meta: UserMeta;
   currentPage: number;
   currentLimit: number;
 };
 
-function UserTable({ users, meta, currentPage, currentLimit }: UserTableProps) {
+function UserTable({
+  users,
+  departments,
+  meta,
+  currentPage,
+  currentLimit,
+}: UserTableProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -183,6 +191,7 @@ function UserTable({ users, meta, currentPage, currentLimit }: UserTableProps) {
             {mode === "edit" && (
               <EditUserForm
                 user={selectedUser ?? undefined}
+                departments={departments}
                 onClose={() => setOpen(false)}
               />
             )}

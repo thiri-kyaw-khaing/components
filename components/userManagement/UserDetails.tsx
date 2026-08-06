@@ -71,11 +71,21 @@ function UserDetails({ user }: { user: UserDetailsData }) {
         </div>
 
         {/* Certifications Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {user.certificates?.map((cert: Certificate) => (
-            <CertificateCard key={cert.id} certificate={cert} />
-          ))}
-        </div>
+        {user.certificates && user.certificates.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {user.certificates.map((cert: Certificate) => (
+              <CertificateCard key={cert.id} certificate={cert} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-300 py-12 text-center text-gray-500">
+            <Award className="mb-2 h-10 w-10 text-gray-300" />
+            <p className="font-medium">No certificates yet</p>
+            <p className="text-sm">
+              This user hasn&apos;t uploaded any certificates.
+            </p>
+          </div>
+        )}
       </div>
     </>
   );
