@@ -38,9 +38,8 @@ const FormSchema = z.object({
   phone: z
     .string()
     .trim()
-    .max(20, "Phone must be at most 20 characters!")
-    .optional()
-    .or(z.literal("")),
+    .min(1, "Phone is required!")
+    .max(20, "Phone must be at most 20 characters!"),
   departmentId: z.coerce.number().int().min(1, "Department ID is required!"),
   role: z.enum(["Hr(admin)", "DepartmentHead(manager)", "Staff"]),
   position: z

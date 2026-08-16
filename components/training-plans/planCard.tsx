@@ -7,7 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ButtonDialog from "../dashboard/buttonDialog";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, UserPlus } from "lucide-react";
+import Link from "next/link";
 import ViewPlanForm from "./viewPlanDetails";
 import InfoDetail from "./infoDetail";
 import { Course } from "@/app/types/trainingPlan";
@@ -27,7 +28,7 @@ function PlanCard({ plan }: PlanCardProps) {
             </p>
           </CardTitle>
 
-          <CardAction className="text-[#006022] font-medium">
+          <CardAction className="flex items-center gap-2 text-[#006022] font-medium">
             <ButtonDialog
               icon={<EyeIcon className="mr-2 h-4 w-4" />}
               name={"View"}
@@ -35,6 +36,14 @@ function PlanCard({ plan }: PlanCardProps) {
             >
               <ViewPlanForm plan={plan} />
             </ButtonDialog>
+
+            <Link
+              href={`/training-plans/${plan.id}/register`}
+              className="inline-flex items-center bg-[#006022] hover:bg-[#004d1b] text-white px-4 py-2 rounded-md text-sm"
+            >
+              <UserPlus className="mr-2 h-4 w-4" />
+              Register Staff
+            </Link>
           </CardAction>
         </CardHeader>
 

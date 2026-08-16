@@ -90,7 +90,12 @@ function UserForm({ departments }: UserFormProps) {
         <FieldGroup>
           <Field>
             <FieldLabel htmlFor="phone">Phone</FieldLabel>
-            <Input id="phone" name="phone" placeholder="e.g., +1234567890" />
+            <Input
+              id="phone"
+              name="phone"
+              placeholder="e.g., +1234567890"
+              required
+            />
             {state?.errors?.phone?.[0] ? (
               <p className="text-sm text-red-600">{state.errors.phone[0]}</p>
             ) : null}
@@ -139,6 +144,7 @@ function UserForm({ departments }: UserFormProps) {
               <option value="" disabled>
                 Select role
               </option>
+              <option value="Hr(admin)">HR Admin</option>
               <option value="DepartmentHead(manager)">Department Manager</option>
               <option value="Staff">Staff</option>
             </select>
@@ -165,7 +171,17 @@ function UserForm({ departments }: UserFormProps) {
           </Field>
         </FieldGroup>
 
-        <div />
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="workStartDate">Work Start Date</FieldLabel>
+            <Input id="workStartDate" name="workStartDate" type="date" required />
+            {state?.errors?.workStartDate?.[0] ? (
+              <p className="text-sm text-red-600">
+                {state.errors.workStartDate[0]}
+              </p>
+            ) : null}
+          </Field>
+        </FieldGroup>
       </div>
 
       <div className="grid grid-cols-2 gap-4 mt-4">

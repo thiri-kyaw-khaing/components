@@ -16,6 +16,7 @@ export type State = {
     position?: string[];
     password?: string[];
     status?: string[];
+    workStartDate?: string[];
   };
   message?: string | null;
 };
@@ -39,11 +40,10 @@ const FormSchema = z.object({
   phone: z
     .string()
     .trim()
-    .max(20, "Phone must be at most 20 characters!")
-    .optional()
-    .or(z.literal("")),
+    .min(1, "Phone is required!")
+    .max(20, "Phone must be at most 20 characters!"),
   departmentId: z.coerce.number().int().min(1, "Department ID is required!"),
-  role: z.enum(["DepartmentHead(manager)", "Staff"]),
+  role: z.enum(["Hr(admin)", "DepartmentHead(manager)", "Staff"]),
   position: z
     .string()
     .trim()
@@ -51,6 +51,7 @@ const FormSchema = z.object({
     .max(100, "Position must be at most 100 characters!"),
   password: z.string().trim().min(6, "Password must be at least 6 characters!"),
   status: z.enum(["Active", "Inactive", "Suspended"]),
+  workStartDate: z.string().trim().min(1, "Work start date is required!"),
 });
 
 export async function CreateUserAction(
@@ -67,6 +68,7 @@ export async function CreateUserAction(
     position: formData.get("position"),
     password: formData.get("password"),
     status: formData.get("status"),
+    workStartDate: formData.get("workStartDate"),
   });
 
   if (!validatedFields.success) {
@@ -88,6 +90,7 @@ export async function CreateUserAction(
     position,
     password,
     status,
+    workStartDate,
   } = validatedFields.data;
   let isCreated = false;
 
@@ -107,6 +110,7 @@ export async function CreateUserAction(
         position,
         password,
         status,
+        workStartDate,
       }),
       cache: "no-store",
     });

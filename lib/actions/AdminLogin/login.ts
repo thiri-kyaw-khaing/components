@@ -14,7 +14,7 @@ export type State = {
 };
 
 const FormSchema = z.object({
-  email: z.string().trim().email("Invalid email address!"),
+  email: z.string().trim().min(3, "Enter your email or phone!"),
   password: z.string().trim().min(6, "Password must be at least 6 characters!"),
 });
 
@@ -40,7 +40,7 @@ export async function LoginAction(
   const response = await fetch(`${API_BASE_URL}/auth/admin/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ identifier: email, password }),
     cache: "no-store",
   });
 

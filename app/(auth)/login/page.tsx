@@ -85,13 +85,13 @@ function LoginForm() {
                 </FieldDescription> */}
 
                     <FieldGroup className="mt-4">
-                      {/* Email */}
+                      {/* Email or phone */}
                       <Field>
-                        <FieldLabel htmlFor="email">Email Address</FieldLabel>
+                        <FieldLabel htmlFor="email">Email or Phone</FieldLabel>
                         <Input
                           id="email"
-                          type="email"
-                          placeholder="Enter Email"
+                          type="text"
+                          placeholder="Enter email or phone"
                           name="email"
                           required
                         />
